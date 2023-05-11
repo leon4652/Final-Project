@@ -1,44 +1,44 @@
 package com.enjoy.trip.dto;
 
 public class Notice {
-	private int no;
-	private String title;
-	private String contents;
-	private int hits;
+	private int noticeNo;
 	private int userNo;
+	private String noticeTitle;
+	private String noticeContent;
+	private int isNotice;
 	private String registDate;
 	private String updateDate;
 	private String removeDate;
-	private int isNotice;
-	public int getNo() {
-		return no;
+	
+	public int getNoticeNo() {
+		return noticeNo;
 	}
-	public void setNo(int no) {
-		this.no = no;
-	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	public String getContents() {
-		return contents;
-	}
-	public void setContents(String contents) {
-		this.contents = contents;
-	}
-	public int getHits() {
-		return hits;
-	}
-	public void setHits(int hits) {
-		this.hits = hits;
+	public void setNoticeNo(int noticeNo) {
+		this.noticeNo = noticeNo;
 	}
 	public int getUserNo() {
 		return userNo;
 	}
 	public void setUserNo(int userNo) {
 		this.userNo = userNo;
+	}
+	public String getNoticeTitle() {
+		return noticeTitle;
+	}
+	public void setNoticeTitle(String noticeTitle) {
+		this.noticeTitle = noticeTitle;
+	}
+	public String getNoticeContent() {
+		return noticeContent;
+	}
+	public void setNoticeContent(String noticeContent) {
+		this.noticeContent = noticeContent;
+	}
+	public int getIsNotice() {
+		return isNotice;
+	}
+	public void setIsNotice(int isNotice) {
+		this.isNotice = isNotice;
 	}
 	public String getRegistDate() {
 		return registDate;
@@ -58,13 +58,4 @@ public class Notice {
 	public void setRemoveDate(String removeDate) {
 		this.removeDate = removeDate;
 	}
-	public int getIsNotice() {
-		return isNotice;
-	}
-	public void setIsNotice(int isNotice) {
-		this.isNotice = isNotice;
-	}
-
-	
-	
 }

@@ -1,10 +1,10 @@
 package com.enjoy.trip.dto;
 
 public class User {
-	private int no;
-	private String id;
-	private String password;
-	private String name;
+	private int userNo;
+	private String userId;
+	private String userPw;
+	private String userName;
 	private String email0;
 	private String email1;
 	private int sido;
@@ -16,29 +16,30 @@ public class User {
 	private String updateDate;
 	private String removeDate;
 	private int isAdmin;
-	public int getNo() {
-		return no;
+	
+	public int getUserNo() {
+		return userNo;
 	}
-	public void setNo(int no) {
-		this.no = no;
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
 	}
-	public String getId() {
-		return id;
+	public String getUserId() {
+		return userId;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
-	public String getPassword() {
-		return password;
+	public String getUserPw() {
+		return userPw;
 	}
-	public void setPassword(String password) {
-		this.password = password;
+	public void setUserPw(String userPw) {
+		this.userPw = userPw;
 	}
-	public String getName() {
-		return name;
+	public String getUserName() {
+		return userName;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	public String getEmail0() {
 		return email0;
