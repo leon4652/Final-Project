@@ -1,35 +1,33 @@
 package com.enjoy.trip.dto;
 
 public class ShareAttraction {
-	private int shareNo;
-	private String attractionId;
-	private String registerTime;
+	private int boardNo;
+	private int contentId;
+	private String registDate;
 	private String removeDate;
 	
-	
-	public String getRegisterTime() {
-		return registerTime;
+	public int getBoardNo() {
+		return boardNo;
 	}
-	public void setRegisterTime(String registerTime) {
-		this.registerTime = registerTime;
+	public void setBoardNo(int boardNo) {
+		this.boardNo = boardNo;
 	}
-
+	public int getContentId() {
+		return contentId;
+	}
+	public void setContentId(int contentId) {
+		this.contentId = contentId;
+	}
+	public String getRegistDate() {
+		return registDate;
+	}
+	public void setRegistDate(String registDate) {
+		this.registDate = registDate;
+	}
 	public String getRemoveDate() {
 		return removeDate;
 	}
 	public void setRemoveDate(String removeDate) {
 		this.removeDate = removeDate;
-	}
-	public int getShareNo() {
-		return shareNo;
-	}
-	public void setShareNo(int shareNo) {
-		this.shareNo = shareNo;
-	}
-	public String getAttractionId() {
-		return attractionId;
-	}
-	public void setAttractionId(String attractionId) {
-		this.attractionId = attractionId;
 	}
 }

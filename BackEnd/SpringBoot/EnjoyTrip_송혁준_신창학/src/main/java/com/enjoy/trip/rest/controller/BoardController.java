@@ -42,29 +42,19 @@ public class BoardController {
 	}
 	
 	@PostMapping("/write")
-	public void write(@RequestBody ShareBoard param, HttpSession session) throws Exception {
-//		int userNo = ((User) session.getAttribute("userInfo")).getNo(); //유저 번호 설정
-		//int userNo = 1;
-		
-		// 사용자 no 세션에서 가져와서 입력
-		//param.setUserNo(userNo);
-		
-		
+	public void write(@RequestBody ShareBoard param) throws Exception {
 		boardService.writeBoard(param);
 	}
 	
 
 	@GetMapping("/delete/{boardNo}")
 	public void delete(@PathVariable int boardNo) throws Exception {
-		System.out.println(boardNo);
 		boardService.deleteBoard(boardNo);
 	}
 
 	@PutMapping("/update/{boardNo}")
 	public void modify(@PathVariable int boardNo, @RequestBody ShareBoard param) throws Exception {
-		param.setNo(boardNo);
-		
-		System.out.println(param.getNo() + " " + param.getTitle());
+		param.setNo(boardNo); //번호 찾아서 객체에 저장
 		boardService.updateBoard(param);
 	}
 	
