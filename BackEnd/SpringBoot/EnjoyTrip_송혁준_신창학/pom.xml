@@ -11,7 +11,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>PJ0501_BOOT</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>PJ0427_BOOT</name>
+	<name>EnjoyTrip</name>
 	<description>test</description>
 	<properties>
 		<java.version>1.8</java.version>
