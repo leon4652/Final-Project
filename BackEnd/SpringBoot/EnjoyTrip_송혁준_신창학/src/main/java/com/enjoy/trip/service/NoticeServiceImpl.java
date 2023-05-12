@@ -36,7 +36,6 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public Notice getNotice(int noticeNo) throws Exception {
-		noticeMapper.hitsRateUp(noticeNo);
 		return noticeMapper.getNotice(noticeNo);
 	}
 

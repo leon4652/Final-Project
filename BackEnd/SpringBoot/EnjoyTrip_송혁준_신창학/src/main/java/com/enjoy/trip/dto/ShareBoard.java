@@ -12,6 +12,14 @@ public class ShareBoard {
 	private String updateDate;
 	private String removeDate;
 	
+	private String userName;
+	
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 	public int getBoardNo() {
 		return boardNo;
 	}
