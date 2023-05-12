@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.enjoy.trip.mapper.MyPageMapper">
+
+<!-- 
+	User getUser(int userNo) throws SQLException;
+
+	int updateUser(User user) throws SQLException;
+ -->
+	<select id="getUser" parameterType="int" resultType="User">
+		SELECT *, CONCAT(email0 + '@' + email1) AS email 
+		  FROM user 
+		 WHERE user_no = #{userNo}
+	</select> 	
+	
+	<update id="updateUser" parameterType="User">
+		UPDATE user 
+		   SET user_id = #{userId}, user_pw = #{userPw}
+		 WHERE user_no = #{userNo}
+	</update>
+</mapper>

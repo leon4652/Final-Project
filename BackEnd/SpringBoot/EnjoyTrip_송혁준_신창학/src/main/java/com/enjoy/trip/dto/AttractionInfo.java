@@ -16,7 +16,14 @@ public class AttractionInfo {
 	private double latitude;
 	private double longtitude;
 	private String mlevel;
+	private String description;
 	
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
 	public int getContentId() {
 		return contentId;
 	}
