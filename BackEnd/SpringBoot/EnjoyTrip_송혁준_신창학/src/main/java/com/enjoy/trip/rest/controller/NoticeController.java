@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,25 +32,18 @@ public class NoticeController {
 	}
 
 	@PostMapping("/write")
-	public void writeNotice(@RequestBody Notice param, HttpSession session) throws Exception {
-		//User user = ((User) session.getAttribute("userInfo"));
-		//if(user.getIsAdmin() != 1) return; //1인 경우 어드민 설정
-		//int userNo = user.getNo(); 
-		int userNo = 1; //임시 1 설정
-		
-		// 사용자 no 세션에서 가져와서 입력
-		param.setUserNo(userNo);
+	public void writeNotice(@RequestBody Notice param) throws Exception {
 		noticeService.writeNotice(param);
 	}
 	
-	@GetMapping("/delete/{noticeNo}")
+	@DeleteMapping("/delete/{noticeNo}")
 	public void deleteNotice(@PathVariable int noticeNo) throws Exception {
 		noticeService.deleteNotice(noticeNo);
 	}
 
 	@PutMapping("/update/{noticeNo}")
 	public void updateNotice(@PathVariable int noticeNo, @RequestBody Notice param) throws Exception {
-		param.setNo(noticeNo);
+		param.setNoticeNo(noticeNo);
 		noticeService.updateNotice(param);
 	}
 	
