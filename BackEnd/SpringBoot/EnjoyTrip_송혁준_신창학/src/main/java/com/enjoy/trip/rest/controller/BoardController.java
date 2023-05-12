@@ -47,14 +47,14 @@ public class BoardController {
 	}
 	
 
-	@GetMapping("/delete/{boardNo}")
+	@DeleteMapping("/delete/{boardNo}")
 	public void delete(@PathVariable int boardNo) throws Exception {
 		boardService.deleteBoard(boardNo);
 	}
 
 	@PutMapping("/update/{boardNo}")
 	public void modify(@PathVariable int boardNo, @RequestBody ShareBoard param) throws Exception {
-		param.setNo(boardNo); //번호 찾아서 객체에 저장
+		param.setBoardNo(boardNo);
 		boardService.updateBoard(param);
 	}
 	

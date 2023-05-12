@@ -15,10 +15,11 @@
   <result property="registDate" column="regist_date"/>
   <result property="updateDate" column="update_date"/>
   <result property="removeDate" column="remove_date"/>
+  <result property="userName" column="user_name"/>
 </resultMap>
 
 
-<select id="selectBoard" resultMap="boardResultMap">
+<select id="selectBoard" resultMap="boardResultMap"> <!-- 조인 사용, user name까지 가져옴 -->
   select s.*, u.user_name
     from share_board s LEFT JOIN user u ON s.user_no = u.user_no
    where s.remove_date is null
@@ -27,7 +28,7 @@
 <select id="getBoard" parameterType="int" resultMap="boardResultMap">
 	select *
 	  from share_board
-	 where board_no = #{boardNo}
+	 where board_no = #{boardNo} and remove_date is null
 </select> 
 
 <update id="deleteBoard" parameterType="int">

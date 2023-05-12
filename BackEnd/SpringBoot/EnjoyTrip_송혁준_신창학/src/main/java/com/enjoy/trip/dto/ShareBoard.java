@@ -1,40 +1,54 @@
 package com.enjoy.trip.dto;
 
 public class ShareBoard {
-	private int no;
-	private String title;
-	private String contents;
-	private int hits;
+	private int boardNo;
+	private int boardHit;
+	private String boardTitle;
+	private String boardContent;
+	private int boardLike;
 	private int userNo;
-	private String writerName;
-	private String registerTime;
+	private int commentCount;
+	private String registDate;
 	private String updateDate;
 	private String removeDate;
-
 	
-	public int getNo() {
-		return no;
+	private String userName;
+	
+	public String getUserName() {
+		return userName;
 	}
-	public void setNo(int no) {
-		this.no = no;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
-	public String getTitle() {
-		return title;
+	public int getBoardNo() {
+		return boardNo;
 	}
-	public void setTitle(String title) {
-		this.title = title;
+	public void setBoardNo(int boardNo) {
+		this.boardNo = boardNo;
 	}
-	public String getContents() {
-		return contents;
+	public int getBoardHit() {
+		return boardHit;
 	}
-	public void setContents(String contents) {
-		this.contents = contents;
+	public void setBoardHit(int boardHit) {
+		this.boardHit = boardHit;
 	}
-	public int getHits() {
-		return hits;
+	public String getBoardTitle() {
+		return boardTitle;
 	}
-	public void setHits(int hits) {
-		this.hits = hits;
+	public void setBoardTitle(String boardTitle) {
+		this.boardTitle = boardTitle;
+	}
+	public String getBoardContent() {
+		return boardContent;
+	}
+	public void setBoardContent(String boardContent) {
+		this.boardContent = boardContent;
+	}
+	public int getBoardLike() {
+		return boardLike;
+	}
+	public void setBoardLike(int boardLike) {
+		this.boardLike = boardLike;
 	}
 	public int getUserNo() {
 		return userNo;
@@ -42,11 +56,17 @@ public class ShareBoard {
 	public void setUserNo(int userNo) {
 		this.userNo = userNo;
 	}
-	public String getWriterName() {
-		return writerName;
+	public int getCommentCount() {
+		return commentCount;
 	}
-	public void setWriterName(String writerName) {
-		this.writerName = writerName;
+	public void setCommentCount(int commentCount) {
+		this.commentCount = commentCount;
+	}
+	public String getRegistDate() {
+		return registDate;
+	}
+	public void setRegistDate(String registDate) {
+		this.registDate = registDate;
 	}
 	public String getUpdateDate() {
 		return updateDate;
@@ -60,14 +80,4 @@ public class ShareBoard {
 	public void setRemoveDate(String removeDate) {
 		this.removeDate = removeDate;
 	}
-	public String getRegisterTime() {
-		return registerTime;
-	}
-	public void setRegisterTime(String registerTime) {
-		this.registerTime = registerTime;
-	}
-
-	
-	
-	
 }

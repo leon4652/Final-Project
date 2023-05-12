@@ -10,5 +10,4 @@ public interface NoticeMapper {
 	void deleteNotice(int noticeNo) throws Exception;
 	void updateNotice(Notice param) throws Exception;
 	Notice getNotice(int noticeNo) throws Exception;
-	void hitsRateUp(int noticeNo) throws Exception;
 }
