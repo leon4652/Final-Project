@@ -1,54 +1,47 @@
 package com.enjoy.trip.dto;
 
 public class ShareBoard {
-	private int boardNo;
-	private int boardHit;
-	private String boardTitle;
-	private String boardContent;
-	private int boardLike;
+	private int shareBoardNo;
+	private int shareBoardHit;
+	private String shareBoardTitle;
+	private String shareBoardContent;
+	private int shareBoardLike;
 	private int userNo;
 	private int commentCount;
 	private String registDate;
 	private String updateDate;
 	private String removeDate;
-	
 	private String userName;
 	
-	public String getUserName() {
-		return userName;
+	public int getShareBoardNo() {
+		return shareBoardNo;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setShareBoardNo(int shareBoardNo) {
+		this.shareBoardNo = shareBoardNo;
 	}
-	public int getBoardNo() {
-		return boardNo;
+	public int getShareBoardHit() {
+		return shareBoardHit;
 	}
-	public void setBoardNo(int boardNo) {
-		this.boardNo = boardNo;
+	public void setShareBoardHit(int shareBoardHit) {
+		this.shareBoardHit = shareBoardHit;
 	}
-	public int getBoardHit() {
-		return boardHit;
+	public String getShareBoardTitle() {
+		return shareBoardTitle;
 	}
-	public void setBoardHit(int boardHit) {
-		this.boardHit = boardHit;
+	public void setShareBoardTitle(String shareBoardTitle) {
+		this.shareBoardTitle = shareBoardTitle;
 	}
-	public String getBoardTitle() {
-		return boardTitle;
+	public String getShareBoardContent() {
+		return shareBoardContent;
 	}
-	public void setBoardTitle(String boardTitle) {
-		this.boardTitle = boardTitle;
+	public void setShareBoardContent(String shareBoardContent) {
+		this.shareBoardContent = shareBoardContent;
 	}
-	public String getBoardContent() {
-		return boardContent;
+	public int getShareBoardLike() {
+		return shareBoardLike;
 	}
-	public void setBoardContent(String boardContent) {
-		this.boardContent = boardContent;
-	}
-	public int getBoardLike() {
-		return boardLike;
-	}
-	public void setBoardLike(int boardLike) {
-		this.boardLike = boardLike;
+	public void setShareBoardLike(int shareBoardLike) {
+		this.shareBoardLike = shareBoardLike;
 	}
 	public int getUserNo() {
 		return userNo;
@@ -79,5 +72,11 @@ public class ShareBoard {
 	}
 	public void setRemoveDate(String removeDate) {
 		this.removeDate = removeDate;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 }
