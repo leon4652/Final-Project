@@ -1,11 +1,11 @@
 package com.enjoy.trip.dto;
 
-public class ShareBoard {
-	private int shareBoardNo;
-	private int shareBoardHit;
-	private String shareBoardTitle;
-	private String shareBoardContent;
-	private int shareBoardLike;
+public class StoryBoard {
+	private int storyBoardNo;
+	private int storyBoardHit;
+	private String storyBoardTitle;
+	private String storyBoardContent;
+	private int storyBoardLike;
 	private int userNo;
 	private int commentCount;
 	private String registDate;
@@ -13,35 +13,35 @@ public class ShareBoard {
 	private String removeDate;
 	private String userName;
 	
-	public int getShareBoardNo() {
-		return shareBoardNo;
+	public int getStoryBoardNo() {
+		return storyBoardNo;
 	}
-	public void setShareBoardNo(int shareBoardNo) {
-		this.shareBoardNo = shareBoardNo;
+	public void setStoryBoardNo(int storyBoardNo) {
+		this.storyBoardNo = storyBoardNo;
 	}
-	public int getShareBoardHit() {
-		return shareBoardHit;
+	public int getStoryBoardHit() {
+		return storyBoardHit;
 	}
-	public void setShareBoardHit(int shareBoardHit) {
-		this.shareBoardHit = shareBoardHit;
+	public void setStoryBoardHit(int storyBoardHit) {
+		this.storyBoardHit = storyBoardHit;
 	}
-	public String getShareBoardTitle() {
-		return shareBoardTitle;
+	public String getStoryBoardTitle() {
+		return storyBoardTitle;
 	}
-	public void setShareBoardTitle(String shareBoardTitle) {
-		this.shareBoardTitle = shareBoardTitle;
+	public void setStoryBoardTitle(String storyBoardTitle) {
+		this.storyBoardTitle = storyBoardTitle;
 	}
-	public String getShareBoardContent() {
-		return shareBoardContent;
+	public String getStoryBoardContent() {
+		return storyBoardContent;
 	}
-	public void setShareBoardContent(String shareBoardContent) {
-		this.shareBoardContent = shareBoardContent;
+	public void setStoryBoardContent(String storyBoardContent) {
+		this.storyBoardContent = storyBoardContent;
 	}
-	public int getShareBoardLike() {
-		return shareBoardLike;
+	public int getStoryBoardLike() {
+		return storyBoardLike;
 	}
-	public void setShareBoardLike(int shareBoardLike) {
-		this.shareBoardLike = shareBoardLike;
+	public void setStoryBoardLike(int storyBoardLike) {
+		this.storyBoardLike = storyBoardLike;
 	}
 	public int getUserNo() {
 		return userNo;

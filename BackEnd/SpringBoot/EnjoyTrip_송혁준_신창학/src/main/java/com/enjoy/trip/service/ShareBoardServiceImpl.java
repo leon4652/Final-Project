@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 import com.enjoy.trip.dto.ShareBoard;
 import com.enjoy.trip.dto.ShareAttraction;
 import com.enjoy.trip.dto.User;
-import com.enjoy.trip.mapper.BoardMapper;
+import com.enjoy.trip.mapper.ShareBoardMapper;
 
 @Service
-public class BoardServiceImpl implements BoardService {
-	private BoardMapper boardMapper;	
-	public BoardServiceImpl(BoardMapper boardMapper) {
+public class ShareBoardServiceImpl implements ShareBoardService {
+	private ShareBoardMapper boardMapper;	
+	public ShareBoardServiceImpl(ShareBoardMapper boardMapper) {
 		this.boardMapper = boardMapper;
 	}
 
@@ -22,8 +22,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public void deleteBoard(int boardNo) throws Exception {
-		boardMapper.deleteBoard(boardNo);
+	public void deleteBoard(int shareBoardNo) throws Exception {
+		boardMapper.deleteBoard(shareBoardNo);
 	}
 
 	@Override
@@ -37,9 +37,9 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public ShareBoard getBoard(int boardNo) throws Exception {
-		boardMapper.hitsRateUp(boardNo);
-		return boardMapper.getBoard(boardNo);
+	public ShareBoard getBoard(int shareBoardNo) throws Exception {
+		boardMapper.hitsRateUp(shareBoardNo);
+		return boardMapper.getBoard(shareBoardNo);
 	}
 
 	@Override

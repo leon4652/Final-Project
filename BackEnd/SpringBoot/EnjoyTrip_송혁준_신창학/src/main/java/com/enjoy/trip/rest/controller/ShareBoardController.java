@@ -18,49 +18,48 @@ import org.springframework.web.bind.annotation.RestController;
 import com.enjoy.trip.dto.ShareBoard;
 import com.enjoy.trip.dto.ShareAttraction;
 import com.enjoy.trip.dto.User;
-import com.enjoy.trip.service.BoardService;
+import com.enjoy.trip.service.ShareBoardService;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("/api/board")
-public class BoardController {
-	private BoardService boardService;
-	public BoardController(BoardService boardService) {
-		this.boardService = boardService;
+@RequestMapping("/api/shareboard")
+public class ShareBoardController {
+	private final ShareBoardService shareBoardService;
+	public ShareBoardController(ShareBoardService shareBoardService) {
+		this.shareBoardService = shareBoardService;
 	}
-	
 
 	@GetMapping("/list")
 	public List<ShareBoard> select() throws Exception {
-		return boardService.selectBoard();
+		return shareBoardService.selectBoard();
 	}
 	
 
-	@GetMapping("/info/{boardNo}")
-	public ShareBoard getBoard(@PathVariable int boardNo) throws Exception {
-		return boardService.getBoard(boardNo);
+	@GetMapping("/info/{shareBoardNo}")
+	public ShareBoard getBoard(@PathVariable int shareBoardNo) throws Exception {
+		return shareBoardService.getBoard(shareBoardNo);
 	}
 	
 	@PostMapping("/write")
 	public void write(@RequestBody ShareBoard param) throws Exception {
-		boardService.writeBoard(param);
+		shareBoardService.writeBoard(param);
 	}
 	
 
-	@DeleteMapping("/delete/{boardNo}")
-	public void delete(@PathVariable int boardNo) throws Exception {
-		boardService.deleteBoard(boardNo);
+	@DeleteMapping("/delete/{shareBoardNo}")
+	public void delete(@PathVariable int shareBoardNo) throws Exception {
+		shareBoardService.deleteBoard(shareBoardNo);
 	}
 
-	@PutMapping("/update/{boardNo}")
-	public void modify(@PathVariable int boardNo, @RequestBody ShareBoard param) throws Exception {
-		param.setBoardNo(boardNo);
-		boardService.updateBoard(param);
+	@PutMapping("/update/{shareBoardNo}")
+	public void modify(@PathVariable int shareBoardNo, @RequestBody ShareBoard param) throws Exception {
+		param.setBoardNo(shareBoardNo);
+		shareBoardService.updateBoard(param);
 	}
 	
 	@GetMapping("/getattraction/{userNo}")
 	public List<ShareAttraction> getAttraction(@PathVariable int userNo) throws Exception {
-		return boardService.getShareAttraction(userNo);
+		return shareBoardService.getShareAttraction(userNo);
 	}
 
 	

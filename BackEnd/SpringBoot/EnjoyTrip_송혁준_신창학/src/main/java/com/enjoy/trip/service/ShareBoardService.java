@@ -4,16 +4,15 @@ import java.util.List;
 
 import com.enjoy.trip.dto.ShareBoard;
 import com.enjoy.trip.dto.ShareAttraction;
-import com.enjoy.trip.dto.User;
 
-public interface BoardService {
+public interface ShareBoardService {
 	List<ShareBoard> selectBoard() throws Exception;
 
-	void deleteBoard(int boardNo) throws Exception;
+	void deleteBoard(int shareBoardNo) throws Exception;
 
 	void writeBoard(ShareBoard write) throws Exception;
 
-	ShareBoard getBoard(int boardNo) throws Exception;
+	ShareBoard getBoard(int shareBoardNo) throws Exception;
 
 	void updateBoard(ShareBoard update) throws Exception;
 
