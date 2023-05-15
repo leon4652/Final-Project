@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.enjoy.trip.mapper.StoryBoardMapper">
+
+	<resultMap type="StoryBoard" id="StoryBoardResultMap">
+	  <result property="storyBoardNo" column="story_board_no"/>
+	  <result property="storyBoardHit" column="story_board_hit"/>
+	  <result property="storyBoardTitle" column="story_board_title"/>
+	  <result property="storyBoardContent" column="story_board_content"/>
+	  <result property="storyBoardLike" column="story_board_like"/>
+	  <result property="userNo" column="user_no"/>
+	  <result property="commentCount" column="comment_count"/>
+	  <result property="registDate" column="regist_date"/>
+	  <result property="updateDate" column="update_date"/>
+	  <result property="removeDate" column="remove_date"/>
+	  <result property="userName" column="user_name"/>
+	</resultMap>
+
+	<select id="selectStoryBoard" resultMap="StoryBoardResultMap"> <!-- 조인 사용, user name까지 가져옴 -->
+	  SELECT s.*, u.user_name
+	    FROM story_board s 
+	    LEFT JOIN user u 
+	   USING (user_no)
+	   WHERE s.remove_date is null
+	</select>
+	
+	<select id="getStoryBoard" parameterType="int" resultMap="StoryBoardResultMap">
+		SELECT *
+		  FROM story_board
+		 WHERE story_board_no = #{storyBoardNo} 
+		   AND remove_date is null
+	</select> 
+	
+	<update id="deleteStoryBoard" parameterType="int">
+		UPDATE story_board
+		   SET remove_date = now()
+		 WHERE story_board_no = #{storyBoardNo}
+	</update>
+	
+	<insert id="writeStoryBoard" parameterType="StoryBoard">
+		INSERT INTO story_board(story_board_title, story_board_content, user_no, regist_date) 
+		VALUES (#{storyBoardTitle}, #{storyBoardContent}, #{userNo}, now())
+	</insert>
+	
+	<update id="updateStoryBoard" parameterType="StoryBoard">
+		UPDATE story_board
+		   SET update_date = now(),
+		   	   story_board_title = #{storyBoardTitle},
+		       story_board_content = #{storyBoardContent}
+		 WHERE story_board_no = #{storyBoardNo}
+	</update>
+	
+	<update id="hitsRateUp" parameterType="int">
+		UPDATE story_board
+		   SET story_board_hit = story_board_hit + 1
+		 WHERE story_board_no = #{storyBoardNo}
+	</update>
+
+</mapper>
