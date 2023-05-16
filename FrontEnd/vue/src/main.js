@@ -5,6 +5,9 @@ import store from "./store";
 
 Vue.config.productionTip = false;
 
+//전역 변수로 kakao map 객체 선언
+window.map = null;
+
 new Vue({
   router,
   store, // <-- vuex 요소 저장

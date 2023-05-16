@@ -2,14 +2,6 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/step00">step00</router-link> |
-      <router-link to="/step01">step01</router-link> |
-      <router-link to="/step02">step02</router-link> |
-      <router-link to="/step03">step03</router-link> |
-      <router-link to="/step04">step04</router-link> |
-      <router-link to="/step05">step05</router-link> |
-      <router-link to="/step06">step06</router-link> |
-      <router-link to="/step07">step07</router-link> |
       <router-link to="/kakaoMap">카카오맵</router-link> |
       <router-link to="/searchMap">여행지 검색</router-link> |
       <router-link to="/searchResult">여행지 검색 결과</router-link> |
