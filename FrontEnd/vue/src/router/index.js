@@ -9,7 +9,10 @@ import Step04View from "@/views/Step04View.vue";
 import Step05View from "@/views/Step05View.vue";
 import Step06View from "@/views/Step06View.vue";
 import Step07View from "@/views/Step07View.vue";
-import _kakaoMap from "@/views/_kakaoMap.vue";
+import kakaoMap from "@/views/KakaoMap.vue"; //카카오 지도 API
+import SearchMap from "@/views/SearchMap.vue"; //검색하는 창
+import SearchResult from "@/views/SearchResult.vue"; //검색결과 창
+import SRView1 from "@/views/SearchResult/SRView1.vue"; //검색결과 창 자식 1
 
 Vue.use(VueRouter);
 
@@ -62,7 +65,25 @@ const routes = [
   {
     path: "/kakaoMap",
     name: "kakaoMap",
-    component: _kakaoMap,
+    component: kakaoMap,
+  },
+  {
+    path: "/searchMap",
+    name: "SearchMap",
+    component: SearchMap,
+  },
+  {
+    path: "/searchResult",
+    name: "SearchResult",
+    component: SearchResult,
+    children: [
+      //자식 컴포넌트 선언
+      {
+        path: "/srView1",
+        name: "SRView1",
+        component: SRView1,
+      },
+    ],
   },
 ];
 

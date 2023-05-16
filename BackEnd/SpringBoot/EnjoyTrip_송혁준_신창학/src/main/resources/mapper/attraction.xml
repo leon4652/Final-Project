@@ -8,7 +8,22 @@
 	List<AttractionInfo> selectAttractionList(Map<String, Object> param)
 	
 	AttractionInfo getAttraction(int contentId) throws SQLException;
+	
+	List<Sido> selectSidoList() throws SQLException;
+
+	List<Gugun> selectGugun(int sidoCode) throws SQLException;
  -->
+ 
+ 	<select id="selectSidoList" resultType="Sido">
+		SELECT sido_code, sido_name
+		  FROM sido
+ 	</select>
+ 	
+ 	<select id="selectGugun" resultType="Gugun" parameterType="int">
+ 		SELECT gugun_code, gugun_name
+ 		  FROM gugun
+ 		 WHERE sido_code = #{sidoCode}
+ 	</select>
  	
 	<select id="selectAttractionList" parameterType="Map" resultType="AttractionInfo">
 		SELECT i.content_id, 

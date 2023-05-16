@@ -6,6 +6,8 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.enjoy.trip.dto.AttractionInfo;
+import com.enjoy.trip.dto.Gugun;
+import com.enjoy.trip.dto.Sido;
 import com.enjoy.trip.mapper.AttractionMapper;
 
 @Service
@@ -25,6 +27,16 @@ public class AttractionServiceImpl implements AttractionService {
 	@Override
 	public AttractionInfo getAttraction(int contentId) throws Exception {
 		return attractionMapper.getAttraction(contentId);
+	}
+
+	@Override
+	public List<Sido> selectSidoList() throws Exception {
+		return attractionMapper.selectSidoList();
+	}
+
+	@Override
+	public List<Gugun> selectGugun(int sidoCode) throws Exception {
+		return attractionMapper.selectGugun(sidoCode);
 	}
 	
 	

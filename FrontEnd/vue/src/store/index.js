@@ -7,7 +7,27 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     count: 0,
+    lan: 37.52251412,
+    lat: 128.2919115,
+    searchWord: "검색어",
   },
+  mutations: {
+    //위도 경도 변경
+    MOD_LAN_LAT(state, payload) {
+      (state.lan = payload.lan), (state.lat = payload.lat);
+    },
+
+    MOD_SEARCH_WORD(state, payload) {
+      state.searchWord = payload;
+    },
+  },
+  getters: {
+    posMsg(state) {
+      let msg = "[현재 좌표] lan :" + state.lan + " lat :" + state.lat;
+      return msg;
+    },
+  },
+  actions: {},
 });
 
 //step02
@@ -64,18 +84,18 @@ export default new Vuex.Store({
 //   state: {
 //     count: 0,
 //   },
-//   mutations: {
-//     //mutation을 통해 state 상태 변경
-//     ADD_ONE(state) {
-//       state.count += 1;
-//     },
-//     ADD_COUNT(state, payload) {
-//       state.count += payload;
-//     },
-//     ADD_OBJ_COUNT(state, payload) {
-//       state.count += payload.num;
-//     },
+// mutations: {
+//   //mutation을 통해 state 상태 변경
+//   ADD_ONE(state) {
+//     state.count += 1;
 //   },
+//   ADD_COUNT(state, payload) {
+//     state.count += payload;
+//   },
+//   ADD_OBJ_COUNT(state, payload) {
+//     state.count += payload.num;
+//   },
+// },
 //   getters: {
 //     // 복잡한 계산식을 처리 : computed
 //     countMsg(state) {
@@ -160,7 +180,7 @@ export default new Vuex.Store({
 //   },
 // });
 
-//step07
+// step07
 // export default new Vuex.Store({
 //   state: {
 //     count: 0,
