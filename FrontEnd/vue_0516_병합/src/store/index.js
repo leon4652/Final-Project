@@ -1,3 +1,4 @@
+import http from "@/api/http";
 import Vue from "vue";
 import Vuex from "vuex";
 
@@ -10,6 +11,9 @@ export default new Vuex.Store({
     lan: 37.52251412,
     lat: 128.2919115,
     searchWord: "검색어",
+
+    sidos: [{ value: null, text: "선택하세요" }],
+    guguns: [{ value: null, text: "선택하세요" }],
   },
   mutations: {
     //위도 경도 변경
@@ -20,6 +24,16 @@ export default new Vuex.Store({
     MOD_SEARCH_WORD(state, payload) {
       state.searchWord = payload;
     },
+    SET_SIDO_LIST(state, sidos) {
+      sidos.forEach((sido) => {
+        state.sidos.push({ value: sido.sidoCode, text: sido.sidoName });
+      });
+    },
+    SET_GUGUN_LIST(state, guguns) {
+      guguns.forEach((gugun) => {
+        state.guguns.push({ value: gugun.gugunCode, text: gugun.gugunName });
+      });
+    },
   },
   getters: {
     posMsg(state) {
@@ -27,7 +41,30 @@ export default new Vuex.Store({
       return msg;
     },
   },
-  actions: {},
+  actions: {
+    getSido({ commit }) {
+      http
+        .get(`/api/attraction/sido`)
+        .then(({ data }) => {
+          console.log(data);
+          commit("SET_SIDO_LIST", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getGugun({ commit }, sidoCode) {
+      // const params = { sido: sidoCode };
+      http
+        .get(`/api/attraction/gugun/` + sidoCode)
+        .then(({ data }) => {
+          commit("SET_GUGUN_LIST", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
 });
 
 //step02

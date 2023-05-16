@@ -14,6 +14,8 @@ import SearchMap from "@/views/SearchMap.vue"; //검색하는 창
 import SearchResult from "@/views/SearchResult.vue"; //검색결과 창
 import SRView1 from "@/views/SearchResult/SRView1.vue"; //검색결과 창 자식 1
 
+import MypageView from "@/views/MyPageView.vue";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -84,6 +86,11 @@ const routes = [
         component: SRView1,
       },
     ],
+  },
+  {
+    path: "/mypage",
+    name: "myPage",
+    component: MypageView,
   },
 ];
 

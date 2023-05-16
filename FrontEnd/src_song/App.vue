@@ -11,8 +11,7 @@
       <router-link to="/step06">step06</router-link> |
       <router-link to="/step07">step07</router-link> |
       <router-link to="/kakaoMap">카카오맵</router-link> |
-      <router-link to="/searchMap">여행지 검색</router-link> |
-      <router-link to="/searchResult">여행지 검색 결과</router-link> |
+      <router-link to="/mypage">마이페이지</router-link> |
     </div>
     <router-view />
   </div>
