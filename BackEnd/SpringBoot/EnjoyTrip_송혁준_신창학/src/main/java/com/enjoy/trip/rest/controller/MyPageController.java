@@ -11,7 +11,7 @@ import com.enjoy.trip.dto.User;
 import com.enjoy.trip.service.MyPageService;
 
 @RestController
-@RequestMapping("/mypage")
+@RequestMapping("/api/mypage")
 public class MyPageController {
 	private final MyPageService myPageService;
 	

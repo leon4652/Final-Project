@@ -7,6 +7,8 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.enjoy.trip.dto.AttractionInfo;
+import com.enjoy.trip.dto.Gugun;
+import com.enjoy.trip.dto.Sido;
 
 @Mapper
 public interface AttractionMapper {
@@ -14,5 +16,9 @@ public interface AttractionMapper {
 	List<AttractionInfo> selectAttractionList(Map<String, Object> param) throws SQLException;
 
 	AttractionInfo getAttraction(int contentId) throws SQLException;
+
+	List<Sido> selectSidoList() throws SQLException;
+
+	List<Gugun> selectGugun(int sidoCode) throws SQLException;
 
 }

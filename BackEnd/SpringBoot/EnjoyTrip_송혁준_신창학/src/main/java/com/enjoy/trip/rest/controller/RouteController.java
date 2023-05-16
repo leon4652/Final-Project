@@ -14,7 +14,7 @@ import com.enjoy.trip.dto.MyRoute;
 import com.enjoy.trip.service.RouteService;
 
 @RestController
-@RequestMapping("/myroute")
+@RequestMapping("/api/myroute")
 public class RouteController {
 	private final RouteService routeService;
 	

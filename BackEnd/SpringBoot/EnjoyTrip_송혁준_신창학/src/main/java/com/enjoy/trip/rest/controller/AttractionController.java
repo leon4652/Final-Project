@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.enjoy.trip.dto.AttractionInfo;
+import com.enjoy.trip.dto.Gugun;
+import com.enjoy.trip.dto.Sido;
 import com.enjoy.trip.paging.Page;
 import com.enjoy.trip.service.AttractionService;
 
 @RestController
-@RequestMapping("/attraction")
+@RequestMapping("/api/attraction")
 public class AttractionController {
 	private final AttractionService attractionService;
 
@@ -43,4 +45,14 @@ public class AttractionController {
 		return attractionService.getAttraction(contentId);
 	}
 	
+	// 시도 정보 가져오기
+	@GetMapping("sido")
+	public List<Sido> selectSido() throws Exception {
+		return attractionService.selectSidoList();
+	}
+	
+	@GetMapping("gugun/{sidoCode}")
+	public List<Gugun> selectGugun(@PathVariable("sidoCode") int sidoCode) throws Exception {
+		return attractionService.selectGugun(sidoCode);
+	}
 }
