@@ -53,7 +53,7 @@ public class ShareBoardController {
 
 	@PutMapping("/update/{shareBoardNo}")
 	public void modify(@PathVariable int shareBoardNo, @RequestBody ShareBoard param) throws Exception {
-		param.setBoardNo(shareBoardNo);
+		param.setShareBoardNo(shareBoardNo);
 		shareBoardService.updateBoard(param);
 	}
 	
