@@ -22,7 +22,7 @@ export default {
   mounted() {
     // api 스크립트 소스 불러오기 및 지도 출력
     if (window.kakao && window.kakao.maps) {
-      this.loadMap(this.lat, this.lng);
+      this.loadMap();
     } else {
       this.loadScript();
     }
@@ -39,10 +39,10 @@ export default {
     },
 
     // 맵 출력하기
-    loadMap(lat, lng) {
+    loadMap() {
       const container = document.getElementById("map");
       const options = {
-        center: new window.kakao.maps.LatLng(lat, lng),
+        center: new window.kakao.maps.LatLng(this.lat, this.lng),
         level: 3,
       };
       this.map = new window.kakao.maps.Map(container, options);
