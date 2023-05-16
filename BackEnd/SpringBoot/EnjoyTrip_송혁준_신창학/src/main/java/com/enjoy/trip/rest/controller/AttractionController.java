@@ -16,7 +16,7 @@ import com.enjoy.trip.paging.Page;
 import com.enjoy.trip.service.AttractionService;
 
 @RestController
-@RequestMapping("/attraction")
+@RequestMapping("/api/attraction")
 public class AttractionController {
 	private final AttractionService attractionService;
 
