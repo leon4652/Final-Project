@@ -1,3 +1,4 @@
+import http from "@/api/http";
 import Vue from "vue";
 import Vuex from "vuex";
 
@@ -7,27 +8,46 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     count: 0,
-    lan: 37.52251412,
-    lat: 128.2919115,
-    searchWord: "검색어",
+    sidos: [{ value: null, text: "선택하세요" }],
+    guguns: [{ value: null, text: "선택하세요" }],
   },
   mutations: {
-    //위도 경도 변경
-    MOD_LAN_LAT(state, payload) {
-      (state.lan = payload.lan), (state.lat = payload.lat);
+    SET_SIDO_LIST(state, sidos) {
+      sidos.forEach((sido) => {
+        state.sidos.push({ value: sido.sidoCode, text: sido.sidoName });
+      });
     },
+    SET_GUGUN_LIST(state, guguns) {
+      guguns.forEach((gugun) => {
+        state.guguns.push({ value: gugun.gugunCode, text: gugun.gugunName });
+      });
+    },
+  },
+  actions: {
+    getSido({ commit }) {
+      http
+        .get(`/api/attraction/sido`)
+        .then(({ data }) => {
+          console.log(data)
+          commit("SET_SIDO_LIST", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getGugun({ commit }, sidoCode) {
+      // const params = { sido: sidoCode };
+      http
+        .get(`/api/attraction/gugun/` + sidoCode)
+        .then(({ data }) => {
+          commit("SET_GUGUN_LIST", data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
 
-    MOD_SEARCH_WORD(state, payload) {
-      state.searchWord = payload;
-    },
-  },
-  getters: {
-    posMsg(state) {
-      let msg = "[현재 좌표] lan :" + state.lan + " lat :" + state.lat;
-      return msg;
-    },
-  },
-  actions: {},
 });
 
 //step02
@@ -84,18 +104,18 @@ export default new Vuex.Store({
 //   state: {
 //     count: 0,
 //   },
-// mutations: {
-//   //mutation을 통해 state 상태 변경
-//   ADD_ONE(state) {
-//     state.count += 1;
+//   mutations: {
+//     //mutation을 통해 state 상태 변경
+//     ADD_ONE(state) {
+//       state.count += 1;
+//     },
+//     ADD_COUNT(state, payload) {
+//       state.count += payload;
+//     },
+//     ADD_OBJ_COUNT(state, payload) {
+//       state.count += payload.num;
+//     },
 //   },
-//   ADD_COUNT(state, payload) {
-//     state.count += payload;
-//   },
-//   ADD_OBJ_COUNT(state, payload) {
-//     state.count += payload.num;
-//   },
-// },
 //   getters: {
 //     // 복잡한 계산식을 처리 : computed
 //     countMsg(state) {
@@ -180,7 +200,7 @@ export default new Vuex.Store({
 //   },
 // });
 
-// step07
+//step07
 // export default new Vuex.Store({
 //   state: {
 //     count: 0,
