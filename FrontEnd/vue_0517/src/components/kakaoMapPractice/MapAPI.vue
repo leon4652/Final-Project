@@ -43,8 +43,10 @@ export default {
         center: new window.kakao.maps.LatLng(this.lat, this.lng),
         level: 3,
       };
-      this.map = new window.kakao.maps.Map(container, options);
 
+      if (!this.map) {
+        this.map = new window.kakao.maps.Map(container, options);
+      }
       // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
       var mapTypeControl = new window.kakao.maps.MapTypeControl();
       this.map.addControl(
