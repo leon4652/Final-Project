@@ -3,6 +3,8 @@ package com.enjoy.trip.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.ResponseEntity;
+
 import com.enjoy.trip.dto.AttractionInfo;
 import com.enjoy.trip.dto.Gugun;
 import com.enjoy.trip.dto.Sido;
@@ -16,5 +18,9 @@ public interface AttractionService {
 	List<Sido> selectSidoList() throws Exception;
 
 	List<Gugun> selectGugun(int sidoCode) throws Exception;
+
+	ResponseEntity<?> searchSido(String regionName) throws Exception;
+
+	ResponseEntity<?> searchGugun(String regionName) throws Exception;
 
 }

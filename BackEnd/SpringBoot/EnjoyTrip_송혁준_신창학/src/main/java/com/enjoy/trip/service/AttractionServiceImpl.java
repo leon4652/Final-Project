@@ -1,8 +1,10 @@
 package com.enjoy.trip.service;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.enjoy.trip.dto.AttractionInfo;
@@ -37,6 +39,17 @@ public class AttractionServiceImpl implements AttractionService {
 	@Override
 	public List<Gugun> selectGugun(int sidoCode) throws Exception {
 		return attractionMapper.selectGugun(sidoCode);
+	}
+
+	@Override
+	public ResponseEntity<?> searchSido(String regionName) throws Exception {
+		return attractionMapper.searchSido(regionName);
+	}
+
+	@Override
+	public ResponseEntity<?> searchGugun(String regionName) throws Exception {
+		// TODO Auto-generated method stub
+		return attractionMapper.searchGugun(regionName);
 	}
 	
 	
