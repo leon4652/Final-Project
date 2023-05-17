@@ -7,9 +7,6 @@ import SearchResult from "@/views/SearchResult.vue"; //검색결과 창
 import SRView1 from "@/views/SearchResult/SRView1.vue"; //검색결과 창 자식 1
 
 import MypageView from "@/views/MyPageView.vue";
-import MyPageInfo from "@/components/myPage/MyPageInfo.vue";
-import MyPageBoard from "@/components/myPage/MyPageBoard.vue";
-import MyPageComment from "@/components/myPage/MyPageComment.vue";
 
 Vue.use(VueRouter);
 
@@ -49,19 +46,19 @@ const routes = [
     component: MypageView,
     children: [
       {
-        path: "/info",
+        path: "info",
         name: "myPageInfo",
-        component: MyPageInfo,
+        component: () => import(/* webpackChunkName: "myPage" */ "@/components/myPage/MyPageInfo.vue"),
       },
       {
-        path: "/board",
+        path: "board",
         name: "myPageBoard",
-        component: MyPageBoard,
+        component: () => import(/* webpackChunkName: "myPage" */ "@/components/myPage/MyPageBoard.vue"),
       },
       {
-        path: "/comment",
+        path: "comment",
         name: "myPageComment",
-        component: MyPageComment,
+        component: () => import(/* webpackChunkName: "myPage" */ "@/components/myPage/MyPageComment.vue"),
       },
     ]
   },
