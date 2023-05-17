@@ -6,6 +6,7 @@
       <router-link to="/searchMap">여행지 검색</router-link> |
       <router-link to="/searchResult">여행지 검색 결과</router-link> |
       <router-link to="/mypage">마이페이지</router-link> |
+      <router-link to="/login">로그인</router-link> |
     </div>
     <router-view />
   </div>

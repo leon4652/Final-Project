@@ -12,7 +12,8 @@ import SRView4 from "@/views/SearchResult/SRView4.vue"; //검색결과 창 자�
 import SRView5 from "@/views/SearchResult/SRView5.vue"; //검색결과 창 자식 5
 import SRViewERR from "@/views/SearchResult/SRViewERR.vue"; //검색결과 창 - ERR
 
-import MypageView from "@/views/MyPageView.vue";
+import MypageView from "@/views/MyPageView.vue"; // 마이페이지
+import LoginView from "@/views/LoginView.vue"; // 로그인
 
 Vue.use(VueRouter);
 
@@ -102,6 +103,11 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/login",
+    name: "login",
+    component: LoginView
+  }
 ];
 
 const router = new VueRouter({
