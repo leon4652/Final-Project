@@ -57,7 +57,7 @@ public class AttractionController {
 		return attractionService.selectGugun(sidoCode);
 	}
 	
-	@GetMapping("search/{regionName}")
+	@GetMapping("search/{regionName}/{sidoCode}")
 	public ResponseEntity<?> getRegion(@PathVariable("name") String regionName) throws Exception {
 		//시도 검색해서 있으면 해당 값 리턴
 		ResponseEntity<?> nowSearch = attractionService.searchSido(regionName);

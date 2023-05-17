@@ -18,7 +18,7 @@
 	ResponseEntity<?> searchGugun(String regionName) throws SQLException;
  -->
  
- <resultMap type="Sido" id="sidoResult">
+  <resultMap type="Sido" id="sidoResult">
   <result property="sidoCode" column="sido_code"/>
   <result property="sidoName" column="sido_name"/>
   <result property="sidoImg" column="sido_img"/>
@@ -41,6 +41,7 @@
  		 WHERE gugun_name like "%{regionName}%"
  	</select>
  
+
  	<select id="selectSidoList" resultType="Sido">
 		SELECT sido_code, sido_name
 		  FROM sido

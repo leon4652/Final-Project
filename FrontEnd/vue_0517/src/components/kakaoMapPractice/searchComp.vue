@@ -2,13 +2,13 @@
   <div>
     <h1>searchComp, 여행지 검색 페이지</h1>
     <select v-model="mobility">
-      <option value="">교통수단</option>
+      <option value="0" selected>교통수단</option>
       <option value="1">자동차</option>
       <option value="2">자전거</option>
       <option value="3">도보</option>
     </select>
     <select v-model="sidoCode">
-      <option value="">지역</option>
+      <option value="0" selected>지역</option>
       <option value="1">서울</option>
       <option value="2">인천</option>
       <option value="3">대전</option>
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import { mapState } from "vuex";
 import { mapMutations } from "vuex";
 export default {
@@ -52,8 +53,23 @@ export default {
   methods: {
     ...mapMutations("mapStore", ["MOD_SEARCH_WORD"]),
     search() {
-      this.MOD_SEARCH_WORD(this.searchInput);
-      this.$router.push("/srView1"); // 다른 뷰로 이동
+      if (this.sidoCode == 0 || this.mobility == 0) alert("옵션을 선택하세요.");
+      else {
+        this.MOD_SEARCH_WORD(this.searchInput);
+
+        //검색어 및 옵션 기반으로 검색
+        axios
+          .get(`/api/attraction/view/${this.searchWord}/${this.sidoCode}`)
+          .then((response) => {
+            // 응답 데이터 처리
+            console.log(response.data);
+            this.$router.push("/srView1"); // 다른 뷰로 이동
+          })
+          .catch((error) => {
+            // 에러 처리
+            console.error(error);
+          });
+      }
     },
   },
 };
