@@ -51,7 +51,7 @@ export default {
   },
   created() {},
   methods: {
-    ...mapMutations("mapStore", ["MOD_SEARCH_WORD"]),
+    ...mapMutations("mapStore", ["MOD_SEARCH_WORD", "SET_GUGUN"]),
     search() {
       if (this.sidoCode == 0 || this.mobility == 0) alert("옵션을 선택하세요.");
       else {
@@ -59,10 +59,11 @@ export default {
 
         //검색어 및 옵션 기반으로 검색
         axios
-          .get(`/api/attraction/view/${this.searchWord}/${this.sidoCode}`)
+          .get(`http://localhost/api/attraction/search/${this.searchWord}/${this.sidoCode}`)
           .then((response) => {
-            // 응답 데이터 처리
-            console.log(response.data);
+            const data = response.data;
+          const { gugunCode, sidoCode, gugunName } = data;
+          this.SET_GUGUN({ gugunCode, sidoCode, gugunName });
             this.$router.push("/srView1"); // 다른 뷰로 이동
           })
           .catch((error) => {

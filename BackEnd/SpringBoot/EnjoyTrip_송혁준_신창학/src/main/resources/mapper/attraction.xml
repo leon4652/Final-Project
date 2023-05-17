@@ -18,29 +18,21 @@
 	ResponseEntity<?> searchGugun(String regionName) throws SQLException;
  -->
  
-  <resultMap type="Sido" id="sidoResult">
+
+ 
+ <resultMap type="Gugun" id="gugunResult">
+  <result property="gugunCode" column="gugun_code"/>
+  <result property="gugunName" column="gugun_name"/>
   <result property="sidoCode" column="sido_code"/>
-  <result property="sidoName" column="sido_name"/>
-  <result property="sidoImg" column="sido_img"/>
-  </resultMap>
-  
- <resultMap type="Gugun" id="sidoResult">
-  <result property="sidoCode" column="sido_code"/>
-  <result property="sidoName" column="sido_name"/>
-  <result property="sidoImg" column="sido_img"/>
 </resultMap>
 
- 	<select id="searchSido" resultMap="sidoResult">
- 		SELECT *
- 		  FROM sido
- 		 WHERE sido_name like "%{regionName}%"
- 	</select>
- 	<select id="searchGugun" resultMap="GugunResult">
+<select id="searchGugun" resultMap="gugunResult">
  		SELECT *
  		  FROM gugun
- 		 WHERE gugun_name like "%{regionName}%"
+ 		 WHERE gugun_name LIKE CONCAT('%', #{regionName}, '%') AND sido_code = #{sidoCode}
  	</select>
- 
+
+
 
  	<select id="selectSidoList" resultType="Sido">
 		SELECT sido_code, sido_name

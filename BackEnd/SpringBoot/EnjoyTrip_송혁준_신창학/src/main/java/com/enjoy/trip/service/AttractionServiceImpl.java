@@ -42,14 +42,8 @@ public class AttractionServiceImpl implements AttractionService {
 	}
 
 	@Override
-	public ResponseEntity<?> searchSido(String regionName) throws Exception {
-		return attractionMapper.searchSido(regionName);
-	}
-
-	@Override
-	public ResponseEntity<?> searchGugun(String regionName) throws Exception {
-		// TODO Auto-generated method stub
-		return attractionMapper.searchGugun(regionName);
+	public Gugun searchGugun(String regionName, int sidoCode) throws Exception {
+		return attractionMapper.searchGugun(regionName, sidoCode);
 	}
 	
 	

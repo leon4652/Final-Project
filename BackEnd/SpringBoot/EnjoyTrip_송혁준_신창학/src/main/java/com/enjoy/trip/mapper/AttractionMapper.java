@@ -22,8 +22,6 @@ public interface AttractionMapper {
 
 	List<Gugun> selectGugun(int sidoCode) throws SQLException;
 
-	ResponseEntity<?> searchSido(String regionName) throws SQLException;
-
-	ResponseEntity<?> searchGugun(String regionName) throws SQLException;
+	Gugun searchGugun(String regionName, int sidoCode) throws SQLException;
 
 }

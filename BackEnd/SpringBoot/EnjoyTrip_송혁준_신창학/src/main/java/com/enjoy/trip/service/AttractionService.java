@@ -19,8 +19,6 @@ public interface AttractionService {
 
 	List<Gugun> selectGugun(int sidoCode) throws Exception;
 
-	ResponseEntity<?> searchSido(String regionName) throws Exception;
-
-	ResponseEntity<?> searchGugun(String regionName) throws Exception;
+	Gugun searchGugun(String regionName, int sidoCode) throws Exception;
 
 }

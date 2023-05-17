@@ -5,6 +5,9 @@ const mapStore = {
     lan: 37.52251412,
     lat: 128.2919115,
     searchWord: "검색어",
+    gugunCode: 0,
+    gugunName: "",
+    sidoCode: 0,
   },
   mutations: {
     //위도 경도 변경
@@ -15,6 +18,12 @@ const mapStore = {
     MOD_SEARCH_WORD(state, payload) {
       state.searchWord = payload;
     },
+
+    SET_GUGUN(state, payload) {
+      state.gugunCode = payload.gugunCode,
+      state.sidoCode = payload.sidoCode,
+      state.gugunName = payload.gugunName
+    }
   },
   getters: {
     posMsg(state) {
