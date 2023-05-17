@@ -2,10 +2,6 @@
   <div>
     <div id="map" style="width: 600px; height: 600px"></div>
     <button @click="panTo">이동</button>
-    {{ test }}
-
-    <input v-model="lat" type="text" placeholder="위도" />
-    <input v-model="lng" type="text" placeholder="경도" />
   </div>
 </template>
 
@@ -25,6 +21,9 @@ export default {
     } else {
       this.loadScript();
     }
+  },
+  created() {
+    this.panTo();
   },
   methods: {
     // api 불러오기
@@ -56,15 +55,13 @@ export default {
       // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
       var zoomControl = new window.kakao.maps.ZoomControl();
       this.map.addControl(zoomControl, window.kakao.maps.ControlPosition.RIGHT);
-
-      // this.loadMaker();
     },
 
     //위도 경도 부드럽게 이동, 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
     panTo() {
       var moveLatLon = new window.kakao.maps.LatLng(
-        this.$store.state.lan,
-        this.$store.state.lat
+        this.$store.state.mapStore.lan,
+        this.$store.state.mapStore.lat
       );
       this.map.panTo(moveLatLon);
     },

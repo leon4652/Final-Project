@@ -5,7 +5,6 @@
     <input v-model="lan" type="text" placeholder="lan 값 입력" />
     <input v-model="lat" type="text" placeholder="lat 값 입력" />
     <button @click="saveValue">저장</button>
-    <input />
   </div>
 </template>
 
@@ -16,7 +15,7 @@ export default {
   components: {},
   computed: {
     posMsg() {
-      return this.$store.getters.posMsg; //getters를 통해 얻어오기
+      return this.$store.getters["mapStore/posMsg"]; //getters를 통해 얻어오기
     },
   },
 
@@ -28,10 +27,13 @@ export default {
     };
   },
 
-  created() {},
+  created() {
+    console.log(this.lan, this.lat);
+  },
 
   methods: {
-    ...mapMutations(["MOD_LAN_LAT"]),
+    ...mapMutations("mapStore", ["MOD_LAN_LAT"]),
+
     saveValue() {
       this.MOD_LAN_LAT({ lan: this.lan, lat: this.lat });
     },
