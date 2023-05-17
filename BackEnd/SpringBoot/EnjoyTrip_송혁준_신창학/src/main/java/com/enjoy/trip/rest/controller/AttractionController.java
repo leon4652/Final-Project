@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -54,5 +55,17 @@ public class AttractionController {
 	@GetMapping("gugun/{sidoCode}")
 	public List<Gugun> selectGugun(@PathVariable("sidoCode") int sidoCode) throws Exception {
 		return attractionService.selectGugun(sidoCode);
+	}
+	
+	@GetMapping("search/{regionName}/{sidoCode}")
+	public ResponseEntity<?> getRegion(@PathVariable("name") String regionName) throws Exception {
+		//시도 검색해서 있으면 해당 값 리턴
+		ResponseEntity<?> nowSearch = attractionService.searchSido(regionName);
+		if(nowSearch != null) {
+			System.out.println("시도");
+			return nowSearch;
+		}
+		else return attractionService.searchGugun(regionName);
+		//없다면 구군 검색값 리턴
 	}
 }

@@ -22,11 +22,7 @@ const mapStore = {
       return msg;
     },
   },
-  actions: {
-    setMap({ commit }, map) {
-      commit("SET_MAP", map); // map 객체를 저장하는 mutation 호출
-    },
-  },
+  actions: {},
 };
 
 export default mapStore;

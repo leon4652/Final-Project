@@ -12,8 +12,36 @@
 	List<Sido> selectSidoList() throws SQLException;
 
 	List<Gugun> selectGugun(int sidoCode) throws SQLException;
+	
+	ResponseEntity<?> searchSido(String regionName) throws SQLException;
+
+	ResponseEntity<?> searchGugun(String regionName) throws SQLException;
  -->
  
+  <resultMap type="Sido" id="sidoResult">
+  <result property="sidoCode" column="sido_code"/>
+  <result property="sidoName" column="sido_name"/>
+  <result property="sidoImg" column="sido_img"/>
+  </resultMap>
+  
+ <resultMap type="Gugun" id="sidoResult">
+  <result property="sidoCode" column="sido_code"/>
+  <result property="sidoName" column="sido_name"/>
+  <result property="sidoImg" column="sido_img"/>
+</resultMap>
+
+ 	<select id="searchSido" resultMap="sidoResult">
+ 		SELECT *
+ 		  FROM sido
+ 		 WHERE sido_name like "%{regionName}%"
+ 	</select>
+ 	<select id="searchGugun" resultMap="GugunResult">
+ 		SELECT *
+ 		  FROM gugun
+ 		 WHERE gugun_name like "%{regionName}%"
+ 	</select>
+ 
+
  	<select id="selectSidoList" resultType="Sido">
 		SELECT sido_code, sido_name
 		  FROM sido
