@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import com.enjoy.trip.dto.User;
 import com.enjoy.trip.service.JWTService;
 import com.enjoy.trip.service.UserService;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
