@@ -12,10 +12,30 @@
 	List<Sido> selectSidoList() throws SQLException;
 
 	List<Gugun> selectGugun(int sidoCode) throws SQLException;
+	
+	ResponseEntity<?> searchSido(String regionName) throws SQLException;
+
+	ResponseEntity<?> searchGugun(String regionName) throws SQLException;
  -->
  
+
+ 
+ <resultMap type="Gugun" id="gugunResult">
+  <result property="gugunCode" column="gugun_code"/>
+  <result property="gugunName" column="gugun_name"/>
+  <result property="sidoCode" column="sido_code"/>
+</resultMap>
+
+<select id="searchGugun" resultMap="gugunResult">
+ 		SELECT *
+ 		  FROM gugun
+ 		 WHERE gugun_name LIKE CONCAT('%', #{regionName}, '%') AND sido_code = #{sidoCode}
+ 	</select>
+
+
+
  	<select id="selectSidoList" resultType="Sido">
-		SELECT sido_code, sido_name
+		SELECT sido_code, sido_name, sido_img
 		  FROM sido
  	</select>
  	
