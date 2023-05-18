@@ -6,7 +6,7 @@
       src="@/assets/travel.jpg"
       style="max-width: 40%; max-height: 40%"
     />
-    <div>2023.05.17</div>
+    <div>2023.05.18</div>
   </div>
 </template>
 

@@ -1,15 +1,14 @@
 const mapStore = {
   namespaced: true,
   state: {
-    count: 0,
-    lan: 37.52251412,
-    lat: 128.2919115,
     searchWord: "검색어",
     gugunCode: 0,
     gugunName: "",
     sidoCode: 0,
     sidoName: "",
     sidoImg: "",
+
+    gugunList: [], // 구군 리스트를 저장할 배열 추가
   },
   mutations: {
     //위도 경도 변경
@@ -26,10 +25,14 @@ const mapStore = {
         (state.sidoCode = payload.sidoCode),
         (state.gugunName = payload.gugunName);
     },
-    SET_NOW_SIDO(state, payload) {
+    SET_NOW_SIDO(state, payload) { //SELECT에서 선택한 현재 지역별로 정렬
       state.sidoCode = payload.sidoCode;
       state.sidoName = payload.sidoName;
       state.sidoImg = payload.sidoImg;
+    },
+
+    SET_GUGUN_LIST(state, payload) {
+      state.gugunList = payload; // 구군 리스트를 받아 state에 저장
     },
   },
   getters: {
