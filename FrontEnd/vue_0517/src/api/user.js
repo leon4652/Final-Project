@@ -5,7 +5,6 @@ const api = apiInstance();
 async function login(user, success, fail) {
   console.dir(user);
   await api.post(`/user/login`, JSON.stringify(user)).then(success).catch(fail);
-  // await api.post(`/user/login`, user).then(success).catch(fail);
 }
 
 async function findById(userId, success, fail) {
@@ -27,4 +26,7 @@ async function getIfo(userId, success, fail) {
   await api.get(`/user/info/${userId}`).then(success).catch(fail);
 }
 
-export { login, findById, tokenRegeneration, logout, getIfo };
+async function signup(user, success, fail) {
+  await api.post(`/user/signUp`, user).then(success).catch(fail);
+}
+export { login, findById, tokenRegeneration, logout, getIfo, signup };

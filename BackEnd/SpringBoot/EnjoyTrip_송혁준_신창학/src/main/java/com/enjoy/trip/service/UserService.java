@@ -18,7 +18,7 @@ public interface UserService {
 
 	boolean checkDuplicateId(String userId) throws Exception;
 
-	void signUp(User user) throws Exception;
+	boolean signUp(User user) throws Exception;
 
 	User findPwByUser(User user) throws Exception;
 

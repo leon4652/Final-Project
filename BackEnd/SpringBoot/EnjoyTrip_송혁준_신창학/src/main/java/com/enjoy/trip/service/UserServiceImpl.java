@@ -1,5 +1,6 @@
 package com.enjoy.trip.service;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,8 +56,15 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void signUp(User user) throws Exception {
-		userMapper.insertUser(user);
+	public boolean signUp(User user) {
+		boolean check = true;
+		try {
+			userMapper.insertUser(user);
+		} catch (SQLException e) {
+			check = false;
+		}
+		System.out.println(check);
+		return check;
 	}
 
 	@Override

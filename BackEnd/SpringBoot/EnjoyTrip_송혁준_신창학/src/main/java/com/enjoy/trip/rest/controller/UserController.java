@@ -126,8 +126,15 @@ public class UserController {
 	
 	//회원가입
 	@PostMapping("signUp")
-	public void signUp(@RequestBody User user) throws Exception {
-		userService.signUp(user);
+	public ResponseEntity<?> signUp(@RequestBody User user) throws Exception {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		System.out.println(user.getUserId());
+		System.out.println(user.getUserPw());
+		System.out.println(user.getUserName());
+		if (userService.signUp(user)) resultMap.put("message", SUCCESS);
+		else resultMap.put("message", FAIL);
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	
 	//비밀번호찾기
