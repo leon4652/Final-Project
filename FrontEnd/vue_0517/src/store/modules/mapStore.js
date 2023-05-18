@@ -9,6 +9,7 @@ const mapStore = {
     gugunName: "",
     sidoCode: 0,
     sidoName: "",
+    sidoImg: "",
   },
   mutations: {
     //위도 경도 변경
@@ -25,9 +26,10 @@ const mapStore = {
         (state.sidoCode = payload.sidoCode),
         (state.gugunName = payload.gugunName);
     },
-    SET_SIDO(state, payload) {
+    SET_NOW_SIDO(state, payload) {
       state.sidoCode = payload.sidoCode;
       state.sidoName = payload.sidoName;
+      state.sidoImg = payload.sidoImg;
     },
   },
   getters: {

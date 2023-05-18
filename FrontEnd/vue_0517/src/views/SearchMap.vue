@@ -1,20 +1,51 @@
 <template>
-  <div>
-    <search-comp></search-comp>
-    <search-temp-and-map></search-temp-and-map>
+  <div class="container">
+    <div class="top">
+      <search-board></search-board>
+    </div>
+    <div class="bottom">
+      <div class="left">
+        <kakao-map></kakao-map>
+      </div>
+      <div class="right">
+        <sido-info></sido-info>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import SearchComp from "@/components/search/searchComp.vue";
-import SearchTempAndMap from "@/components/search/searchTempAndMap.vue";
-//핫게시글, 추천 경로 등 추가할 필요 있음.
-//comp1 추가 : 날씨
-
-//comp2 추가
+import SearchBoard from "@/components/search/searchBoard.vue";
+import kakaoMap from "@/components/maps/kakaoMap.vue";
+import sidoInfo from "@/components/search/sidoInfo.vue";
 
 export default {
-  components: { SearchComp, SearchTempAndMap },
+  components: { SearchBoard, kakaoMap, sidoInfo },
 };
 </script>
-<style></style>
+
+<style>
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* 전체 화면 높이 기준 */
+}
+
+.top {
+  flex: 1; /* 상위 절반 공간을 차지 */
+  margin-bottom: 1px;
+}
+
+.bottom {
+  flex: 1; /* 하위 절반 공간을 차지 */
+  display: flex;
+}
+
+.left {
+  flex: 1; /* 좌측 공간을 차지 */
+}
+
+.right {
+  flex: 1; /* 우측 공간을 차지 */
+}
+</style>

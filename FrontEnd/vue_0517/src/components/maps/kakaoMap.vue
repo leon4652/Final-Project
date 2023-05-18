@@ -6,6 +6,7 @@
 
 <script>
 import { mapState } from "vuex";
+import axios from "axios";
 export default {
   name: "kakaoMap",
   components: {},
@@ -21,7 +22,6 @@ export default {
       lan: 127.298259,
       maplevel: 3,
       geocoder: null,
-      flag: false,
     };
   },
 
@@ -38,6 +38,17 @@ export default {
           this.loadMap(); //지도 다시 실행
         }
       });
+
+      //바뀐 sidoCode를 토대로 axios를 통해 해당 시도의 구군리스트를 담아 vuex에 배열 형태로 저장
+      axios
+        .get(`http://localhost/api/attraction/gugun/${this.sidoCode}`)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          // 요청이 실패하면 에러를 처리합니다.
+          console.error(error);
+        });
     },
   },
   created() {},
@@ -134,6 +145,6 @@ export default {
 <style scoped>
 #map {
   width: 100%;
-  height: 600px;
+  height: 500px;
 }
 </style>
