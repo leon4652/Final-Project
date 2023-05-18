@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import MapPractice from "@/components/kakaoMapPractice/MapAPI.vue";
-import testView from "@/components/kakaoMapPractice/inputTest.vue";
+import MapPractice from "@/components/maps/MapAPI.vue";
+import testView from "@/components/maps/inputTest.vue";
 export default {
   components: { MapPractice, testView },
 };

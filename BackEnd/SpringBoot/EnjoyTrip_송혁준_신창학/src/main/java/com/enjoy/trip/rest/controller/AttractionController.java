@@ -52,6 +52,10 @@ public class AttractionController {
 		return attractionService.selectSidoList();
 	}
 	
+	// 시도 코드로 시도 정보 가져오기
+//	@GetMapping("sidoCode")
+//	public 
+	
 	@GetMapping("gugun/{sidoCode}")
 	public List<Gugun> selectGugun(@PathVariable("sidoCode") int sidoCode) throws Exception {
 		return attractionService.selectGugun(sidoCode);
@@ -59,7 +63,6 @@ public class AttractionController {
 	
 	@GetMapping("search/{regionName}/{sidoCode}")
 	public Gugun getRegion(@PathVariable("regionName") String regionName, @PathVariable("sidoCode") int sidoCode) throws Exception {
-		System.out.println(regionName + " " + sidoCode);
 		return attractionService.searchGugun(regionName, sidoCode);
 	}
 }

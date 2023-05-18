@@ -17,7 +17,7 @@
 
 <script>
 import { mapState } from "vuex";
-import resultComp from "@/components/kakaoMapPractice/resultComp.vue"; //컴포넌트
+import resultComp from "@/components/search/resultComp.vue"; //컴포넌트
 export default {
   name: "SearchResult",
   components: { resultComp },

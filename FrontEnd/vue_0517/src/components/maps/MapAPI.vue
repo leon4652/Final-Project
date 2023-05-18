@@ -28,10 +28,11 @@ export default {
   methods: {
     // api 불러오기
     loadScript() {
-      const key = "19e886f21a48e41e0c5e607ebfe3ed26"; //JS API KEY
       const script = document.createElement("script");
       script.src =
-        "//dapi.kakao.com/v2/maps/sdk.js?appkey=" + key + "&autoload=false";
+        "//dapi.kakao.com/v2/maps/sdk.js?appkey=" +
+        process.env.VUE_APP_KAKAO_MAP_API_KEY +
+        "&autoload=false";
       script.onload = () => window.kakao.maps.load(this.loadMap);
       document.head.appendChild(script);
     },
