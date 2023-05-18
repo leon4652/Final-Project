@@ -7,6 +7,9 @@ Vue.use(Vuex);
 import mapStore from './modules/mapStore';
 import myPage from './modules/myPage';
 import login from './modules/login'
+import userStore from './modules/userStore'
+
+import itemStore from './item/itemStore';
 
 //step01;
 export default new Vuex.Store({
@@ -14,5 +17,7 @@ export default new Vuex.Store({
     mapStore,
     myPage,
     login,
+    userStore,
+    itemStore,
   },
 });

@@ -1,4 +1,4 @@
-import http from '@/api/http';
+import { apiInstance } from '@/api/http';
 
 const myPage = {
   state: {
@@ -20,7 +20,7 @@ const myPage = {
   getters: {},
   actions: {
     getSido({ commit }) {
-      http
+      apiInstance
         .get(`/api/attraction/sido`)
         .then(({ data }) => {
           console.log(data);
@@ -32,7 +32,7 @@ const myPage = {
     },
     getGugun({ commit }, sidoCode) {
       // const params = { sido: sidoCode };
-      http
+      apiInstance
         .get(`/api/attraction/gugun/` + sidoCode)
         .then(({ data }) => {
           commit('SET_GUGUN_LIST', data);
