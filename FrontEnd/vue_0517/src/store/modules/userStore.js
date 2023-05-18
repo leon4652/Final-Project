@@ -1,6 +1,6 @@
 import jwtDecode from 'jwt-decode';
 import router from '@/router';
-import { login, findById, tokenRegeneration, logout } from '@/api/user.js';
+import { login, findById, tokenRegeneration, logout, signup } from '@/api/user.js';
 
 const userStore = {
   namespaced: true,
@@ -9,6 +9,7 @@ const userStore = {
     isLoginError: false,
     userInfo: null,
     isValidToken: false,
+    isSignUp: false,
   },
   getters: {
     checkUserInfo: function (state) {
@@ -32,6 +33,9 @@ const userStore = {
       state.isLogin = true;
       state.userInfo = userInfo;
     },
+    SET_IS_SIGNUP: (state, isSignUp) => {
+      state.isSignUp = isSignUp;
+    }
   },
   actions: {
     async userConfirm({ commit }, user) {
@@ -139,6 +143,20 @@ const userStore = {
         }
       );
     },
+    async userSignup({commit}, user) {
+      await signup (
+        user,
+        ({data}) => {
+          if (data.message === 'success') {
+            commit('SET_IS_SIGNUP', true);
+          }
+        },
+        (error) => {
+          console.log(error);
+          alert("회원가입에 실패");
+          throw new Error("실패띠")
+        })
+    }
   },
 };
 

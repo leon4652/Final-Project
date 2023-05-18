@@ -72,6 +72,8 @@
 </template>
 
 <script>
+// import userStore from '@/store/modules/userStore';
+import { mapActions } from 'vuex';
 import SelectGugun from '../item/SelectGugun.vue';
 import SelectSido from '../item/SelectSido.vue';
 
@@ -81,9 +83,9 @@ export default {
   data() {
     return {
       user: {
-        userId: '',
-        userPw: '',
-        userName: '',
+        userId: null,
+        userPw: null,
+        userName: null,
         email: '',
         sido: 0,
         gugun: 0,
@@ -97,9 +99,14 @@ export default {
   },
   created() {},
   methods: {
-    confirm() {
-        console.dir(this.user);
-      console.log('회원 가입');
+    ...mapActions('userStore', ['userSignup']),
+    async confirm() {
+      // store에 있는 state에 있는 isSignUp에 따라 동작하도록 변경해야함
+      await this.userSignup(this.user)
+        .then(() => {
+          this.$router.push({ name: 'login' });
+        })
+        .catch(console.log('실패'));
     },
     customDateFormatter(value) {
       value = this.selectedDate;
