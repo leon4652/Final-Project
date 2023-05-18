@@ -37,7 +37,7 @@ import axios from "axios";
 import { mapState } from "vuex";
 import { mapMutations } from "vuex";
 export default {
-  name: "SearchComp",
+  name: "SearchBoard",
   components: {},
   computed: {
     ...mapState("mapStore", ["searchWord"]),
@@ -54,7 +54,11 @@ export default {
     this.fetchSidoOptions(); // 컴포넌트가 생성되면 서버에서 지역 옵션들을 가져온다.
   },
   methods: {
-    ...mapMutations("mapStore", ["MOD_SEARCH_WORD", "SET_GUGUN", "SET_SIDO"]),
+    ...mapMutations("mapStore", [
+      "MOD_SEARCH_WORD",
+      "SET_GUGUN",
+      "SET_NOW_SIDO",
+    ]),
     search() {
       //검색 결과 푸쉬
       if (this.sidoCode == 0) alert("세부지역을 검색해보세요.");
@@ -83,18 +87,24 @@ export default {
       axios
         .get("http://localhost/api/attraction/sido")
         .then((response) => {
-          this.sidoOptions = response.data;
+          this.sidoOptions = response.data.map((sido) => ({
+            sidoCode: sido.sidoCode,
+            sidoName: sido.sidoName,
+            sidoImg: sido.sidoImg,
+          }));
         })
         .catch((error) => {
           console.error(error);
         });
     },
     handleSidoCodeChange() {
-      // sidoName 값을 가져와서 SET_SIDO 뮤테이션에 함께 전달
-      const sidoName =
-        this.sidoOptions.find((sido) => sido.sidoCode === this.sidoCode)
-          ?.sidoName || "";
-      this.SET_SIDO({ sidoCode: this.sidoCode, sidoName });
+      // sidoName, sidoImg 값을 가져와서 SET_NOW_SIDO 뮤테이션에 함께 전달
+      const sido = this.sidoOptions.find(
+        (sido) => sido.sidoCode === this.sidoCode
+      );
+      const sidoName = sido ? sido.sidoName : "";
+      const sidoImg = sido ? sido.sidoImg : "";
+      this.SET_NOW_SIDO({ sidoCode: this.sidoCode, sidoName, sidoImg });
     },
   },
 };

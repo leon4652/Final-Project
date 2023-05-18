@@ -52,9 +52,6 @@ public class AttractionController {
 		return attractionService.selectSidoList();
 	}
 	
-	// 시도 코드로 시도 정보 가져오기
-//	@GetMapping("sidoCode")
-//	public 
 	
 	@GetMapping("gugun/{sidoCode}")
 	public List<Gugun> selectGugun(@PathVariable("sidoCode") int sidoCode) throws Exception {
