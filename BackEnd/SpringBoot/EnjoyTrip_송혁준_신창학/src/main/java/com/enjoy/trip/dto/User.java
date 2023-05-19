@@ -107,4 +107,13 @@ public class User {
 	public void setIsAdmin(int isAdmin) {
 		this.isAdmin = isAdmin;
 	}
+	@Override
+	public String toString() {
+		return "User [userNo=" + userNo + ", userId=" + userId + ", userPw=" + userPw + ", userName=" + userName
+				+ ", email0=" + email0 + ", email1=" + email1 + ", sido=" + sido + ", gugun=" + gugun + ", birthYear="
+				+ birthYear + ", birthMonth=" + birthMonth + ", birthDate=" + birthDate + ", registDate=" + registDate
+				+ ", updateDate=" + updateDate + ", removeDate=" + removeDate + ", isAdmin=" + isAdmin + "]";
+	}
+	
+	
 }

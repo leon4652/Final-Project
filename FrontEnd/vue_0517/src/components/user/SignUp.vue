@@ -39,7 +39,7 @@
               <b-form-input
                 id="email"
                 type="email"
-                v-model="user.email"
+                v-model="user.email0"
                 required
                 placeholder="이메일 입력...."
               ></b-form-input>
@@ -56,7 +56,6 @@
               <b-form-datepicker
                 id="birth"
                 v-model="selectedDate"
-                :value-as-date="true"
                 :formatter="customDateFormatter()"
               ></b-form-datepicker>
             </b-form-group>
@@ -90,8 +89,8 @@ export default {
         sido: 0,
         gugun: 0,
         birthYear: 0,
-        birthMonth: '',
-        birthDate: '',
+        birthMonth: 0,
+        birthDate: 0,
       },
       selectedDate: null,
       sidoCode: 0,
@@ -113,8 +112,8 @@ export default {
       const date = new Date(value);
 
       const year = date.getFullYear(); // 숫자로 된 연도
-      const month = date.toLocaleString('default', { month: 'long' }); // 문자열로 된 월
-      const day = date.toLocaleString('default', { day: 'numeric' }); // 문자열로 된 일
+      const month = date.getMonth() + 1; // 숫자로 된 월
+      const day = date.getDate(); // 숫자로 된 일
 
       this.user.birthYear = year;
       this.user.birthMonth = month;

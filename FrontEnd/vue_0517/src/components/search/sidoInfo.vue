@@ -1,9 +1,13 @@
 <template>
   <div>
-    <img :src="sidoImg" alt="지역" class="fixed-size-image"/>
+    <img :src="sidoImg" alt="지역" class="fixed-size-image" />
     <b></b>
     <ul>
-      <li v-for="gugun in gugunList" :key="gugun.gugunCode" @click="gugunClick(gugun)">
+      <li
+        v-for="gugun in gugunList"
+        :key="gugun.gugunCode"
+        @click="gugunClick(gugun)"
+      >
         지역 : {{ gugun.gugunName }}
       </li>
     </ul>
@@ -11,7 +15,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapMutations, mapState } from "vuex";
 export default {
   name: "sidoInfo",
   components: {},
@@ -21,15 +25,18 @@ export default {
     };
   },
   computed: {
-    ...mapState("mapStore", ["sidoImg", "gugunList"]),
+    ...mapState("mapStore", ["sidoImg", "gugunList", "sidoCode"]),
   },
   created() {},
   methods: {
-    gugunClick(gugun) {
-      // 클릭 이벤트 처리
-      console.log("Clicked:", gugun.gugunName);
-      // 여기서 추가로 필요한 로직을 작성하세요
-      alert(gugun.gugunName + " 을 클릭하셨군요!")
+    ...mapMutations("mapStore", ["SET_GUGUN"]),
+    async gugunClick(gugun) {
+      await this.SET_GUGUN({
+        gugunCode: gugun.gugunCode,
+        sidoCode: this.sidoCode,
+        gugunName: gugun.gugunName,
+      });
+      this.$router.push("/rsMain"); // 다른 뷰로 이동
     },
   },
 };

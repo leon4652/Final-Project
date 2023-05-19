@@ -42,9 +42,8 @@ public class UserController {
 		try {
 			User loginUser = userService.getUser(user);
 			if (loginUser != null) {
-				String accessToken = jwtService.createAccessToken("userId", loginUser.getUserId());// key, data
-				String refreshToken = jwtService.createRefreshToken("userId", loginUser.getUserId());// key, data
-				userService.updateRefreshToken(user.getUserId(), refreshToken);
+				String accessToken = jwtService.createAccessToken("userId", loginUser.getUserId(), loginUser.getUserNo());// key, data
+				String refreshToken = jwtService.createRefreshToken("userId", loginUser.getUserId(), loginUser.getUserNo());// key, data
 				resultMap.put("access-token", accessToken);
 				resultMap.put("refresh-token", refreshToken);
 				resultMap.put("message", SUCCESS);
@@ -100,18 +99,18 @@ public class UserController {
 	}
 
 	@PostMapping("/refresh")
-	public ResponseEntity<?> refreshToken(@RequestBody User user, HttpServletRequest request)
+	public ResponseEntity<?> refreshToken(HttpServletRequest request)
 			throws Exception {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
 		String token = request.getHeader("refresh-token");
+		Map<String, Object> map = jwtService.get(token);
 		if (jwtService.checkToken(token)) {
-			if (token.equals(userService.getRefreshToken(user.getUserId()))) {
-				String accessToken = jwtService.createAccessToken("userId", user.getUserId());
-				resultMap.put("access-token", accessToken);
-				resultMap.put("message", SUCCESS);
-				status = HttpStatus.ACCEPTED;
-			}
+			String accessToken = jwtService.createAccessToken("userId", (String) map.get("userId"), Integer.parseInt((String) map.get("userNo")));
+			resultMap.put("access-token", accessToken);
+			resultMap.put("message", SUCCESS);
+			status = HttpStatus.ACCEPTED;
+
 		} else {
 			status = HttpStatus.UNAUTHORIZED;
 		}

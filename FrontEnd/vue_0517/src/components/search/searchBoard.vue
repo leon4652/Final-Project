@@ -23,12 +23,6 @@
       type="text"
       placeholder="지역을 검색하세요."
     /><button @click="search">검색</button>
-
-    <!-- 여기서부터 아래 화면 정보 출력 -->
-    <h1>
-      {{ sidoCode }}
-    </h1>
-    <!--시도 변경시 변경 정보 출력 -->
   </div>
 </template>
 
@@ -74,7 +68,7 @@ export default {
             const data = response.data;
             const { gugunCode, sidoCode, gugunName } = data;
             this.SET_GUGUN({ gugunCode, sidoCode, gugunName });
-            this.$router.push("/srView1"); // 다른 뷰로 이동
+            this.$router.push("/rsMain"); // 다른 뷰로 이동
           })
           .catch((error) => {
             // 에러 처리

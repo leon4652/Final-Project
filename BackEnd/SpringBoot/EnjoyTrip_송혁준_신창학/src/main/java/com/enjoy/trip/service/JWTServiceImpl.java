@@ -2,8 +2,15 @@ package com.enjoy.trip.service;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import com.enjoy.trip.dto.User;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -12,6 +19,10 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @Service
 public class JWTServiceImpl implements JWTService {
+	private UserService userService;
+	public JWTServiceImpl(UserService userService) {
+		this.userService = userService;
+	}
 
 	private static final String SALT = "enjoyTrip";
 
@@ -19,16 +30,16 @@ public class JWTServiceImpl implements JWTService {
 	private static final int REFRESH_TOKEN_EXPIRE_MINUTES = 2; // 주단위
 
 	@Override
-	public String createAccessToken(String key, String userId) {
-		return create(key, userId, "access-token", 1000 * 60 * ACCESS_TOKEN_EXPIRE_MINUTES);
+	public String createAccessToken(String key, String userId, int userNo) {
+		return create(key, userId, userNo, "access-token", 1000 * 60 * ACCESS_TOKEN_EXPIRE_MINUTES);
 	}
 
 	@Override
-	public String createRefreshToken(String key, String userId) {
-		return create(key, userId, "refresh-token", 1000 * 60 * 60 * 24 * 7 * REFRESH_TOKEN_EXPIRE_MINUTES);
+	public String createRefreshToken(String key, String userId, int userNo) {
+		return create(key, userId, userNo, "refresh-token", 1000 * 60 * 60 * 24 * 7 * REFRESH_TOKEN_EXPIRE_MINUTES);
 	}
 
-	private String create(String key, String userId, String subject, long expire) {
+	private String create(String key, String userId, int userNo, String subject, long expire) {
 		Claims claims = Jwts.claims()
 				// 토큰 제목 설정 ex) access-token, refresh-token
 				.setSubject(subject)
@@ -39,6 +50,7 @@ public class JWTServiceImpl implements JWTService {
 
 		// 저장할 data의 key, value
 		claims.put(key, userId);
+		claims.put("userNo", userNo);
 
 		String jwt = Jwts.builder()
 				// Header 설정 : 토큰의 타입, 해쉬 알고리즘 정보 세팅.
@@ -73,5 +85,44 @@ public class JWTServiceImpl implements JWTService {
 			return false;
 		}
 	}
+	
+	@Override
+	public Map<String, Object> get(String key) {
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
+				.getRequest();
+		String jwt = request.getHeader("access-token");
+		Jws<Claims> claims = null;
+		try {
+			claims = Jwts.parser().setSigningKey(SALT.getBytes("UTF-8")).parseClaimsJws(jwt);
+		} catch (Exception e) {
+//			if (logger.isInfoEnabled()) {
+//				e.printStackTrace();
+//			} else {
+//			}
+//			throw new UnAuthorizedException();
+//			개발환경
+//			Map<String,Object> testMap = new HashMap<>();
+//			testMap.put("userid", userid);
+//			return testMap;
+		}
+		Map<String, Object> value = claims.getBody();
+		/**
+		 * userId : useId
+		 * userNo : userNo
+		 */
+		return value;
+	}
 
+	@Override
+	public String getUserId() {
+		return (String) this.get("user").get("userid");
+	}
+	
+	@Override
+	public User getUserInfo(HttpServletRequest request) throws Exception {
+		String accessToken = request.getHeader("access-token");
+		Map<String, Object> map = get(accessToken);
+		String userId = (String) map.get("userId");
+		return userService.getUserById(userId);
+	}
 }

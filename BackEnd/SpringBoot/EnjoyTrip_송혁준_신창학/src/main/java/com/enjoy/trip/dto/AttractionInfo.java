@@ -14,10 +14,18 @@ public class AttractionInfo {
 	private int sidoCode;
 	private int gugunCode;
 	private double latitude;
-	private double longtitude;
+	private double longitude;
 	private String mlevel;
 	private String description;
 	
+	private String overview;
+	
+	public String getOverview() {
+		return overview;
+	}
+	public void setOverview(String overview) {
+		this.overview = overview;
+	}
 	public String getDescription() {
 		return description;
 	}
@@ -102,11 +110,11 @@ public class AttractionInfo {
 	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
-	public double getLongtitude() {
-		return longtitude;
+	public double getlongitude() {
+		return longitude;
 	}
-	public void setLongtitude(double longtitude) {
-		this.longtitude = longtitude;
+	public void setlongitude(double longitude) {
+		this.longitude = longitude;
 	}
 	public String getMlevel() {
 		return mlevel;

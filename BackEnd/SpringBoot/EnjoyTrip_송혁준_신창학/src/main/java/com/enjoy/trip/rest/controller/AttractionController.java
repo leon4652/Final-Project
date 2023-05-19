@@ -26,40 +26,49 @@ public class AttractionController {
 	public AttractionController(AttractionService attractionService) {
 		this.attractionService = attractionService;
 	}
-	
+
 	// 관광지 정보 보기
 	@GetMapping("list")
-	public List<AttractionInfo> selectAttractionList(@RequestParam("sido") int sidoCode, @RequestParam("pageNo") int pageNo) throws Exception {
+	public List<AttractionInfo> selectAttractionList(@RequestParam("sido") int sidoCode,
+			@RequestParam("pageNo") int pageNo) throws Exception {
 		Page page = new Page();
 		page.setPageNo(pageNo);
-		
+
 		Map<String, Object> param = new HashMap<>();
 		param.put("sido", sidoCode);
 		param.put("page", page);
-		
+
 		return attractionService.selectAttractionList(param);
 	}
-	
+
 	// 관광지 상세 정보 보기
 	@GetMapping("view/{contentId}")
 	public AttractionInfo selectView(@PathVariable("contentId") int contentId) throws Exception {
 		return attractionService.getAttraction(contentId);
 	}
-	
+
 	// 시도 정보 가져오기
 	@GetMapping("sido")
 	public List<Sido> selectSido() throws Exception {
 		return attractionService.selectSidoList();
 	}
-	
-	
+
 	@GetMapping("gugun/{sidoCode}")
 	public List<Gugun> selectGugun(@PathVariable("sidoCode") int sidoCode) throws Exception {
 		return attractionService.selectGugun(sidoCode);
 	}
-	
+
+	// 시도코드 / 지역이름으로 탐색
 	@GetMapping("search/{regionName}/{sidoCode}")
-	public Gugun getRegion(@PathVariable("regionName") String regionName, @PathVariable("sidoCode") int sidoCode) throws Exception {
+	public Gugun getRegion(@PathVariable("regionName") String regionName, @PathVariable("sidoCode") int sidoCode)
+			throws Exception {
 		return attractionService.searchGugun(regionName, sidoCode);
+	}
+
+	// 관광지 상세 정보 보기
+	@GetMapping("view/{contentTypeId}/{sidoCode}/{gugunCode}")
+	public List<AttractionInfo> getAttractionInfo(@PathVariable("contentTypeId") int contentId,
+			@PathVariable("sidoCode") int sidoCode, @PathVariable("gugunCode") int gugunCode) throws Exception {
+		return attractionService.searchAtt(contentId, sidoCode, gugunCode);
 	}
 }

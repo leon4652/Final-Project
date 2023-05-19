@@ -4,12 +4,17 @@ import HomeView from "@/views/HomeView.vue";
 
 import SearchMap from "@/views/SearchMap.vue"; //검색하는 창
 import SearchResult from "@/views/SearchResult.vue"; //검색결과 창
-import SRView1 from "@/views/SearchResult/SRView1.vue"; //검색결과 창 자식 1
-import SRView2 from "@/views/SearchResult/SRView2.vue"; //검색결과 창 자식 2
-import SRView3 from "@/views/SearchResult/SRView3.vue"; //검색결과 창 자식 3
-import SRView4 from "@/views/SearchResult/SRView4.vue"; //검색결과 창 자식 4
-import SRView5 from "@/views/SearchResult/SRView5.vue"; //검색결과 창 자식 5
-import SRViewERR from "@/views/SearchResult/SRViewERR.vue"; //검색결과 창 - ERR
+import rsMain from "@/views/SearchResult/01_main.vue";
+import rsTravel from "@/views/SearchResult/02_travel.vue";
+import rsCulture from "@/views/SearchResult/03_culture.vue";
+import rsFestival from "@/views/SearchResult/04_festival.vue";
+import rsPlan from "@/views/SearchResult/05_plan.vue";
+import rsLeisure from "@/views/SearchResult/06_leisure.vue";
+import rsAmenity from "@/views/SearchResult/07_amenity.vue";
+import rsShopping from "@/views/SearchResult/08_shopping.vue";
+import rsRestaurant from "@/views/SearchResult/09_restaurant.vue";
+import rsReview from "@/views/SearchResult/10_review.vue";
+import SRViewERR from "@/views/SearchResult/SRViewERR";
 
 import MypageView from "@/views/MyPageView.vue"; // 마이페이지
 import UserView from "@/views/UserView.vue"; // 로그인
@@ -34,29 +39,54 @@ const routes = [
     children: [
       //자식 컴포넌트 선언
       {
-        path: "/srView1",
-        name: "SRView1",
-        component: SRView1,
+        path: "/rsMain",
+        name: "rsMain",
+        component: rsMain,
       },
       {
-        path: "/srView2",
-        name: "SRView2",
-        component: SRView2,
+        path: "/rsTravel",
+        name: "rsTravel",
+        component: rsTravel,
       },
       {
-        path: "/srView3",
-        name: "SRView3",
-        component: SRView3,
+        path: "/rsCulture",
+        name: "rsCulture",
+        component: rsCulture,
       },
       {
-        path: "/srView4",
-        name: "SRView4",
-        component: SRView4,
+        path: "/rsFestival",
+        name: "rsFestival",
+        component: rsFestival,
       },
       {
-        path: "/srView5",
-        name: "SRView5",
-        component: SRView5,
+        path: "/rsPlan",
+        name: "rsPlan",
+        component: rsPlan,
+      },
+      {
+        path: "/rsLeisure",
+        name: "rsLeisure",
+        component: rsLeisure,
+      },
+      {
+        path: "/rsAmenity",
+        name: "rsAmenity",
+        component: rsAmenity,
+      },
+      {
+        path: "/rsShopping",
+        name: "rsShopping",
+        component: rsShopping,
+      },
+      {
+        path: "/rsRestaurant",
+        name: "rsRestaurant",
+        component: rsRestaurant,
+      },
+      {
+        path: "/rsReview",
+        name: "rsReview",
+        component: rsReview,
       },
       {
         path: "/srViewERR",

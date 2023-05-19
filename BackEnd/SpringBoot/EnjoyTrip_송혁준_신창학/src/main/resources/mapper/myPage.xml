@@ -17,7 +17,16 @@
 	
 	<update id="updateUser" parameterType="User">
 		UPDATE user 
-		   SET user_id = #{userId}, user_pw = #{userPw}
+		   SET user_id = #{userId}, 
+		       user_pw = #{userPw}, 
+		       user_name = #{userName},
+		       email0 = #{email0},
+		       sido = #{sido},
+		       gugun = #{gugun},
+		       birth_year = #{birthYear},
+		       birth_month = #{birthMonth},
+		       birth_date = #{birthDate},
+		       update_date = now()
 		 WHERE user_no = #{userNo}
 	</update>
 </mapper>

@@ -35,6 +35,15 @@ const userStore = {
     },
     SET_IS_SIGNUP: (state, isSignUp) => {
       state.isSignUp = isSignUp;
+    },
+    SET_LOGOUT: (state) => {
+      state.isLogin = false;
+      state.isLoginError =  false;
+      state.userInfo = null;
+      state.isValidToken = false;
+      state.isSignUp = false;
+      sessionStorage.removeItem("access-token")
+      sessionStorage.removeItem("refresh-token")
     }
   },
   actions: {
