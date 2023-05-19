@@ -10,7 +10,7 @@
 <script>
 import KakaoMap from "@/components/maps/kakaoMap.vue";
 export default {
-  name: "leisure",
+  name: "rsLeisure",
   components: { KakaoMap },
   data() {
     return {
