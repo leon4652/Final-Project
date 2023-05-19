@@ -1,18 +1,20 @@
 const mapStore = {
   namespaced: true,
   state: {
-    searchWord: "검색어",
+    lat: 36.354935,
+    lan: 127.298259,
     gugunCode: 0,
     gugunName: "",
     sidoCode: 0,
     sidoName: "",
-    sidoImg: "",
+    sidoImg:
+      "https://www.urbanbrush.net/web/wp-content/uploads/edd/2022/12/urbanbrush-20221223093720209565.jpg",
 
     gugunList: [], // 구군 리스트를 저장할 배열 추가
   },
   mutations: {
     //위도 경도 변경
-    MOD_LAN_LAT(state, payload) {
+    SET_LAN_LAT(state, payload) {
       (state.lan = payload.lan), (state.lat = payload.lat);
     },
 
@@ -25,7 +27,8 @@ const mapStore = {
         (state.sidoCode = payload.sidoCode),
         (state.gugunName = payload.gugunName);
     },
-    SET_NOW_SIDO(state, payload) { //SELECT에서 선택한 현재 지역별로 정렬
+    SET_NOW_SIDO(state, payload) {
+      //SELECT에서 선택한 현재 지역별로 정렬
       state.sidoCode = payload.sidoCode;
       state.sidoName = payload.sidoName;
       state.sidoImg = payload.sidoImg;

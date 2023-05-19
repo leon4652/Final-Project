@@ -1,12 +1,17 @@
 <template>
   <div>
-    <h1>SearchResult, 검색 결과 : {{ searchWord }}</h1>
+    <h1>SearchResult, 검색 결과 : {{ gugunName }}</h1>
     <div id="nav">
-      <router-link to="/srView1">자식 1</router-link> |
-      <router-link to="/srView2">자식 2</router-link> |
-      <router-link to="/srView3">자식 3</router-link> |
-      <router-link to="/srView4">자식 4</router-link> |
-      <router-link to="/srView5">자식 5</router-link> |
+      <router-link to="/main">메인화면</router-link> |
+      <router-link to="/travel">관광지</router-link> |
+      <router-link to="/culture">문화시설</router-link> |
+      <router-link to="/festival">축제공연행사</router-link> |
+      <router-link to="/plan">여행코스</router-link> |
+      <router-link to="/leisure">레포츠</router-link> |
+      <router-link to="/amenity">숙박</router-link> |
+      <router-link to="/shopping">쇼핑</router-link> |
+      <router-link to="/restaurant">음식점</router-link> |
+      <router-link to="/review">지역 후기</router-link> |
     </div>
     <router-view />
     <!-- 라우터 뷰 -->
@@ -22,7 +27,7 @@ export default {
   name: "SearchResult",
   components: { resultComp },
   computed: {
-    ...mapState("mapStore", ["searchWord"]),
+    ...mapState("mapStore", ["searchWord", "gugunName"]),
   },
   data() {
     return {};
