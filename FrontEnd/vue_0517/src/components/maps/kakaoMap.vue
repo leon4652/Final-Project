@@ -186,7 +186,7 @@ export default {
           //클릭이벤트 : markerName으로 저장. gugunUseName 처리 이후 라우터뷰 푸쉬
           kakao.maps.event.addListener(marker, "click", async () => {
             await this.getGugunUseName(markerName[index]); //정보 저장
-            this.$router.push("/srView1"); // 다른 뷰로 이동
+            this.$router.push("/rsMain"); // 다른 뷰로 이동
           });
         });
       } catch (error) {

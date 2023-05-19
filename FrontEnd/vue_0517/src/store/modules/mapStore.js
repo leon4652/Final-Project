@@ -11,6 +11,7 @@ const mapStore = {
       "https://www.urbanbrush.net/web/wp-content/uploads/edd/2022/12/urbanbrush-20221223093720209565.jpg",
 
     gugunList: [], // 구군 리스트를 저장할 배열 추가
+    attInfoList: [], //어트랙션 정보들을 저장할 배열
   },
   mutations: {
     //위도 경도 변경
@@ -36,6 +37,10 @@ const mapStore = {
 
     SET_GUGUN_LIST(state, payload) {
       state.gugunList = payload; // 구군 리스트를 받아 state에 저장
+    },
+
+    SET_ATTINFO_LIST(state, payload) {
+      state.attInfoList = payload;
     },
   },
   getters: {

@@ -24,4 +24,6 @@ public interface AttractionMapper {
 
 	Gugun searchGugun(String regionName, int sidoCode) throws SQLException;
 
+	List<AttractionInfo> searchAtt(int contentTypeId, int sidoCode, int gugunCode);
+
 }

@@ -4,115 +4,133 @@
 
 <mapper namespace="com.enjoy.trip.mapper.AttractionMapper">
 
-<!-- 
-	List<AttractionInfo> selectAttractionList(Map<String, Object> param)
-	
-	AttractionInfo getAttraction(int contentId) throws SQLException;
-	
-	List<Sido> selectSidoList() throws SQLException;
-
-	List<Gugun> selectGugun(int sidoCode) throws SQLException;
-	
-	ResponseEntity<?> searchSido(String regionName) throws SQLException;
-
-	ResponseEntity<?> searchGugun(String regionName) throws SQLException;
- -->
- 
-
- 
- <resultMap type="Gugun" id="gugunResult">
-  <result property="gugunCode" column="gugun_code"/>
-  <result property="gugunName" column="gugun_name"/>
-  <result property="sidoCode" column="sido_code"/>
-</resultMap>
-
-<select id="searchGugun" resultMap="gugunResult">
- 		SELECT *
- 		  FROM gugun
- 		 WHERE gugun_name LIKE CONCAT('%', #{regionName}, '%') AND sido_code = #{sidoCode}
- 	</select>
+	<!-- List<AttractionInfo> selectAttractionList(Map<String, Object> param) 
+		AttractionInfo getAttraction(int contentId) throws SQLException; List<Sido> 
+		selectSidoList() throws SQLException; List<Gugun> selectGugun(int sidoCode) 
+		throws SQLException; ResponseEntity<?> searchSido(String regionName) throws 
+		SQLException; ResponseEntity<?> searchGugun(String regionName) throws SQLException; -->
 
 
 
- 	<select id="selectSidoList" resultType="Sido">
-		SELECT sido_code, sido_name, sido_img
-		  FROM sido
- 	</select>
- 	
- 	<select id="selectGugun" resultType="Gugun" parameterType="int">
- 		SELECT gugun_code, gugun_name
- 		  FROM gugun
- 		 WHERE sido_code = #{sidoCode}
- 	</select>
- 	
-	<select id="selectAttractionList" parameterType="Map" resultType="AttractionInfo">
-		SELECT i.content_id, 
-			   des.homepage, 
-			   des.overview,
-			   des.telname, 
-			   d.cat1, 
-			   d.cat2, 
-			   d.cat3, 
-			   d.created_time, 
-			   d.modified_time,
-			   d.booktour, 
-			   i.content_type_id, 
-			   i.title, 
-			   i.addr1, 
-			   i.addr2, 
-			   i.zipcode,
-			   i.tel, 
-			   i.first_image, 
-			   i.first_image2, 
-			   i.readcount, 
-			   i.sido_code,
-			   i.gugun_code, 
-			   i.latitude, 
-			   i.longitude, 
-			   i.mlevel
-		  FROM attraction_info i,
-			   attraction_detail d, 
-			   attraction_description des
-		 WHERE i.content_id = d.content_id 
-		   AND i.content_id = des.content_id
-		   AND i.sido_code = #{sido}
-		 LIMIT #{page.begin}, #{page.listSize}
-	</select>
-	
-	<resultMap type="AttractionInfo" id="AttractionInfoMap">
-		<result column="overview" property="description"/>
+	<resultMap type="Gugun" id="gugunResult">
+		<result property="gugunCode" column="gugun_code" />
+		<result property="gugunName" column="gugun_name" />
+		<result property="sidoCode" column="sido_code" />
 	</resultMap>
-	
-	<select id="getAttraction" parameterType="int" resultMap="AttractionInfoMap">
-		SELECT i.content_id, 
-			   des.homepage, 
-			   des.overview,
-			   des.telname, 
-			   d.cat1, 
-			   d.cat2, 
-			   d.cat3, 
-			   d.created_time, 
-			   d.modified_time,
-			   d.booktour, 
-			   i.content_type_id, 
-			   i.title, 
-			   i.addr1, 
-			   i.addr2, 
-			   i.zipcode,
-			   i.tel, 
-			   i.first_image, 
-			   i.first_image2, 
-			   i.readcount, 
-			   i.sido_code,
-			   i.gugun_code, 
-			   i.latitude, 
-			   i.longitude, 
-			   i.mlevel
-		  FROM attraction_info i
-		  JOIN attraction_detail d
-		 USING (content_id) 
-		  JOIN attraction_description des
-		 USING (content_id)
-		 WHERE i.content_id = #{contentId}
+
+	<select id="searchGugun" resultMap="gugunResult">
+		SELECT *
+		FROM gugun
+		WHERE gugun_name LIKE CONCAT('%', #{regionName}, '%') AND sido_code =
+		#{sidoCode}
 	</select>
+
+
+
+	<select id="selectSidoList" resultType="Sido">
+		SELECT sido_code,
+		sido_name, sido_img
+		FROM sido
+	</select>
+
+	<select id="selectGugun" resultType="Gugun" parameterType="int">
+		SELECT gugun_code, gugun_name
+		FROM gugun
+		WHERE sido_code = #{sidoCode}
+	</select>
+
+	<select id="selectAttractionList" parameterType="Map"
+		resultType="AttractionInfo">
+		SELECT i.content_id,
+		des.homepage,
+		des.overview,
+		des.telname,
+		d.cat1,
+		d.cat2,
+		d.cat3,
+		d.created_time,
+		d.modified_time,
+		d.booktour,
+		i.content_type_id,
+		i.title,
+		i.addr1,
+		i.addr2,
+		i.zipcode,
+		i.tel,
+		i.first_image,
+		i.first_image2,
+		i.readcount,
+		i.sido_code,
+		i.gugun_code,
+		i.latitude,
+		i.longitude,
+		i.mlevel
+		FROM attraction_info i,
+		attraction_detail d,
+		attraction_description des
+		WHERE i.content_id = d.content_id
+		AND i.content_id = des.content_id
+		AND i.sido_code = #{sido}
+		LIMIT #{page.begin}, #{page.listSize}
+	</select>
+
+	<resultMap type="AttractionInfo" id="AttractionInfoMap">
+		<result column="overview" property="description" />
+	</resultMap>
+
+	<select id="getAttraction" parameterType="int"
+		resultMap="AttractionInfoMap">
+		SELECT i.content_id,
+		des.homepage,
+		des.overview,
+		des.telname,
+		d.cat1,
+		d.cat2,
+		d.cat3,
+		d.created_time,
+		d.modified_time,
+		d.booktour,
+		i.content_type_id,
+		i.title,
+		i.addr1,
+		i.addr2,
+		i.zipcode,
+		i.tel,
+		i.first_image,
+		i.first_image2,
+		i.readcount,
+		i.sido_code,
+		i.gugun_code,
+		i.latitude,
+		i.longitude,
+		i.mlevel
+		FROM attraction_info i
+		JOIN attraction_detail d
+		USING (content_id)
+		JOIN attraction_description des
+		USING (content_id)
+		WHERE i.content_id = #{contentId}
+	</select>
+
+	<resultMap type="AttractionInfo" id="AttResultMap">
+		<result property="sidoCode" column="sido_code" />
+		<result property="gugunCode" column="gugun_code" />
+		<result property="title" column="title" />
+		<result property="addr1" column="addr1" />
+		<result property="firstImage" column="first_image" />
+		<result property="firstImage2" column="first_image2" />
+		<result property="latitude" column="latitude" />
+		<result property="longitude" column="longitude" />
+		<result property="overview" column="overview" />
+	</resultMap>
+
+
+	<select id="searchAtt" parameterType="Int" resultMap="AttResultMap">
+		SELECT ai.sido_code, ai.gugun_code, ai.title, ai.addr1, ai.first_image,
+			   ai.first_image2, ai.latitude, ai.longitude, ad.overview
+		  FROM attraction_info ai JOIN attraction_description ad
+		    ON ai.content_id = ad.content_id
+		 WHERE content_type_id = #{contentTypeId} and gugun_code = #{gugunCode} and sido_code = #{sidoCode};
+	</select>
+
 </mapper>
