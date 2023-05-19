@@ -5,12 +5,47 @@
       <router-link to="/kakaoMap">카카오맵</router-link> |
       <router-link to="/searchMap">여행지 검색</router-link> |
       <router-link to="/searchResult">여행지 검색 결과</router-link> |
-      <router-link to="/mypage">마이페이지</router-link> |
-      <router-link to="/user/login">로그인</router-link> |
+
+
+      <!-- 로그인 전-->
+      <template v-if="!isLogin">
+        <router-link to="/user/login">로그인</router-link> |
+      </template>
+      <!-- 로그인 후 -->
+      <template v-if="isLogin">
+        <router-link to="/mypage">마이페이지</router-link> |
+        <span @click="logout">로그아웃</span>
+      </template>
     </div>
     <router-view />
   </div>
 </template>
+
+<script>
+import { mapMutations, mapState } from 'vuex';
+
+
+export default {
+  name: 'app',
+  components: { },
+  data() {
+    return {
+      
+    };
+  },
+  computed: {
+    ...mapState("userStore", ["isLogin"])
+  },
+  created() {},
+  methods: {
+    ...mapMutations("userStore", ["SET_LOGOUT"]),
+    logout() {
+      this.SET_LOGOUT()
+    }
+  },
+};
+</script>
+
 
 <style>
 #app {

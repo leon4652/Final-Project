@@ -1,10 +1,12 @@
 <template>
   <div>
     <h2>User Profile</h2>
-    <div v-if="!editMode">
-      <span>Name: {{ user.name }}</span>
+    <!-- <div v-if="!editMode">
+      <span>ID: {{ user.userId }}</span>
       <br />
-      <span>Email: {{ user.email }}</span>
+      <span>Name: {{ user.userName }}</span>
+      <br />
+      <span>Email: {{ user.email0 }}</span>
       <br />
       <span>Sido: {{ user.sido }} | </span>
       <span>Gugun: {{ user.gugun }}</span>
@@ -14,8 +16,68 @@
       <span>Birth Date: {{ user.birthDate }}</span>
       <br />
       <button @click="editMode = true">Edit</button>
-    </div>
+    </div> -->
 
+        <b-container class="bv-example-row mt-3" v-if="!editMode" @submit.prevent="save">
+      <b-row>
+        <b-col>
+          <b-alert variant="secondary" show><h3>회원 정보</h3></b-alert>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col></b-col>
+        <b-col cols="8">
+          <b-card class="text-center mt-3" style="max-width: 40rem" align="left">
+            <b-form class="text-left">
+              <b-form-group label="아이디:" label-for="userId">
+                <b-form-input
+                  id="userId"
+                  :value="user.userId"
+                  :required="true"
+                  readonly
+                ></b-form-input>
+              </b-form-group>
+              <b-form-group label="이름:" label-for="userName">
+                <b-form-input
+                  id="userName"
+                  :value="users.userName"
+                  required
+                ></b-form-input>
+              </b-form-group>
+              <b-form-group label="이메일:" label-for="email">
+                <b-form-input
+                  id="email"
+                  type="email"
+                  :value="users.email0"
+                  required
+                  placeholder="이메일 입력...."
+                ></b-form-input>
+              </b-form-group>
+              <b-form-group label="시/도:">
+                <select-sido @select-sido="selectSido"></select-sido>
+              </b-form-group>
+
+              <b-form-group label="구/군:">
+                <select-gugun :sidoCode="sidoCode" @select-gugun="selectGugun"></select-gugun>
+              </b-form-group>
+
+              <b-form-group label="생년월일:" label-for="birth">
+                <b-form-datepicker
+                  id="birth"
+                  :value="selectedDate"
+                  :value-as-date="true"
+                  :formatter="customDateFormatter()"
+                ></b-form-datepicker>
+              </b-form-group>
+              <b-button type="button" variant="success" class="m-1" @click="editMode = true"
+                >수정하기</b-button
+              >
+            </b-form>
+          </b-card>
+        </b-col>
+        <b-col></b-col>
+      </b-row>
+    </b-container>
     <!-- <form v-else @submit.prevent="save">
       <label for="name">Name:</label>
       <input type="text" id="name" v-model="user.name" readonly />
@@ -52,119 +114,125 @@
       <button type="button" @click="editMode = false">Cancel</button>
     </form> -->
 
+    <b-container class="bv-example-row mt-3" v-else @submit.prevent="save">
+      <b-row>
+        <b-col>
+          <b-alert variant="secondary" show><h3>정보 수정</h3></b-alert>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col></b-col>
+        <b-col cols="8">
+          <b-card class="text-center mt-3" style="max-width: 40rem" align="left">
+            <b-form class="text-left">
+              <b-form-group label="아이디:" label-for="userId">
+                <b-form-input
+                  id="userId"
+                  v-model="user.userId"
+                  :required="true"
+                  @input="resetValidation()"
+                  placeholder="아이디 입력...."
+                ></b-form-input>
+              </b-form-group>
+              <div v-if="showErrorMessage" class="invalid-feedback">입력값이 필요합니다.</div>
+              <b-form-group label="비밀번호:" label-for="userPw">
+                <b-form-input
+                  type="password"
+                  id="userPw"
+                  v-model="users.userPw"
+                  required
+                  placeholder="비밀번호 입력...."
+                ></b-form-input>
+              </b-form-group>
+              <b-form-group label="이름:" label-for="userName">
+                <b-form-input
+                  id="userName"
+                  v-model="users.userName"
+                  required
+                  placeholder="이름 입력...."
+                ></b-form-input>
+              </b-form-group>
+              <b-form-group label="이메일:" label-for="email">
+                <b-form-input
+                  id="email"
+                  type="email"
+                  v-model="users.email0"
+                  required
+                  placeholder="이메일 입력...."
+                ></b-form-input>
+              </b-form-group>
+              <b-form-group label="시/도:">
+                <select-sido @select-sido="selectSido"></select-sido>
+              </b-form-group>
 
+              <b-form-group label="구/군:">
+                <select-gugun :sidoCode="sidoCode" @select-gugun="selectGugun"></select-gugun>
+              </b-form-group>
 
-      <b-container class="bv-example-row mt-3" v-else @submit.prevent="save">
-    <b-row>
-      <b-col>
-        <b-alert variant="secondary" show><h3>정보 수정</h3></b-alert>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col></b-col>
-      <b-col cols="8">
-        <b-card class="text-center mt-3" style="max-width: 40rem" align="left">
-          <b-form class="text-left">
-            <b-form-group label="아이디:" label-for="userId">
-              <b-form-input
-                id="userId"
-                v-model="user.userId"
-                :required="true"
-                @input="resetValidation()"
-                placeholder="아이디 입력...."
-              ></b-form-input>
-            </b-form-group>
-                <div v-if="showErrorMessage" class="invalid-feedback">
-      입력값이 필요합니다.
-    </div>
-            <b-form-group label="비밀번호:" label-for="userPw">
-              <b-form-input
-                type="password"
-                id="userPw"
-                v-model="user.userPw"
-                required
-                placeholder="비밀번호 입력...."
-              ></b-form-input>
-            </b-form-group>
-            <b-form-group label="이름:" label-for="userName">
-              <b-form-input
-                id="userName"
-                v-model="user.userName"
-                required
-                placeholder="이름 입력...."
-              ></b-form-input>
-            </b-form-group>
-            <b-form-group label="이메일:" label-for="email">
-              <b-form-input
-                id="email"
-                type="email"
-                v-model="user.email"
-                required
-                placeholder="이메일 입력...."
-              ></b-form-input>
-            </b-form-group>
-            <b-form-group label="시/도:">
-              <select-sido @select-sido="selectSido"></select-sido>
-            </b-form-group>
-
-            <b-form-group label="구/군:">
-              <select-gugun :sidoCode="sidoCode" @select-gugun="selectGugun"></select-gugun>
-            </b-form-group>
-
-            <b-form-group label="생년월일:" label-for="birth">
-              <b-form-datepicker
-                id="birth"
-                v-model="selectedDate"
-                :value-as-date="true"
-                :formatter="customDateFormatter()"
-              ></b-form-datepicker>
-            </b-form-group>
-            <b-button type="button" variant="success" class="m-1" @click="confirm"
-              >수정하기</b-button
-            >
-          </b-form>
-        </b-card>
-      </b-col>
-      <b-col></b-col>
-    </b-row>
-  </b-container>
+              <b-form-group label="생년월일:" label-for="birth">
+                <b-form-datepicker
+                  id="birth"
+                  v-model="selectedDate"
+                  :value-as-date="true"
+                  :formatter="customDateFormatter()"
+                ></b-form-datepicker>
+              </b-form-group>
+              <b-button type="button" variant="success" class="m-1" @click="confirm"
+                >수정하기</b-button
+              >
+              <b-button type="button" variant="warning" class="m-1" @click="editMode = false"
+                >취소하기</b-button
+              >
+            </b-form>
+          </b-card>
+        </b-col>
+        <b-col></b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import SelectGugun from '../item/SelectGugun.vue';
 import SelectSido from '../item/SelectSido.vue';
 
+const myPageStore = 'myPageStore';
+
 export default {
-  components: {SelectGugun, SelectSido},
+  components: { SelectGugun, SelectSido },
   data() {
     return {
-      user: {
-        name: 'John Doe',
-        email: 'johndoe@example.com',
-        sido: '대전',
-        gugun: '서구',
-        birthYear: '1997',
-        birthMonth: '8',
-        birthDate: '1',
+      users: {
+        userId: null,
+        userPw: null,
+        userName: null,
+        email0: '',
+        sido: 0,
+        gugun: 0,
+        birthYear: 0,
+        birthMonth: '',
+        birthDate: '',
       },
       selectedDate: null,
       editMode: false,
       sidoCode: null,
       gugunCode: null,
       showErrorMessage: false,
+      userNo: 0,
     };
   },
   computed: {
     // ...mapState(['sidos', 'guguns']),
+    ...mapState(myPageStore, ['user', 'isUpdate']),
   },
-  created() {
-    // this.getSido();
+  async created() {
     // 마이페이지 접근 시 로그인된 회원의 정보를 가져와야함
+    await this.getUser();
+    this.users = this.user;
   },
   methods: {
-        resetValidation() {
+    resetValidation() {
       this.showErrorMessage = false;
     },
     save() {
@@ -172,22 +240,20 @@ export default {
       this.editMode = false;
     },
 
-    // ...mapActions(['getSido', 'getGugun']),
-    // gugunList() {
-    //   this.gugunCode = null;
-    //   if (this.sidoCode) this.getGugun(this.sidoCode);
-    // },
-    ...mapActions('userStore', ['userSignup']),
+    ...mapActions(myPageStore, ['getUser', 'updateUser']),
     async confirm() {
-      if (this.inputValue === "") {
+      console.dir(this.users);
+      if (this.inputValue === '') {
         this.showErrorMessage = true;
       } else {
         this.editMode = false;
       }
       // store에 있는 state에 있는 isSignUp에 따라 동작하도록 변경해야함
-      await this.userSignup(this.user)
+      await this.updateUser(this.users)
         .then(() => {
-          this.$router.push({ name: 'login' });
+          // isUpdate가 0이 아니면 state에 있는 user를 화면에 보여주고
+          // 다시 mypage로 이동
+          if (this.isUpdate !== 0) this.$router.push({ name: 'myPage' });
         })
         .catch(console.log('실패'));
     },
