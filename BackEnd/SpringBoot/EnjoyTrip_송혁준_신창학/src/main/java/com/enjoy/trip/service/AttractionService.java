@@ -21,4 +21,6 @@ public interface AttractionService {
 
 	Gugun searchGugun(String regionName, int sidoCode) throws Exception;
 
+	List<AttractionInfo> searchAtt(int contentTypeId, int sidoCode, int gugunCode);
+
 }

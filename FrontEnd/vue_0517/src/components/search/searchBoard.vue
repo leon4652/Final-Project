@@ -68,7 +68,7 @@ export default {
             const data = response.data;
             const { gugunCode, sidoCode, gugunName } = data;
             this.SET_GUGUN({ gugunCode, sidoCode, gugunName });
-            this.$router.push("/srView1"); // 다른 뷰로 이동
+            this.$router.push("/rsMain"); // 다른 뷰로 이동
           })
           .catch((error) => {
             // 에러 처리

@@ -45,6 +45,11 @@ public class AttractionServiceImpl implements AttractionService {
 	public Gugun searchGugun(String regionName, int sidoCode) throws Exception {
 		return attractionMapper.searchGugun(regionName, sidoCode);
 	}
+
+	@Override
+	public List<AttractionInfo> searchAtt(int contentTypeId, int sidoCode, int gugunCode) {
+		return attractionMapper.searchAtt(contentTypeId, sidoCode, gugunCode);
+	}
 	
 	
 

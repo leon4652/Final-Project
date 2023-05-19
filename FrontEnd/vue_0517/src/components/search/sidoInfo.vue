@@ -36,7 +36,7 @@ export default {
         sidoCode: this.sidoCode,
         gugunName: gugun.gugunName,
       });
-      this.$router.push("/srView1"); // 다른 뷰로 이동
+      this.$router.push("/rsMain"); // 다른 뷰로 이동
     },
   },
 };
