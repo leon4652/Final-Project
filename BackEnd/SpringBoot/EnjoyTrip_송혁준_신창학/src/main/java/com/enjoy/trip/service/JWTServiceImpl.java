@@ -122,7 +122,6 @@ public class JWTServiceImpl implements JWTService {
 	public User getUserInfo(HttpServletRequest request) throws Exception {
 		String accessToken = request.getHeader("access-token");
 		Map<String, Object> map = get(accessToken);
-//		int userNo = Integer.parseInt((String) map.get("userNo"));
 		String userId = (String) map.get("userId");
 		return userService.getUserById(userId);
 	}

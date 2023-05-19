@@ -41,6 +41,7 @@ export default {
     ...mapMutations("userStore", ["SET_LOGOUT"]),
     logout() {
       this.SET_LOGOUT()
+      this.$router.push({ name: 'Home' });
     }
   },
 };

@@ -1,24 +1,15 @@
 <template>
+<!-- 
+  해야할 일
+  1. 정보를 받아올 때 시도 코드가 아니라 지역 이름이 나오도록
+  
+  2. 생년월일을 받아올 때 YYYY-MM-DD 형식으로 받아오기
+
+  3. 생년월일을 수정하면 YYYY-MM-DD 형식으로 저장
+ -->
   <div>
     <h2>User Profile</h2>
-    <!-- <div v-if="!editMode">
-      <span>ID: {{ user.userId }}</span>
-      <br />
-      <span>Name: {{ user.userName }}</span>
-      <br />
-      <span>Email: {{ user.email0 }}</span>
-      <br />
-      <span>Sido: {{ user.sido }} | </span>
-      <span>Gugun: {{ user.gugun }}</span>
-      <br />
-      <span>Birth Year: {{ user.birthYear }} | </span>
-      <span>Birth Month: {{ user.birthMonth }} | </span>
-      <span>Birth Date: {{ user.birthDate }}</span>
-      <br />
-      <button @click="editMode = true">Edit</button>
-    </div> -->
-
-        <b-container class="bv-example-row mt-3" v-if="!editMode" @submit.prevent="save">
+    <b-container class="bv-example-row mt-3" v-if="!editMode" @submit.prevent="save">
       <b-row>
         <b-col>
           <b-alert variant="secondary" show><h3>회원 정보</h3></b-alert>
@@ -30,44 +21,31 @@
           <b-card class="text-center mt-3" style="max-width: 40rem" align="left">
             <b-form class="text-left">
               <b-form-group label="아이디:" label-for="userId">
-                <b-form-input
-                  id="userId"
-                  :value="user.userId"
-                  :required="true"
-                  readonly
-                ></b-form-input>
+                <b-form-input id="userId" :value="user.userId" readonly></b-form-input>
               </b-form-group>
               <b-form-group label="이름:" label-for="userName">
-                <b-form-input
-                  id="userName"
-                  :value="users.userName"
-                  required
-                ></b-form-input>
+                <b-form-input id="userName" :value="users.userName" readonly></b-form-input>
               </b-form-group>
               <b-form-group label="이메일:" label-for="email">
-                <b-form-input
-                  id="email"
-                  type="email"
-                  :value="users.email0"
-                  required
-                  placeholder="이메일 입력...."
-                ></b-form-input>
+                <b-form-input id="email" type="email" :value="users.email0" readonly></b-form-input>
               </b-form-group>
-              <b-form-group label="시/도:">
-                <select-sido @select-sido="selectSido"></select-sido>
+              <b-form-group label="시/도:" label-for="sido">
+                <b-form-input id="sido" :value="users.sido" readonly></b-form-input>
               </b-form-group>
 
               <b-form-group label="구/군:">
-                <select-gugun :sidoCode="sidoCode" @select-gugun="selectGugun"></select-gugun>
+                <b-form-input id="gugun" :value="users.gugun" readonly></b-form-input>
               </b-form-group>
 
               <b-form-group label="생년월일:" label-for="birth">
-                <b-form-datepicker
+                <b-form-input id="birth" :value="selectedDate" readonly></b-form-input>
+                <!-- <b-form-datepicker
                   id="birth"
-                  :value="selectedDate"
+                  :value="user.birthYear"
                   :value-as-date="true"
                   :formatter="customDateFormatter()"
-                ></b-form-datepicker>
+                  readonly
+                ></b-form-datepicker> -->
               </b-form-group>
               <b-button type="button" variant="success" class="m-1" @click="editMode = true"
                 >수정하기</b-button
@@ -78,41 +56,6 @@
         <b-col></b-col>
       </b-row>
     </b-container>
-    <!-- <form v-else @submit.prevent="save">
-      <label for="name">Name:</label>
-      <input type="text" id="name" v-model="user.name" readonly />
-      <br />
-      <label for="email">Password:</label>
-      <input type="password" id="password" v-model="user.password" />
-      <br />
-      <label for="email">Email:</label>
-      <input type="email" id="email" v-model="user.email" />
-      <br />
-
-      <label for="sido">Sido:</label>
-      <input type="text" id="sido" v-model="user.sido" />
-      <br />
-      <div>sido</div>
-      <select v-model="sidoCode" :options="sidos" @change="gugunList"></select>
-      <div>gugun</div>
-      <select v-model="gugunCode" :options="guguns"></select>
-      <br />
-
-      <label for="gugun">Gugun:</label>
-      <input type="text" id="gugun" v-model="user.gugun" />
-      <br />
-      <label for="birthYear">Birth Year:</label>
-      <input type="number" id="birthYear" v-model="user.birthYear" />
-      <br />
-      <label for="birthMonth">Birth Month:</label>
-      <input type="number" id="birthMonth" v-model="user.birthMonth" />
-      <br />
-      <label for="birthDate">Birth Date:</label>
-      <input type="number" id="birthDate" v-model="user.birthDate" />
-      <br />
-      <button type="submit">Save</button>
-      <button type="button" @click="editMode = false">Cancel</button>
-    </form> -->
 
     <b-container class="bv-example-row mt-3" v-else @submit.prevent="save">
       <b-row>
@@ -132,6 +75,7 @@
                   :required="true"
                   @input="resetValidation()"
                   placeholder="아이디 입력...."
+                  readonly
                 ></b-form-input>
               </b-form-group>
               <div v-if="showErrorMessage" class="invalid-feedback">입력값이 필요합니다.</div>
@@ -173,7 +117,6 @@
                 <b-form-datepicker
                   id="birth"
                   v-model="selectedDate"
-                  :value-as-date="true"
                   :formatter="customDateFormatter()"
                 ></b-form-datepicker>
               </b-form-group>
@@ -223,26 +166,30 @@ export default {
     };
   },
   computed: {
-    // ...mapState(['sidos', 'guguns']),
     ...mapState(myPageStore, ['user', 'isUpdate']),
   },
   async created() {
     // 마이페이지 접근 시 로그인된 회원의 정보를 가져와야함
     await this.getUser();
     this.users = this.user;
+
+    // selectedDate를 YYYY-MM-DD 형식으로 변경
+    const year = String(this.user.birthYear);
+    const month = String(this.user.birthMonth).padStart(2, '0');
+    const day = String(this.user.birthDate).padStart(2, '0');
+    this.selectedDate = `${year}-${month}-${day}`
   },
   methods: {
     resetValidation() {
       this.showErrorMessage = false;
     },
+    // 사용자 정보 변경 모드로 전환
     save() {
-      // TODO: 사용자 정보 저장 로직 구현
       this.editMode = false;
     },
 
     ...mapActions(myPageStore, ['getUser', 'updateUser']),
     async confirm() {
-      console.dir(this.users);
       if (this.inputValue === '') {
         this.showErrorMessage = true;
       } else {
@@ -262,8 +209,8 @@ export default {
       const date = new Date(value);
 
       const year = date.getFullYear(); // 숫자로 된 연도
-      const month = date.toLocaleString('default', { month: 'long' }); // 문자열로 된 월
-      const day = date.toLocaleString('default', { day: 'numeric' }); // 문자열로 된 일
+      const month = date.getMonth() + 1; // 숫자로 된 월
+      const day = date.getDate(); // 숫자로 된 일
 
       this.user.birthYear = year;
       this.user.birthMonth = month;
