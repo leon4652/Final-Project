@@ -12,15 +12,21 @@ export default {
   name: "kakaoMap",
   components: {},
   computed: {
-    ...mapState("mapStore", ["sidoCode", "sidoName", "gugunList"]),
+    ...mapState("mapStore", [
+      "sidoCode",
+      "sidoName",
+      "gugunList",
+      "gugunCode",
+      "gugunName",
+      "lan",
+      "lat",
+    ]),
   },
   data() {
     return {
       map: null,
       positions: [],
       markers: [],
-      lat: 36.354935,
-      lan: 127.298259,
       maplevel: 3,
       geocoder: null,
     };
@@ -28,14 +34,13 @@ export default {
 
   watch: {
     sidoCode() {
-      this.maplevel = 10; //맵사이즈 변경
+      this.maplevel = 11; //맵사이즈 변경
 
       var geocoder = new kakao.maps.services.Geocoder();
       geocoder.addressSearch(this.sidoName, (result, status) => {
         if (status === kakao.maps.services.Status.OK) {
           var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-          this.lat = coords.getLat();
-          this.lan = coords.getLng();
+          this.SET_LAN_LAT({ lat: coords.getLat(), lan: coords.getLng() });
           this.loadMap(); //지도 다시 실행
         }
       });
@@ -52,12 +57,26 @@ export default {
           // 요청이 실패하면 에러를 처리합니다.
           console.error(error);
         });
+    },
 
-      
+    gugunName() {
+      this.maplevel = 7; //맵사이즈 변경
+
+      var geocoder = new kakao.maps.services.Geocoder();
+      geocoder.addressSearch(
+        this.sidoName + " " + this.gugunName,
+        (result, status) => {
+          if (status === kakao.maps.services.Status.OK) {
+            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+            this.SET_LAN_LAT({ lat: coords.getLat(), lan: coords.getLng() });
+            this.loadMap(); //지도 다시 실행
+          }
+        }
+      );
     },
   },
   created() {},
-  mounted() {
+  async mounted() {
     // api 스크립트 소스 불러오기 및 지도 출력
     if (window.kakao && window.kakao.maps) {
       this.loadMap();
@@ -66,7 +85,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations("mapStore",["SET_GUGUN_LIST"]),
+    ...mapMutations("mapStore", ["SET_LAN_LAT", "SET_GUGUN_LIST", "SET_GUGUN"]),
     // api 불러오기
     loadScript() {
       const script = document.createElement("script");
@@ -100,70 +119,100 @@ export default {
         mapTypeControl,
         window.kakao.maps.ControlPosition.TOPRIGHT
       ); // kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의, TOPRIGHT는 오른쪽 위를 의미한다.
-
     },
     // 지정한 위치에 마커 불러오기
 
-    loadMaker() {
-      //gugunList의 크기만큼 반복문 사용
-      for (let i = 0; i < this.gugunList.length; i++) {
-      var geocoder = new kakao.maps.services.Geocoder();
-      geocoder.addressSearch(this.gugunList[i].gugunName, (result, status) => {
-        if (status === kakao.maps.services.Status.OK) {
-          //마커 생성
-          var coords = new kakao.maps.LatLng(result[0].y, result[0].x); //검색 구군 좌표
-          var mLat = coords.getLat(); 
-          var mLan = coords.getLng();
-          var markerPosition  = new kakao.maps.LatLng(mLat, mLan); // 마커 좌표
-
-          var marker = new kakao.maps.Marker({ //마커 객체 생성
-            position: markerPosition
-          });
-          console.dir(this.gugunList[i].gugunName + "좌표 : " + mLat + " " + mLan)
-          marker.setMap(this.map); //맵에 부착
-        }
-      });
-    }
-
-
-      // // 현재 표시되어있는 marker들이 있다면 marker에 등록된 map을 없애준다.
-      // this.deleteMarker();
-      // // 마커 이미지를 생성합니다
-      // //   const imgSrc = require("@/assets/map/markerStar.png");
-      // // 마커 이미지의 이미지 크기 입니다
-      // //   const imgSize = new kakao.maps.Size(24, 35);
-      // //   const markerImage = new kakao.maps.MarkerImage(imgSrc, imgSize);
-
-      // // 마커를 생성합니다
-      // this.markers = [];
-      // this.positions.forEach((position) => {
-      //   const marker = new kakao.maps.Marker({
-      //     map: this.map, // 마커를 표시할 지도
-      //     position: position.latlng, // 마커를 표시할 위치
-      //     title: position.title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-      //     //   image: markerImage, // 마커의 이미지
-      //   });
-      //   this.markers.push(marker);
-      // });
-      // console.log("마커수 ::: " + this.markers.length);
-
-      // // 4. 지도를 이동시켜주기
-      // // 배열.reduce( (누적값, 현재값, 인덱스, 요소)=>{ return 결과값}, 초기값);
-      // const bounds = this.positions.reduce(
-      //   (bounds, position) => bounds.extend(position.latlng),
-      //   new kakao.maps.LatLngBounds()
-      // );
-
-      // this.map.setBounds(bounds);
-    },
-    deleteMarker() {
-      console.log("마커 싹 지우자!!!", this.markers.length);
-      if (this.markers.length > 0) {
-        this.markers.forEach((item) => {
-          console.log(item);
-          item.setMap(null);
+    async loadMaker() {
+      const markerPositions = []; // 좌표를 저장할 배열
+      const markerName = []; //마커 이름 "here"
+      const getAddressSearch = (gugunName) => {
+        return new Promise((resolve, reject) => {
+          const geocoder = new kakao.maps.services.Geocoder();
+          geocoder.addressSearch(
+            this.sidoName + " " + gugunName,
+            (result, status) => {
+              if (status === kakao.maps.services.Status.OK) {
+                const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+                const mLat = coords.getLat();
+                const mLan = coords.getLng();
+                const markerPosition = new kakao.maps.LatLng(mLat, mLan);
+                resolve(markerPosition); // 성공적으로 좌표를 얻으면 resolve 호출
+              } else {
+                reject(status); // 좌표를 얻지 못하면 reject 호출
+              }
+            }
+          );
         });
+      };
+
+      try {
+        // 주소 검색 비동기 처리 및 markerPositions 배열에 추가
+        await Promise.all(
+          this.gugunList.map(async (gugun) => {
+            try {
+              const markerPosition = await getAddressSearch(gugun.gugunName);
+              markerPositions.push(markerPosition); //배열에 값 추가
+              markerName.push(gugun.gugunName);
+            } catch (error) {
+              console.error("Error occurred during addressSearch:", error);
+            }
+          })
+        );
+
+        // 모든 마커가 추가된 후에 추가 로직 실행
+        markerPositions.forEach((markerPosition, index) => {
+          const marker = new kakao.maps.Marker({
+            position: markerPosition,
+          });
+          marker.setMap(this.map);
+          this.markers.push(marker); //마커 붙이기
+
+          // 마커에 표시할 인포윈도우를 생성합니다
+          var infowindow = new kakao.maps.InfoWindow({
+            content: `<div class = "info-window">${markerName[index]}</div>`, // 인포윈도우에 표시할 내용
+          });
+
+          //마커 이벤트
+          kakao.maps.event.addListener(
+            marker,
+            "mouseover",
+            this.makeOverListener(this.map, marker, infowindow)
+          );
+
+          kakao.maps.event.addListener(marker, "mouseout", function () {
+            infowindow.close();
+          });
+
+          //클릭이벤트 : markerName으로 저장. gugunUseName 처리 이후 라우터뷰 푸쉬
+          kakao.maps.event.addListener(marker, "click", async () => {
+            await this.getGugunUseName(markerName[index]); //정보 저장
+            this.$router.push("/srView1"); // 다른 뷰로 이동
+          });
+        });
+      } catch (error) {
+        console.error("Error occurred:", error);
       }
+    },
+    makeOverListener(map, marker, infowindow) {
+      return function () {
+        infowindow.open(map, marker);
+      };
+    },
+    async getGugunUseName(regionName) {
+      axios
+        .get(
+          `http://localhost/api/attraction/search/${regionName}/${this.sidoCode}`
+        )
+        .then((response) => {
+          this.SET_GUGUN({
+            gugunCode: response.data.gugunCode,
+            gugunName: response.data.gugunName,
+            sidoCode: response.data.sidoCode,
+          });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     },
   },
 };
@@ -173,5 +222,28 @@ export default {
 #map {
   width: 100%;
   height: 500px;
+}
+
+.info-window {
+  padding: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  background-color: #ffffff;
+  color: #000000;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.custom-info-window .info-content {
+  padding: 10px;
+}
+
+.custom-info-window .info-content p {
+  margin: 0;
+}
+
+.custom-info-window .info-content p:first-child {
+  font-weight: bold;
 }
 </style>

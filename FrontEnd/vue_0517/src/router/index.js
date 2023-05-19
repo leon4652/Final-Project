@@ -4,11 +4,12 @@ import HomeView from "@/views/HomeView.vue";
 
 import SearchMap from "@/views/SearchMap.vue"; //검색하는 창
 import SearchResult from "@/views/SearchResult.vue"; //검색결과 창
-import SRView1 from "@/views/SearchResult/SRView1.vue"; //검색결과 창 자식 1
-import SRView2 from "@/views/SearchResult/SRView2.vue"; //검색결과 창 자식 2
-import SRView3 from "@/views/SearchResult/SRView3.vue"; //검색결과 창 자식 3
-import SRView4 from "@/views/SearchResult/SRView4.vue"; //검색결과 창 자식 4
-import SRView5 from "@/views/SearchResult/SRView5.vue"; //검색결과 창 자식 5
+import SRView1 from "@/views/SearchResult/SRView1.vue"; //메인 정보
+import SRView2 from "@/views/SearchResult/SRView2.vue"; //관광지
+import SRView3 from "@/views/SearchResult/SRView3.vue"; //축제
+import SRView4 from "@/views/SearchResult/SRView4.vue"; //음식점
+import SRView5 from "@/views/SearchResult/SRView5.vue"; //숙박업소
+import SRView6 from "@/views/SearchResult/SRView6.vue"; //지역 후기
 import SRViewERR from "@/views/SearchResult/SRViewERR.vue"; //검색결과 창 - ERR
 
 import MypageView from "@/views/MyPageView.vue"; // 마이페이지
@@ -57,6 +58,11 @@ const routes = [
         path: "/srView5",
         name: "SRView5",
         component: SRView5,
+      },
+      {
+        path: "/srView6",
+        name: "SRView6",
+        component: SRView6,
       },
       {
         path: "/srViewERR",

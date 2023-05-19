@@ -58,6 +58,7 @@ public class AttractionController {
 		return attractionService.selectGugun(sidoCode);
 	}
 	
+	//시도코드 / 지역이름으로 탐색
 	@GetMapping("search/{regionName}/{sidoCode}")
 	public Gugun getRegion(@PathVariable("regionName") String regionName, @PathVariable("sidoCode") int sidoCode) throws Exception {
 		return attractionService.searchGugun(regionName, sidoCode);
