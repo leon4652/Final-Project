@@ -10,7 +10,7 @@
 <script>
 import KakaoMap from "@/components/maps/kakaoMap.vue";
 export default {
-  name: "SRView2",
+  name: "rsTravel",
   components: { KakaoMap },
   data() {
     return {

@@ -10,7 +10,7 @@
 <script>
 import KakaoMap from "@/components/maps/kakaoMap.vue";
 export default {
-  name: "plan",
+  name: "rsPlan",
   components: { KakaoMap },
   data() {
     return {
