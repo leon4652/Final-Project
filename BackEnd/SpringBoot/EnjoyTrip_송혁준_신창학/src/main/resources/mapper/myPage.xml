@@ -17,7 +17,7 @@
 	
 	<update id="updateUser" parameterType="User">
 		UPDATE user 
-		   SET user_id = #{userId}, user_pw = #{userPw}
+		   SET user_id = #{userId}, user_pw = #{userPw}, user_name = #{useName}
 		 WHERE user_no = #{userNo}
 	</update>
 </mapper>

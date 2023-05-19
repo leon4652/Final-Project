@@ -2,18 +2,19 @@ import jwtDecode from 'jwt-decode';
 import router from '@/router';
 import { login, findById, tokenRegeneration, logout, signup } from '@/api/user.js';
 
-const userStore = {
+const user = {
   namespaced: true,
   state: {
     isLogin: false,
     isLoginError: false,
-    userInfo: null,
     isValidToken: false,
     isSignUp: false,
+    user: null,
+    isUpdate: 0,
   },
   getters: {
     checkUserInfo: function (state) {
-      return state.userInfo;
+      return state.user;
     },
     checkToken: function (state) {
       return state.isValidToken;
@@ -29,9 +30,9 @@ const userStore = {
     SET_IS_VALID_TOKEN: (state, isValidToken) => {
       state.isValidToken = isValidToken;
     },
-    SET_USER_INFO: (state, userInfo) => {
+    SET_USER_INFO: (state, user) => {
       state.isLogin = true;
-      state.userInfo = userInfo;
+      state.user = user;
     },
     SET_IS_SIGNUP: (state, isSignUp) => {
       state.isSignUp = isSignUp;
@@ -39,12 +40,16 @@ const userStore = {
     SET_LOGOUT: (state) => {
       state.isLogin = false;
       state.isLoginError =  false;
-      state.userInfo = null;
+      state.user = null;
       state.isValidToken = false;
       state.isSignUp = false;
       sessionStorage.removeItem("access-token")
       sessionStorage.removeItem("refresh-token")
-    }
+    },
+    // 마이페이지 관련
+    SET_IS_UPDATE(state, isUpdate) {
+        state.isUpdate = isUpdate;
+      },
   },
   actions: {
     async userConfirm({ commit }, user) {
@@ -52,10 +57,8 @@ const userStore = {
         user,
         ({ data }) => {
           if (data.message === 'success') {
-            console.log(data.message);
             let accessToken = data['access-token'];
             let refreshToken = data['refresh-token'];
-            // console.log("login success token created!!!! >> ", accessToken, refreshToken);
             commit('SET_IS_LOGIN', true);
             commit('SET_IS_LOGIN_ERROR', false);
             commit('SET_IS_VALID_TOKEN', true);
@@ -78,7 +81,7 @@ const userStore = {
         decodeToken.userid,
         ({ data }) => {
           if (data.message === 'success') {
-            commit('SET_USER_INFO', data.userInfo);
+            commit('SET_USER_INFO', data.user);
             // console.log("3. getUserInfo data >> ", data);
           } else {
             console.log('유저 정보 없음!!!!');
@@ -97,7 +100,7 @@ const userStore = {
     async tokenRegeneration({ commit, state }) {
       console.log('토큰 재발급 >> 기존 토큰 정보 : {}', sessionStorage.getItem('access-token'));
       await tokenRegeneration(
-        JSON.stringify(state.userInfo),
+        JSON.stringify(state.user),
         ({ data }) => {
           if (data.message === 'success') {
             let accessToken = data['access-token'];
@@ -112,7 +115,7 @@ const userStore = {
             console.log('갱신 실패');
             // 다시 로그인 전 DB에 저장된 RefreshToken 제거.
             await logout(
-              state.userInfo.userid,
+              state.user.userId,
               ({ data }) => {
                 if (data.message === 'success') {
                   console.log('리프레시 토큰 제거 성공');
@@ -169,4 +172,4 @@ const userStore = {
   },
 };
 
-export default userStore;
+export default user;
