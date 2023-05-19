@@ -28,8 +28,7 @@ public class MyPageController {
 	
 	@GetMapping("/")
 	public User getUser(HttpServletRequest request) throws Exception {
-//		jwtService.get(key)
-		System.out.println(jwtService.getUserInfo(request));
+		// request에 있는 token에서 userId 추출하기
 		return jwtService.getUserInfo(request);
 	}
 	

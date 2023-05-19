@@ -17,7 +17,6 @@ const myPageStore = {
   },
   actions: {
     async getUser({ commit }) {
-      console.log(123);
       await getUserInfo(
         ({ data }) => {
           console.dir(data);
