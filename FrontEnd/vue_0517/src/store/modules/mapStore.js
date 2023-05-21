@@ -1,3 +1,4 @@
+import axios from "axios";
 const mapStore = {
   namespaced: true,
   state: {
@@ -11,8 +12,9 @@ const mapStore = {
       "https://www.urbanbrush.net/web/wp-content/uploads/edd/2022/12/urbanbrush-20221223093720209565.jpg",
 
     gugunList: [], // 구군 리스트를 저장할 배열 추가
-    attInfoList: [], //어트랙션 정보들을 저장할 배열
-    contentType:0, //콘텐츠 타입(ex:관광지:12, 숙박:25 ..)
+    attInfoList: [], //어트랙션 정보들을 저장할 배열 {}
+    nowContentType:0, //콘텐츠 타입(ex:관광지:12, 숙박:25 ..)
+    contentTypeList:[12, 14, 15, 25, 28, 32, 38, 39],
   },
   mutations: {
     //위도 경도 변경
@@ -44,17 +46,24 @@ const mapStore = {
       state.attInfoList = payload;
     },
 
-    SET_CONTENT_TYPE(state, payload) {
-      state.contentType = payload;
+    SET_NOW_CONTENT_TYPE(state, payload) {
+      state.nowContentType = payload;
     },
   },
   getters: {
-    posMsg(state) {
-      let msg = "[현재 좌표] lan :" + state.lan + " lat :" + state.lat;
-      return msg;
+  },
+  actions: {
+    fetchAttInfoList({ commit, state }, contentType) {
+      axios
+        .get(`http://localhost/api/attraction/view/${contentType}/${state.sidoCode}/${state.gugunCode}`)
+        .then((response) => {
+          commit("SET_ATTINFO_LIST", response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     },
   },
-  actions: {},
 };
 
 export default mapStore;

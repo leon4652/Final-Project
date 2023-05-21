@@ -20,6 +20,8 @@ export default {
       "gugunName",
       "lan",
       "lat",
+      "nowContentType",
+      "attInfoList",
     ]),
   },
   data() {
@@ -34,6 +36,7 @@ export default {
 
   watch: {
     sidoCode() {
+      //시도 코드 변경 시 해당 시도에 맞는 지역 탐색 후 로딩
       this.maplevel = 11; //맵사이즈 변경
 
       var geocoder = new kakao.maps.services.Geocoder();
@@ -54,7 +57,7 @@ export default {
         .then((response) => {
           const getGugunList = response.data;
           this.SET_GUGUN_LIST(getGugunList); //구군리스트 등록
-          this.loadMaker(); //시도를 기반으로 구군별 마커 장착
+          this.loadGugunMaker(); //시도를 기반으로 구군별 마커 장착
         })
         .catch((error) => {
           // 요청이 실패하면 에러를 처리합니다.
@@ -63,6 +66,7 @@ export default {
     },
 
     gugunName() {
+      //구군 이름 변경 시 해당 구군에 맞는 좌표 탐색 후 저장, 이후 로딩 다시 진행
       this.maplevel = 7; //맵사이즈 변경
 
       var geocoder = new kakao.maps.services.Geocoder();
@@ -77,18 +81,22 @@ export default {
         }
       );
     },
+
+
+    
   },
   created() {},
   async mounted() {
     // api 스크립트 소스 불러오기 및 지도 출력
     if (window.kakao && window.kakao.maps) {
       this.loadMap();
+      this.loadContentMaker(); //컨텐츠 마커 출력
     } else {
       this.loadScript();
     }
   },
   methods: {
-    ...mapMutations("mapStore", ["SET_LAN_LAT", "SET_GUGUN_LIST", "SET_GUGUN"]),
+    ...mapMutations("mapStore", ["SET_LAN_LAT", "SET_GUGUN_LIST", "SET_GUGUN","SET_ATTINFO_LIST"]),
     // api 불러오기
     loadScript() {
       const script = document.createElement("script");
@@ -125,9 +133,12 @@ export default {
     },
 
     // 지정한 위치에 마커 불러오기
-    async loadMaker() {
+    async loadGugunMaker() {
       const markerPositions = []; // 좌표를 저장할 배열
       const markerName = []; //마커(인포윈도우) 이름
+      
+
+      //비동기 탐색 : 구군 마커 저장
       const getAddressSearch = (gugunName) => {
         return new Promise((resolve, reject) => {
           const geocoder = new kakao.maps.services.Geocoder();
@@ -148,8 +159,7 @@ export default {
         });
       };
 
-      try {
-        // 주소 검색 비동기 처리 및 markerPositions 배열에 추가
+      //동기 탐색(후처리)
         await Promise.all(
           this.gugunList.map(async (gugun) => {
             try {
@@ -166,7 +176,7 @@ export default {
         markerPositions.forEach((markerPosition, index) => {
 
           // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-          var imageSrc = '/assets/pin1.png',  
+          var imageSrc = '/assets/pin12.png',  
           imageSize = new kakao.maps.Size(20, 24), // 마커이미지의 크기입니다
           imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 
           var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
@@ -201,9 +211,7 @@ export default {
             this.$router.push("/rsMain"); // 다른 뷰로 이동
           });
         });
-      } catch (error) {
-        console.error("Error occurred:", error);
-      }
+      
     },
     makeOverListener(map, marker, infowindow) {
       return function () {
@@ -225,6 +233,27 @@ export default {
         .catch((error) => {
           console.error(error);
         });
+    },
+
+    async loadContentMaker() {
+      //콘텐츠 타입 변경 시 해당 정보에 맞는 마커 생성
+      const markerPositions = []; // 좌표를 저장할 배열
+      const markerName = []; //마커(인포윈도우) 이름
+
+       //비동기 탐색 : 구군 마커 저장
+       const getAddressSearch = (gugunName) => {
+        return new Promise((resolve, reject) => {
+          //here
+        });
+      };
+      //2. attInfoList에 저장한 개수만큼 반복하여 마커 생성(타입 0일 경우 모든 ContentType만큼 반복)
+      console.dir(this.attInfoList);
+
+
+      //3. 마커에 맞는 인포윈도우, 이벤트 설정(정보, overview 등 뜨게 ..)
+
+      //.. 이거 다 하고 attInfoList객체 정보를 null로 변경하여야 함. (이전 기록을 남기지 않아야 하므로)
+      this.SET_ATTINFO_LIST(""); //공백 처리
     },
   },
 };

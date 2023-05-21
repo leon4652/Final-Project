@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 import kakaoMap from "@/components/maps/kakaoMap.vue";
 export default {
   name: "rsMain",
@@ -17,8 +18,14 @@ export default {
       message: "",
     };
   },
-  created() {},
-  methods: {},
+  created() {
+    if (this.$route.query.nowContentType) { //컨텐츠 타입 감지
+      this.SET_NOW_CONTENT_TYPE(this.$route.query.nowContentType);
+    }
+  },
+  methods: {
+    ...mapMutations("mapStore", ["SET_NOW_CONTENT_TYPE"]),
+  },
 };
 </script>
 
