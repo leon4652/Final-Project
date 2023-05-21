@@ -4,16 +4,16 @@
     하위 라우터 뷰 2 : 관광지
     <p>===================</p>
     <kakao-map></kakao-map>
-    <rs-travel-comp>asd</rs-travel-comp>
+    <search-result></search-result>
   </div>
 </template>
 
 <script>
-import KakaoMap from "@/components/maps/kakaoMap.vue";
-import rsTravelComp from "@/components/searchResult/rsTravelComp.vue";
+import kakaoMap from "@/components/maps/kakaoMap.vue";
+import searchResult from "@/components/searchResult/resultComp.vue";
 export default {
   name: "rsTravel",
-  components: { KakaoMap, rsTravelComp },
+  components: { kakaoMap, searchResult },
   data() {
     return {
       message: "",

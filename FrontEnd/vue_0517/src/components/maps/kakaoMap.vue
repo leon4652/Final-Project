@@ -37,7 +37,10 @@ export default {
       this.maplevel = 11; //맵사이즈 변경
 
       var geocoder = new kakao.maps.services.Geocoder();
-      geocoder.addressSearch(this.sidoName, (result, status) => {
+      var searchName = this.sidoName;
+      if(this.sidoCode === 5) searchName = "광주광역시"; //광주의 경우 동명 처리
+
+      geocoder.addressSearch(searchName, (result, status) => {
         if (status === kakao.maps.services.Status.OK) {
           var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
           this.SET_LAN_LAT({ lat: coords.getLat(), lan: coords.getLng() });
@@ -120,11 +123,11 @@ export default {
         window.kakao.maps.ControlPosition.TOPRIGHT
       ); // kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의, TOPRIGHT는 오른쪽 위를 의미한다.
     },
-    // 지정한 위치에 마커 불러오기
 
+    // 지정한 위치에 마커 불러오기
     async loadMaker() {
       const markerPositions = []; // 좌표를 저장할 배열
-      const markerName = []; //마커 이름 "here"
+      const markerName = []; //마커(인포윈도우) 이름
       const getAddressSearch = (gugunName) => {
         return new Promise((resolve, reject) => {
           const geocoder = new kakao.maps.services.Geocoder();
@@ -159,10 +162,19 @@ export default {
           })
         );
 
-        // 모든 마커가 추가된 후에 추가 로직 실행
+        // 모든 마커 위치 정보가 추가된 후에 추가 로직 실행
         markerPositions.forEach((markerPosition, index) => {
+
+          // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
+          var imageSrc = '/assets/pin1.png',  
+          imageSize = new kakao.maps.Size(20, 24), // 마커이미지의 크기입니다
+          imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 
+          var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
+          //마커 생성
           const marker = new kakao.maps.Marker({
             position: markerPosition,
+            image: markerImage // 마커이미지 설정 
           });
           marker.setMap(this.map);
           this.markers.push(marker); //마커 붙이기

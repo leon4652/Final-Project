@@ -4,51 +4,46 @@
 	
 <mapper namespace="com.enjoy.trip.mapper.NoticeMapper">
 
-<!-- 
-	List<Notice> selectNotice();
+<resultMap type="Notice" id="noticeResultMap">
+  <result property="noticeNo" column="notice_no"/>
+  <result property="userNo" column="user_no"/>
+  <result property="noticeTitle" column="notice_title"/>
+  <result property="noticeContent" column="notice_content"/>
+  <result property="isNotice" column="is_notice"/>
+  <result property="registDate" column="regist_date"/>
+  <result property="updateDate" column="update_date"/>
+  <result property="removeDate" column="remove_date"/>
+</resultMap>
 
-	void writeNotice(Notice param);
 
-	void deleteNotice(int noticeNo);
-
-	void updateNotice(Notice param);
-
-	Notice getNotice(int noticeNo);
- -->
- 
  <select id="selectNotice" resultType="Notice">
- 	select *
- 	  from notice
+ 	 select *
+ 	 from notice
+ 	 where remove_date is null
  </select>
 
 <insert id="writeNotice">
-	insert into notice(title, contents, user_no, regist_date) 
-	values(#{title}, #{contents}, #{userNo}, now())
+	insert into notice(notice_title, notice_content, user_no, regist_date) 
+	values(#{noticeTitle}, #{noticeContent}, #{userNo}, now())
 </insert>
 
 <update id="deleteNotice" parameterType="int">
 	update notice
 	   set remove_date = now()
-	 where no = #{no}
+	 where notice_no = #{noticeNo}
 </update>
 <update id="updateNotice" parameterType="Notice">
 	update notice
 	   set update_date = now(),
-	   	   title = #{title},
-	   	   contents = #{contents}
-	 where no = #{no}
+	   	   notice_title = #{noticeTitle},
+	   	   notice_content = #{noticeContent}
+	 where notice_no = #{noticeNo}
 </update>
 
 <select id="getNotice" parameterType="int" resultType="Notice">
 	select *
 	  from notice
-	 where no = #{no}
+	 where notice_no = #{noticeNo} and remove_date is null
 </select>
-
-<update id="hitsRateUp" parameterType="int">
-	update notice
-	   set hits = hits + 1
-	 where no = #{noticeNo}
-</update>
 
 </mapper>

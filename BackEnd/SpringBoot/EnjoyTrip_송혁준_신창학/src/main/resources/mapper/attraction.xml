@@ -20,9 +20,9 @@
 
 	<select id="searchGugun" resultMap="gugunResult">
 		SELECT *
-		FROM gugun
-		WHERE gugun_name LIKE CONCAT('%', #{regionName}, '%') AND sido_code =
-		#{sidoCode}
+		  FROM gugun
+		 WHERE gugun_name LIKE CONCAT('%', #{regionName}, '%') AND sido_code = #{sidoCode}
+
 	</select>
 
 

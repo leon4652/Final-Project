@@ -1,5 +1,5 @@
 <template>
-  <div>
+   <div>
     <h1>SearchResult, 검색 결과 : {{ gugunName }}</h1>
     <div id="nav">
       <router-link to="/rsMain">메인화면</router-link> |

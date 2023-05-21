@@ -12,6 +12,7 @@ const mapStore = {
 
     gugunList: [], // 구군 리스트를 저장할 배열 추가
     attInfoList: [], //어트랙션 정보들을 저장할 배열
+    contentType:0, //콘텐츠 타입(ex:관광지:12, 숙박:25 ..)
   },
   mutations: {
     //위도 경도 변경
@@ -41,6 +42,10 @@ const mapStore = {
 
     SET_ATTINFO_LIST(state, payload) {
       state.attInfoList = payload;
+    },
+
+    SET_CONTENT_TYPE(state, payload) {
+      state.contentType = payload;
     },
   },
   getters: {
