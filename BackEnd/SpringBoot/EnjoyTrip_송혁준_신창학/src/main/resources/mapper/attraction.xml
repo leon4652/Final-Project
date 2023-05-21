@@ -122,12 +122,13 @@
 		<result property="latitude" column="latitude" />
 		<result property="longitude" column="longitude" />
 		<result property="overview" column="overview" />
+		<result property="contentTypeId" column="content_type_id" />
 	</resultMap>
 
 
 	<select id="searchAtt" parameterType="Int" resultMap="AttResultMap">
 		SELECT ai.sido_code, ai.gugun_code, ai.title, ai.addr1, ai.first_image,
-			   ai.first_image2, ai.latitude, ai.longitude, ad.overview
+			   ai.first_image2, ai.latitude, ai.longitude, ad.overview, ai.content_type_id
 		  FROM attraction_info ai JOIN attraction_description ad
 		    ON ai.content_id = ad.content_id
 		 WHERE content_type_id = #{contentTypeId} and gugun_code = #{gugunCode} and sido_code = #{sidoCode};

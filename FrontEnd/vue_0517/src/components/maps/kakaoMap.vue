@@ -20,6 +20,8 @@ export default {
       "gugunName",
       "lan",
       "lat",
+      "nowContentType",
+      "attInfoList",
     ]),
   },
   data() {
@@ -27,13 +29,14 @@ export default {
       map: null,
       positions: [],
       markers: [],
-      maplevel: 3,
+      maplevel: 7,
       geocoder: null,
     };
   },
 
   watch: {
     sidoCode() {
+      //시도 코드 변경 시 해당 시도에 맞는 지역 탐색 후 로딩
       this.maplevel = 11; //맵사이즈 변경
 
       var geocoder = new kakao.maps.services.Geocoder();
@@ -54,7 +57,7 @@ export default {
         .then((response) => {
           const getGugunList = response.data;
           this.SET_GUGUN_LIST(getGugunList); //구군리스트 등록
-          this.loadMaker(); //시도를 기반으로 구군별 마커 장착
+          this.loadGugunMaker(); //시도를 기반으로 구군별 마커 장착
         })
         .catch((error) => {
           // 요청이 실패하면 에러를 처리합니다.
@@ -63,6 +66,7 @@ export default {
     },
 
     gugunName() {
+      //구군 이름 변경 시 해당 구군에 맞는 좌표 탐색 후 저장, 이후 로딩 다시 진행
       this.maplevel = 7; //맵사이즈 변경
 
       var geocoder = new kakao.maps.services.Geocoder();
@@ -77,18 +81,22 @@ export default {
         }
       );
     },
+
+    
   },
   created() {},
   async mounted() {
     // api 스크립트 소스 불러오기 및 지도 출력
     if (window.kakao && window.kakao.maps) {
       this.loadMap();
+      this.loadContentMaker(); //컨텐츠 마커 출력
     } else {
       this.loadScript();
     }
+    if(this.nowContentType != 0) this.loadContentMaker(); //컨텐츠 관련 맵일 경우 추가적인 마커 띄우기 실행
   },
   methods: {
-    ...mapMutations("mapStore", ["SET_LAN_LAT", "SET_GUGUN_LIST", "SET_GUGUN"]),
+    ...mapMutations("mapStore", ["SET_LAN_LAT", "SET_GUGUN_LIST", "SET_GUGUN","SET_ATTINFO_LIST", "SET_NOW_CONTENT_TYPE"]),
     // api 불러오기
     loadScript() {
       const script = document.createElement("script");
@@ -125,9 +133,12 @@ export default {
     },
 
     // 지정한 위치에 마커 불러오기
-    async loadMaker() {
+    async loadGugunMaker() {
       const markerPositions = []; // 좌표를 저장할 배열
       const markerName = []; //마커(인포윈도우) 이름
+      
+
+      //비동기 탐색 : 구군 마커 저장
       const getAddressSearch = (gugunName) => {
         return new Promise((resolve, reject) => {
           const geocoder = new kakao.maps.services.Geocoder();
@@ -148,8 +159,7 @@ export default {
         });
       };
 
-      try {
-        // 주소 검색 비동기 처리 및 markerPositions 배열에 추가
+      //동기 탐색(후처리)
         await Promise.all(
           this.gugunList.map(async (gugun) => {
             try {
@@ -166,7 +176,7 @@ export default {
         markerPositions.forEach((markerPosition, index) => {
 
           // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-          var imageSrc = '/assets/pin1.png',  
+          var imageSrc = '/assets/pin12.png',  
           imageSize = new kakao.maps.Size(20, 24), // 마커이미지의 크기입니다
           imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 
           var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
@@ -198,16 +208,20 @@ export default {
           //클릭이벤트 : markerName으로 저장. gugunUseName 처리 이후 라우터뷰 푸쉬
           kakao.maps.event.addListener(marker, "click", async () => {
             await this.getGugunUseName(markerName[index]); //정보 저장
+            this.SET_NOW_CONTENT_TYPE(10); //콘텐츠 타입 메인으로 변경
             this.$router.push("/rsMain"); // 다른 뷰로 이동
           });
         });
-      } catch (error) {
-        console.error("Error occurred:", error);
-      }
+      
     },
     makeOverListener(map, marker, infowindow) {
       return function () {
         infowindow.open(map, marker);
+      };
+    },
+    closeInfoWindowListener(infowindow) {
+      return function () {
+        infowindow.close();
       };
     },
     async getGugunUseName(regionName) {
@@ -226,6 +240,62 @@ export default {
           console.error(error);
         });
     },
+
+    async loadContentMaker() {
+      // //콘텐츠 타입 변경 시 해당 정보에 맞는 마커 생성
+
+      //1. 비동기 탐색 : 구군 마커 저장
+      axios.get(`http://localhost/api/attraction/view/${this.nowContentType}/${this.sidoCode}/${this.gugunCode}`)
+      .then(response => {
+        this.SET_ATTINFO_LIST(response.data);
+      })
+      .catch(error => {
+          console.error(error);
+        });
+
+      //2. attInfoList에 저장한 개수만큼 반복하여 마커 생성(타입 0일 경우 모든 ContentType만큼 반복)
+      for(var i = 0; i < this.attInfoList.length; i++) {
+        console.dir(this.attInfoList[i].title);
+        console.dir(this.attInfoList[i].longitude);
+        console.dir(this.attInfoList[i].latitude);
+        // 1. 마커이미지를 생성
+        
+        // var imageSrc = '/assets/pin${nowContentType}.png',  
+        var imageSrc = '/assets/pin' + this.attInfoList[i].contentTypeId + '.png',
+          imageSize = new kakao.maps.Size(20, 24), // 마커이미지의 크기입니다
+          imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 
+          var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
+        // 2. 마커 생성
+          const marker = new kakao.maps.Marker({
+            position: new kakao.maps.LatLng(this.attInfoList[i].latitude, this.attInfoList[i].longitude),
+            image: markerImage // 마커이미지 설정 
+          });
+          marker.setMap(this.map); //마커 붙이기
+ 
+        //3. 마커에 표시할 인포윈도우를 생성
+        var infowindow = new kakao.maps.InfoWindow({
+          content: `<div class = "info-window">${this.attInfoList[i].title}</div>`, // 인포윈도우에 표시할 내용
+        });
+
+        //4. 마커 이벤트 처리
+        kakao.maps.event.addListener(
+            marker,
+            "mouseover",
+            this.makeOverListener(this.map, marker, infowindow),
+        );
+
+        kakao.maps.event.addListener(marker, "mouseout", this.closeInfoWindowListener(infowindow));
+
+      }
+      // console.dir(this.attInfoList);
+      //현재 문제점 : 비동기 처리 안해서 그런가 밀림(이전 값이 다음 값에 들어가는듯) .. + 메인 화면에 전체 화면 처리
+      //nowContentType 값 변환하는게 한 번씩 밀림
+
+
+      // //.. 이거 다 하고 attInfoList객체 정보를 null로 변경하여야 함. (이전 기록을 남기지 않아야 하므로)
+      // this.SET_ATTINFO_LIST(""); //공백 처리
+    },
   },
 };
 </script>
@@ -234,6 +304,9 @@ export default {
 #map {
   width: 100%;
   height: 500px;
+  border: 1px solid #ccc; /* 테두리 스타일 추가 */
+  border-radius: 5px; /* 테두리 둥글게 설정 */
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
 }
 
 .info-window {

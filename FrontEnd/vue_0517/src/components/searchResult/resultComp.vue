@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>관광지 컴포넌트, 종류 코드 : {{  }}</h2>
+    <h1> resultComp .. 현재 컨텐츠 코드(nowContentType) : {{ nowContentType }}</h1>
 
     <div class="container">
       <div class="row">
@@ -42,8 +42,7 @@
 </template>
 
 <script>
-import axios from "axios";
-import { mapMutations, mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "resultComp",
@@ -53,22 +52,14 @@ export default {
     };
   },
   computed: {
-    ...mapState("mapStore", ["sidoCode", "gugunCode", "attInfoList"]),
+    ...mapState("mapStore", ["sidoCode", "gugunCode", "attInfoList", "nowContentType"]),
   },
   created() {
-    axios
-      .get(
-        `http://localhost/api/attraction/view/12/${this.sidoCode}/${this.gugunCode}`
-      )
-      .then((response) => {
-        this.SET_ATTINFO_LIST(response.data); // 받아온 데이터를 attList에 저장
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    this.fetchAttInfoList(this.nowContentType);
+
   },
   methods: {
-    ...mapMutations("mapStore", ["SET_ATTINFO_LIST"]),
+    ...mapActions("mapStore", ["fetchAttInfoList"]),
     toggleOverview(att) { //클릭시마다 css 설정 변경
       this.$set(att, 'expanded', !att.expanded);
     },

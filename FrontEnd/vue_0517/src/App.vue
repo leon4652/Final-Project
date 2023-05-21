@@ -2,7 +2,7 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/kakaoMap">카카오맵</router-link> |
+      <router-link to="/storyboard">자유게시판</router-link> |
       <router-link to="/searchMap">여행지 검색</router-link> |
       <router-link to="/searchResult">여행지 검색 결과</router-link> |
 
