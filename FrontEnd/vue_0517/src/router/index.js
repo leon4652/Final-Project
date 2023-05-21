@@ -16,12 +16,19 @@ import rsRestaurant from "@/views/SearchResult/09_restaurant.vue";
 import rsReview from "@/views/SearchResult/10_review.vue";
 import SRViewERR from "@/views/SearchResult/SRViewERR";
 
+import StoryBoard from "@/views/board/storyBoard.vue";
+
 import MypageView from "@/views/MyPageView.vue"; // 마이페이지
 import UserView from "@/views/UserView.vue"; // 로그인
 
 Vue.use(VueRouter);
 
 const routes = [
+  {
+    path: "/storyBoard",
+    name: "storyBoard",
+    component: StoryBoard,
+  },
   {
     path: "/",
     name: "Home",
@@ -153,6 +160,8 @@ const routes = [
       },
     ],
   },
+
+  
 ];
 
 const router = new VueRouter({

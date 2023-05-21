@@ -29,7 +29,7 @@ export default {
       map: null,
       positions: [],
       markers: [],
-      maplevel: 3,
+      maplevel: 7,
       geocoder: null,
     };
   },
@@ -82,7 +82,6 @@ export default {
       );
     },
 
-
     
   },
   created() {},
@@ -94,9 +93,10 @@ export default {
     } else {
       this.loadScript();
     }
+    if(this.nowContentType != 0) this.loadContentMaker(); //컨텐츠 관련 맵일 경우 추가적인 마커 띄우기 실행
   },
   methods: {
-    ...mapMutations("mapStore", ["SET_LAN_LAT", "SET_GUGUN_LIST", "SET_GUGUN","SET_ATTINFO_LIST"]),
+    ...mapMutations("mapStore", ["SET_LAN_LAT", "SET_GUGUN_LIST", "SET_GUGUN","SET_ATTINFO_LIST", "SET_NOW_CONTENT_TYPE"]),
     // api 불러오기
     loadScript() {
       const script = document.createElement("script");
@@ -208,6 +208,7 @@ export default {
           //클릭이벤트 : markerName으로 저장. gugunUseName 처리 이후 라우터뷰 푸쉬
           kakao.maps.event.addListener(marker, "click", async () => {
             await this.getGugunUseName(markerName[index]); //정보 저장
+            this.SET_NOW_CONTENT_TYPE(10); //콘텐츠 타입 메인으로 변경
             this.$router.push("/rsMain"); // 다른 뷰로 이동
           });
         });
@@ -216,6 +217,11 @@ export default {
     makeOverListener(map, marker, infowindow) {
       return function () {
         infowindow.open(map, marker);
+      };
+    },
+    closeInfoWindowListener(infowindow) {
+      return function () {
+        infowindow.close();
       };
     },
     async getGugunUseName(regionName) {
@@ -236,24 +242,59 @@ export default {
     },
 
     async loadContentMaker() {
-      //콘텐츠 타입 변경 시 해당 정보에 맞는 마커 생성
-      const markerPositions = []; // 좌표를 저장할 배열
-      const markerName = []; //마커(인포윈도우) 이름
+      // //콘텐츠 타입 변경 시 해당 정보에 맞는 마커 생성
 
-       //비동기 탐색 : 구군 마커 저장
-       const getAddressSearch = (gugunName) => {
-        return new Promise((resolve, reject) => {
-          //here
+      //1. 비동기 탐색 : 구군 마커 저장
+      axios.get(`http://localhost/api/attraction/view/${this.nowContentType}/${this.sidoCode}/${this.gugunCode}`)
+      .then(response => {
+        this.SET_ATTINFO_LIST(response.data);
+      })
+      .catch(error => {
+          console.error(error);
         });
-      };
+
       //2. attInfoList에 저장한 개수만큼 반복하여 마커 생성(타입 0일 경우 모든 ContentType만큼 반복)
-      console.dir(this.attInfoList);
+      for(var i = 0; i < this.attInfoList.length; i++) {
+        console.dir(this.attInfoList[i].title);
+        console.dir(this.attInfoList[i].longitude);
+        console.dir(this.attInfoList[i].latitude);
+        // 1. 마커이미지를 생성
+        
+        // var imageSrc = '/assets/pin${nowContentType}.png',  
+        var imageSrc = '/assets/pin' + this.attInfoList[i].contentTypeId + '.png',
+          imageSize = new kakao.maps.Size(20, 24), // 마커이미지의 크기입니다
+          imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 
+          var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
+
+        // 2. 마커 생성
+          const marker = new kakao.maps.Marker({
+            position: new kakao.maps.LatLng(this.attInfoList[i].latitude, this.attInfoList[i].longitude),
+            image: markerImage // 마커이미지 설정 
+          });
+          marker.setMap(this.map); //마커 붙이기
+ 
+        //3. 마커에 표시할 인포윈도우를 생성
+        var infowindow = new kakao.maps.InfoWindow({
+          content: `<div class = "info-window">${this.attInfoList[i].title}</div>`, // 인포윈도우에 표시할 내용
+        });
+
+        //4. 마커 이벤트 처리
+        kakao.maps.event.addListener(
+            marker,
+            "mouseover",
+            this.makeOverListener(this.map, marker, infowindow),
+        );
+
+        kakao.maps.event.addListener(marker, "mouseout", this.closeInfoWindowListener(infowindow));
+
+      }
+      // console.dir(this.attInfoList);
+      //현재 문제점 : 비동기 처리 안해서 그런가 밀림(이전 값이 다음 값에 들어가는듯) .. + 메인 화면에 전체 화면 처리
+      //nowContentType 값 변환하는게 한 번씩 밀림
 
 
-      //3. 마커에 맞는 인포윈도우, 이벤트 설정(정보, overview 등 뜨게 ..)
-
-      //.. 이거 다 하고 attInfoList객체 정보를 null로 변경하여야 함. (이전 기록을 남기지 않아야 하므로)
-      this.SET_ATTINFO_LIST(""); //공백 처리
+      // //.. 이거 다 하고 attInfoList객체 정보를 null로 변경하여야 함. (이전 기록을 남기지 않아야 하므로)
+      // this.SET_ATTINFO_LIST(""); //공백 처리
     },
   },
 };
@@ -263,6 +304,9 @@ export default {
 #map {
   width: 100%;
   height: 500px;
+  border: 1px solid #ccc; /* 테두리 스타일 추가 */
+  border-radius: 5px; /* 테두리 둥글게 설정 */
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
 }
 
 .info-window {

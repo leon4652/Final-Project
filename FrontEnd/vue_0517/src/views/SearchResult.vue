@@ -2,7 +2,7 @@
    <div>
     <h1>SearchResult, 검색 결과 : {{ gugunName }}</h1>
     <div id="nav">
-      <router-link :to="{ path: '/rsMain', query: { nowContentType: 0 } }">메인화면</router-link> |
+      <router-link :to="{ path: '/rsMain', query: { nowContentType: 10 } }">메인화면</router-link> |
       <router-link :to="{ path: '/rsTravel', query: { nowContentType: 12 } }">관광지</router-link> |
       <router-link :to="{ path: '/rsCulture', query: { nowContentType: 14 } }">문화시설</router-link> |
       <router-link :to="{ path: '/rsFestival', query: { nowContentType: 15 } }">축제공연행사</router-link> |

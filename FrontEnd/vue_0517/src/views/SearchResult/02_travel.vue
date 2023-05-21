@@ -21,7 +21,7 @@ export default {
       message: "",
     };
   },
-  created() {
+  beforeMount() {
     if (this.$route.query.nowContentType) { //컨텐츠 타입 감지
       this.SET_NOW_CONTENT_TYPE(this.$route.query.nowContentType);
     }

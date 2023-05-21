@@ -55,6 +55,7 @@ public class AttractionController {
 		return attractionService.selectSidoList();
 	}
 
+	//해당 시도의 구군 리스트 가져오기
 	@GetMapping("gugun/{sidoCode}")
 	public List<Gugun> selectGugun(@PathVariable("sidoCode") int sidoCode) throws Exception {
 		return attractionService.selectGugun(sidoCode);
@@ -73,4 +74,5 @@ public class AttractionController {
 			@PathVariable("sidoCode") int sidoCode, @PathVariable("gugunCode") int gugunCode) throws Exception {
 		return attractionService.searchAtt(contentId, sidoCode, gugunCode);
 	}
+	
 }

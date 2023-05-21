@@ -1,28 +1,22 @@
 <template>
   <div>
     <h1>searchComp, 여행지 검색 페이지</h1>
-    <select v-model="mobility">
-      <option value="0" selected>교통수단</option>
-      <option value="1">자동차</option>
-      <option value="2">자전거</option>
-      <option value="3">도보</option>
-    </select>
-    <select v-model="sidoCode" @change="handleSidoCodeChange">
-      <option value="0" selected>지역</option>
-      <option
-        v-for="sido in sidoOptions"
-        :key="sido.sidoCode"
-        :value="sido.sidoCode"
-      >
-        {{ sido.sidoName }}
-        {{ sido.sidoCode }}
-      </option>
-    </select>
-    <input
-      v-model="searchInput"
-      type="text"
-      placeholder="지역을 검색하세요."
-    /><button @click="search">검색</button>
+
+    <div class="select-container">
+      <select class="custom-select" v-model="mobility">
+        <option value="0" selected>교통수단</option>
+        <option value="1">자동차</option>
+        <option value="2">자전거</option>
+        <option value="3">도보</option>
+      </select>
+      <select class="custom-select" v-model="sidoCode" @change="handleSidoCodeChange">
+        <option value="0" selected>지역</option>
+        <option v-for="sido in sidoOptions" :key="sido.sidoCode" :value="sido.sidoCode">
+          {{ sido.sidoName }}
+        </option>
+      </select>
+    </div>
+    
   </div>
 </template>
 
@@ -104,4 +98,29 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.select-container {
+  margin-bottom: 20px;
+}
+
+.custom-select {
+  display: inline-block;
+  padding: 5px 10px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #555555;
+  vertical-align: middle;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.custom-select:focus {
+  border-color: #333333;
+  outline: 0;
+  box-shadow: 0 0 0 2px rgba(51, 51, 51, 0.1);
+}
+</style>
