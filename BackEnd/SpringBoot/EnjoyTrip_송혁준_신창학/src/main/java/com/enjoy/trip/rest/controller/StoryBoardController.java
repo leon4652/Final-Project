@@ -1,8 +1,11 @@
 package com.enjoy.trip.rest.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +23,9 @@ import com.enjoy.trip.service.StoryBoardService;
 @RestController
 @RequestMapping("/api/storyboard")
 public class StoryBoardController {
+	private static final String SUCCESS = "success";
+	private static final String FAIL = "fail";
+	
 	private StoryBoardService storyBoardService;
 	public StoryBoardController(StoryBoardService storyBoardService) {
 		this.storyBoardService = storyBoardService;
@@ -44,8 +50,14 @@ public class StoryBoardController {
 	
 
 	@DeleteMapping("/delete/{storyBoardNo}")
-	public void delete(@PathVariable int storyBoardNo) throws Exception {
+	public ResponseEntity<?> delete(@PathVariable int storyBoardNo) throws Exception {
 		storyBoardService.deleteStoryBoard(storyBoardNo);
+		
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		if (storyBoardService.deleteStoryBoard(storyBoardNo)) resultMap.put("message", SUCCESS);
+		else resultMap.put("message", FAIL);
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 
 	@PutMapping("/update/{storyBoardNo}")

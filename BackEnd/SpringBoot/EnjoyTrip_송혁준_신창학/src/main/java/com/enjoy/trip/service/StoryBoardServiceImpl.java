@@ -1,5 +1,6 @@
 package com.enjoy.trip.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -26,8 +27,15 @@ public class StoryBoardServiceImpl implements StoryBoardService {
 	}
 
 	@Override
-	public void deleteStoryBoard(int storyBoardNo) throws Exception {
-		storyBoardMapper.deleteStoryBoard(storyBoardNo);
+	public boolean deleteStoryBoard(int storyBoardNo) throws Exception {
+		boolean check = true;
+		try {
+			storyBoardMapper.deleteStoryBoard(storyBoardNo);
+		} catch (SQLException e) {
+			check = false;
+		}
+		System.out.println(check);
+		return check;
 	}
 
 	@Override

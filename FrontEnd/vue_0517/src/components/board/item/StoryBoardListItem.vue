@@ -1,13 +1,14 @@
 <template>
-  <b-tr>
-    <b-td>{{ storyBoardNo }}</b-td>
-    <b-th class="text-left">
+  <tr>
+    <td>{{ storyBoardNo }}</td>
+    <th class="text-left">
       <router-link :to="{ name: 'boardview', params: { storyBoardNo: storyBoardNo } }">{{ storyBoardTitle }}</router-link>
-    </b-th>
-    <b-td>{{ storyBoardHit }}</b-td>
-    <b-td>{{ userNo }}</b-td>
-    <b-td>{{ registDate | dateFormat }}</b-td>
-  </b-tr>
+    </th>
+    <td>{{ storyBoardHit }}</td>
+    <td>{{ userNo }}</td>
+    <td>{{ registDate | dateFormat }}</td>
+    <h3>123</h3>
+  </tr>
 </template>
 
 <script>
