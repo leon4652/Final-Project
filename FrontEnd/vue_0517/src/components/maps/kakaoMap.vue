@@ -5,8 +5,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import { mapMutations } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 import axios from "axios";
 export default {
   name: "kakaoMap",
@@ -112,6 +111,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions("mapStore",["getDetailsFromLatLng", "myRoute"]),
     ...mapMutations("mapStore", [
       "SET_LAN_LAT",
       "SET_GUGUN_LIST",
@@ -358,10 +358,7 @@ export default {
         else {
           //마커의 주소값을 찾고, 이를 기반으로 axios 통신을 통해 해당 관광지 정보를 산출한다.
           kakao.maps.event.addListener(marker, 'rightclick', function() {
-            alert(i + " : " + "위도 : " + marker.getPosition().getLat() + "경도 : " + marker.getPosition().getLng());
-            
-
-
+            this.getDetailsFromLatLng({lat : marker.getPosition().getLat(), lan : marker.getPosition().getLng()});
           }.bind(this));
         }
       }
@@ -378,4 +375,4 @@ export default {
   border-radius: 5px; /* 테두리 둥글게 설정 */
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
 }
-</style=>
+</style>

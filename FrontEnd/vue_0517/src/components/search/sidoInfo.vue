@@ -39,7 +39,7 @@ export default {
         sidoCode: this.sidoCode,
         gugunName: gugun.gugunName,
       });
-      this.SET_NOW_CONTENT_TYPE(10); //컨텐츠 타입 변경
+      this.SET_NOW_CONTENT_TYPE(11); //컨텐츠 타입 변경
       this.$router.push("/rsMain"); // 다른 뷰로 이동
     },
   },

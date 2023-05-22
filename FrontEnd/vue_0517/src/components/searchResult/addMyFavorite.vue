@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>우클릭으로 내가 원하는 루트를 추가해보세요.</h3>
+    <button @click="deleteMyRoute">루트 삭제</button>
     <div>
       <div class="container">
         <div class="table-container">
@@ -10,31 +10,27 @@
             </caption>
             <thead>
               <tr>
-                <th>번호</th>
+                <th>지명</th>
                 <th>관광지 주소</th>
                 <th>이미지</th>
                 <th>예상 시간</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="att in attInfoList" :key="att.title">
-                <td>{{ att.title }}</td>
-                <td>{{ att.addr1 }}</td>
-                <td
-                  class="overview"
-                  :class="{ expanded: att.expanded }"
-                  @click="toggleOverview(att)"
-                >
-                  {{ att.overview }}
-                </td>
-                <td class="image-cell" :class="{ expanded: att.expanded }">
+              <tr v-for="mr in myRoute" :key="mr.title">
+                <td>{{ mr.title }}</td>
+                <td>{{ mr.addr1 }}</td>
+                <td>
                   <img
-                    v-if="att.firstImage"
-                    :src="att.firstImage"
+                    v-if="mr.firstImage"
+                    :src="mr.firstImage"
                     alt="Image"
                     class="image"
                   />
                   <span v-else>No Image</span>
+                </td>
+                <td>
+                  예상 시간
                 </td>
               </tr>
             </tbody>
@@ -54,6 +50,7 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex';
 export default {
   name: "addMyFavorite",
   components: {},
@@ -63,10 +60,22 @@ export default {
     };
   },
   created() {},
-  methods: {},
+  methods: {
+    ...mapMutations("mapStore", ["DEL_MY_ROUTE"]),
+    deleteMyRoute() {
+      this.DEL_MY_ROUTE();
+    },
+  },
+  computed: {
+    ...mapState("mapStore", ["myRoute"]),
+  },
 };
 </script>
 
 <style scoped>
 @import url("@/assets/table/table.css");
+.image {
+  width: 100px; /* 이미지의 원하는 크기로 설정 */
+  height: 100px; /* 가로 크기에 맞춰 세로 크기 조절 */
+}
 </style>
