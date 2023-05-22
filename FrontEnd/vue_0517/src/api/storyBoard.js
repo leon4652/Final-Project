@@ -15,11 +15,11 @@ async function write(storyBoard, success, fail) {
 }
 
 async function deleteBoard(storyBoardNo, success, fail) {
-    await api.get(`/storyboard/delete/`+ storyBoardNo).then(success).catch(fail);
+    await api.delete(`/storyboard/delete/`+ storyBoardNo).then(success).catch(fail);
 }
 
 async function modify(storyBoard, success, fail) {
-    await api.get(`/storyboard/modify/`+ storyBoard.storyBoardNo, storyBoard).then(success).catch(fail);
+    await api.put(`/storyboard/modify/`+ storyBoard.storyBoardNo, storyBoard).then(success).catch(fail);
 }
 
 export { select, getBoard, write, deleteBoard, modify };
