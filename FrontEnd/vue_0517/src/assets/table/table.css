@@ -1,47 +1,36 @@
-  body { 
-    font-size: 140%; 
-  }
+.p {
+  text-align: center;
+  padding-top: 140px;
+  font-size: 14px;
+}
 
-  h2 {
-    text-align: center;
-    padding: 20px 0;
-  }
+.table-container {
+  overflow-y: scroll; /* 스크롤 생성 */
+  height: 100%; /* 원하는 높이로 조절 */
+  width: 100%;
+}
 
-  table caption {
-    padding: .5em 0;
-  }
+.overview {
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 60%;
+}
 
-  .p {
-    text-align: center;
-    padding-top: 140px;
-    font-size: 14px;
-  }
+.overview.expanded {
+  white-space: normal;
+}
 
-  .table-container {
-    overflow: auto;
-  }
+.image-cell {
+  max-width: 150px;
+}
 
-  .overview {
-    max-width: 300px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 60%;
-  }
+.image-cell.expanded {
+  width: 60%;
+}
 
-  .overview.expanded {
-    white-space: normal;
-  }
-
-  .image-cell {
-    max-width: 150px;
-  }
-
-  .image-cell.expanded {
-    width: 60%;
-  }
-
-  .image {
-    max-width: 100%;
-    height: auto;
-  }
+.image {
+  max-width: 100%;
+  height: auto;
+}

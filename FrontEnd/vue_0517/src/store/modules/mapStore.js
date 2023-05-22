@@ -2,6 +2,7 @@ import axios from "axios";
 const mapStore = {
   namespaced: true,
   state: {
+    cnt: 0,
     lat: 36.354935,
     lan: 127.298259,
     gugunCode: 0,
@@ -13,10 +14,16 @@ const mapStore = {
 
     gugunList: [], // 구군 리스트를 저장할 배열 추가
     attInfoList: [], //어트랙션 정보들을 저장할 배열 {}
-    nowContentType:0, //콘텐츠 타입(ex:관광지:12, 숙박:25 ..)
-    contentTypeList:[12, 14, 15, 25, 28, 32, 38, 39],
+    nowContentType: 0, //콘텐츠 타입(ex:관광지:12, 숙박:25 ..)
+    contentTypeList: [12, 14, 15, 25, 28, 32, 38, 39],
+    mobility: 1, //이동수단
+    isTripPlan: false, //여행 계획인지 구분
+    myRoute: [], //여행 계획 루트
   },
   mutations: {
+    SET_CNT(state, payload) {
+      state.cnt = payload;
+    },
     //위도 경도 변경
     SET_LAN_LAT(state, payload) {
       (state.lan = payload.lan), (state.lat = payload.lat);
@@ -49,15 +56,47 @@ const mapStore = {
     SET_NOW_CONTENT_TYPE(state, payload) {
       state.nowContentType = payload;
     },
+
+    SET_MOBILITY(state, payload) {
+      state.mobility = payload;
+    },
+
+    SET_IS_TRIP_PLAN(state, payload) {
+      state.isTripPlan = payload;
+    },
+
+    ADD_MY_ROUTE(state, payload) {
+      state.myRoute.push(payload);
+      //여기에 받은 payload를 myRoute[]에 추가
+    },
+
+    DEL_MY_ROUTE(state) {
+      state.myRoute = [];
+      //myRoute[]를 초기화
+    },
   },
-  getters: {
-  },
+  getters: {},
   actions: {
     fetchAttInfoList({ commit, state }, contentType) {
       axios
-        .get(`http://localhost/api/attraction/view/${contentType}/${state.sidoCode}/${state.gugunCode}`)
+        .get(
+          `http://localhost/api/attraction/view/${contentType}/${state.sidoCode}/${state.gugunCode}`
+        )
         .then((response) => {
           commit("SET_ATTINFO_LIST", response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+
+    getDetailsFromLatLng({ commit, state }, contentType) {
+      axios
+        .get(
+          `http://localhost/api/attraction/view/${contentType}/${state.sidoCode}/${state.gugunCode}`
+        )
+        .then((response) => {
+          commit("ADD_MY_ROUTE", response.data);
         })
         .catch((error) => {
           console.error(error);

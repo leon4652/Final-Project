@@ -23,4 +23,6 @@ public interface AttractionService {
 
 	List<AttractionInfo> searchAtt(int contentTypeId, int sidoCode, int gugunCode);
 
+	AttractionInfo searchAttUsingMarker(double lat, double lan);
+
 }

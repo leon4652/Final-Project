@@ -13,6 +13,7 @@ export default {
   components: {},
   computed: {
     ...mapState("mapStore", [
+      "cnt",
       "sidoCode",
       "sidoName",
       "gugunList",
@@ -23,6 +24,7 @@ export default {
       "nowContentType",
       "attInfoList",
       "contentTypeList",
+      "isTripPlan",
     ]),
   },
   data() {
@@ -32,6 +34,7 @@ export default {
       markers: [],
       maplevel: 7,
       geocoder: null,
+      makerInfo:[], //markerInfo 정보 저장
     };
   },
 
@@ -88,13 +91,19 @@ export default {
     // api 스크립트 소스 불러오기 및 지도 출력
     if (window.kakao && window.kakao.maps) {
       //컨텐츠 관련 맵일 경우 추가적인 마커 띄우기 실행
+
       if (this.nowContentType != 0) {
         if (this.nowContentType == 10) {
           //전체 콘텐츠 보기
+          this.SET_IS_TRIP_PLAN(true);
           for (var i = 0; i < this.contentTypeList.length; i++) {
+            this.SET_CNT(i); //cnt
             this.loadContentMaker(this.contentTypeList[i]);
           }
-        } else this.loadContentMaker(this.nowContentType);
+        } else {
+          this.SET_IS_TRIP_PLAN(false);
+          this.loadContentMaker(this.nowContentType);
+        }
       }
       //아닐 경우 기존 지도 띄우기
       else this.loadMap();
@@ -109,6 +118,8 @@ export default {
       "SET_GUGUN",
       "SET_ATTINFO_LIST",
       "SET_NOW_CONTENT_TYPE",
+      "SET_IS_TRIP_PLAN",
+      "SET_CNT"
     ]),
     // api 불러오기
     loadScript() {
@@ -223,8 +234,9 @@ export default {
         //클릭이벤트 : markerName으로 저장. gugunUseName 처리 이후 라우터뷰 푸쉬
         kakao.maps.event.addListener(marker, "click", async () => {
           await this.getGugunUseName(markerName[index]); //정보 저장
-          this.SET_NOW_CONTENT_TYPE(10); //콘텐츠 타입 메인으로 변경
-          this.$router.push("/rsMain"); // 다른 뷰로 이동
+          const path = '/rsMain'; // 경로와 쿼리 파라미터 설정
+          
+          this.$router.push(path); // 다른 뷰로 이동
         });
       });
     },
@@ -256,7 +268,6 @@ export default {
     },
 
     async loadContentMaker(code) {
-      console.dir("코드값 실제로 나옴 : " + code);
       // //콘텐츠 타입 변경 시 해당 정보에 맞는 마커 생성
       //0. 지도 객체 생성
       const container = document.getElementById("map");
@@ -278,21 +289,18 @@ export default {
       ); // kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의, TOPRIGHT는 오른쪽 위를 의미한다.
 
       // 1. 비동기 탐색 : 구군 마커 저장
-      console.dir(
-        `http://localhost/api/attraction/view/${code}/${this.sidoCode}/${this.gugunCode}`
-      );
       const response = await axios.get(
         `http://localhost/api/attraction/view/${code}/${this.sidoCode}/${this.gugunCode}`
       );
       this.SET_ATTINFO_LIST(response.data);
 
       //2. attInfoList에 저장한 개수만큼 반복하여 마커 생성(타입 0일 경우 모든 ContentType만큼 반복)
-      for (var i = 0; i < this.attInfoList.length; i++) {
+      for (let i = 0; i < this.attInfoList.length; i++) {
         // 1. 마커이미지를 생성
 
         var imageSrc =
             "/assets/pin" + this.attInfoList[i].contentTypeId + ".png",
-          imageSize = new kakao.maps.Size(20, 24), // 마커이미지의 크기입니다
+          imageSize = new kakao.maps.Size(30, 30), // 마커이미지의 크기입니다
           imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다.
         var markerImage = new kakao.maps.MarkerImage(
           imageSrc,
@@ -311,9 +319,23 @@ export default {
         marker.setMap(this.map); //마커 붙이기
 
         //3. 마커에 표시할 인포윈도우를 생성
+        //3-1. 인포윈도우 설명 처리. 글이 길면 줄여서 보여주기
+        var maxOverviewLength = 30; // 최대 표시 길이 설정
+        var overview = this.attInfoList[i].overview;
+        if (overview.length > maxOverviewLength) {
+          overview = overview.substring(0, maxOverviewLength) + "...(생략)";
+        }
+
         var infowindow = new kakao.maps.InfoWindow({
-          content: `<div class = "info-window">${this.attInfoList[i].title}</div>`, // 인포윈도우에 표시할 내용
-        });
+        content: `<div style=
+        "max-width: 300px; background-color: #fff; border:1px solid #ccc; border-radius: 10px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); color: #333; 
+        font-family: Arial, sans-serif; font-size: 16px; padding: 10px;">
+          <h3 style="font-size: 18px; font-weight: bold;">${this.attInfoList[i].title}</h3>
+          <span style="color: #0000FF; font-size: 14px;">${this.attInfoList[i].addr1}</span><br>
+          ${overview}<br>
+          ${this.attInfoList[i].firstImage ? `<img src="${this.attInfoList[i].firstImage}" style="max-width: 250px; height: 200px;" alt="Image">` : ''}
+        </div>`, // 인포윈도우에 표시할 내용
+      });
 
         //4. 마커 이벤트 처리
         kakao.maps.event.addListener(
@@ -327,6 +349,21 @@ export default {
           "mouseout",
           this.closeInfoWindowListener(infowindow)
         );
+
+        if(!this.isTripPlan) {
+          kakao.maps.event.addListener(marker, 'rightclick', function() {
+            alert(i + " : " + this.attInfoList[i].title);
+          }.bind(this));
+        }
+        else {
+          //마커의 주소값을 찾고, 이를 기반으로 axios 통신을 통해 해당 관광지 정보를 산출한다.
+          kakao.maps.event.addListener(marker, 'rightclick', function() {
+            alert(i + " : " + "위도 : " + marker.getPosition().getLat() + "경도 : " + marker.getPosition().getLng());
+            
+
+
+          }.bind(this));
+        }
       }
     },
   },
@@ -336,32 +373,9 @@ export default {
 <style scoped>
 #map {
   width: 100%;
-  height: 500px;
+  height: 600px;
   border: 1px solid #ccc; /* 테두리 스타일 추가 */
   border-radius: 5px; /* 테두리 둥글게 설정 */
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
 }
-
-.info-window {
-  padding: 10px;
-  font-size: 14px;
-  line-height: 1.5;
-  background-color: #ffffff;
-  color: #000000;
-  border: 1px solid #cccccc;
-  border-radius: 4px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-}
-
-.custom-info-window .info-content {
-  padding: 10px;
-}
-
-.custom-info-window .info-content p {
-  margin: 0;
-}
-
-.custom-info-window .info-content p:first-child {
-  font-weight: bold;
-}
-</style>
+</style=>
