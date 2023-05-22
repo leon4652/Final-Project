@@ -1,5 +1,8 @@
 <template>
+  <b-container>
     <storyboard-comp></storyboard-comp>
+    <router-view></router-view>
+    </b-container>
 </template>
   
   <script>

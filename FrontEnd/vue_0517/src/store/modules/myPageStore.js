@@ -19,7 +19,6 @@ const myPageStore = {
     async getUser({ commit }) {
       await getUserInfo(
         ({ data }) => {
-          console.dir(data);
           commit('SET_USER', data);
         },
         (error) => {

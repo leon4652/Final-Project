@@ -1,4 +1,4 @@
-import { apiInstance } from "../http";
+import { apiInstance } from "./http";
 
 const api = apiInstance();
 
@@ -11,7 +11,7 @@ async function getBoard(storyBoardNo, success, fail) {
 }
 
 async function write(storyBoard, success, fail) {
-    await api.get(`/storyboard/write`, storyBoard).then(success).catch(fail);
+    await api.post(`/storyboard/write`, storyBoard).then(success).catch(fail);
 }
 
 async function deleteBoard(storyBoardNo, success, fail) {

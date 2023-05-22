@@ -21,13 +21,6 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>내용1</td>
-            <td>내용2</td>
-            <td>내용3</td>
-            <td>내용4</td>
-            <td>내용5</td>
-          </tr>
           <story-board-list-item v-for="board in boards" :key="board.boardNo" v-bind="board" />
         </tbody>
       </table>
@@ -37,7 +30,7 @@
 
 <script>
 import StoryBoardListItem from "@/components/board/item/StoryBoardListItem.vue";
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 const storyBoardStore = "storyBoardStore";
 
@@ -51,22 +44,20 @@ export default {
         boards: [],
     };
   },
+  computed: {
+    ...mapState(storyBoardStore, ['storyBoards'])
+  },
   created() {
-    let param = {
-      pg: 1,
-      spp: 20,
-      key: null,
-      word: null,
-    };
-    getStoryBoardList(
-      param,
-      ({ data }) => {
-        this.articles = data;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    // let param = {
+    //   pg: 1,
+    //   spp: 20,
+    //   key: null,
+    //   word: null,
+    // };
+    console.log("created")
+    this.getStoryBoardList();
+    this.boards = this.storyBoards;
+    console.dir(this.boards)
   },
   methods : {
     ...mapActions(storyBoardStore, ['getStoryBoardList']),
