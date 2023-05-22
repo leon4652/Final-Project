@@ -5,7 +5,7 @@
         <kakao-map class="map-container"></kakao-map>
       </div>
       <div class="search-container">
-        <search-result></search-result>
+        <add-my-favorite></add-my-favorite>
       </div>
     </div>
   </div>
@@ -13,11 +13,11 @@
 
 <script>
 import kakaoMap from "@/components/maps/kakaoMap.vue";
-import searchResult from "@/components/searchResult/resultComp.vue";
+import addMyFavorite from "@/components/searchResult/addMyFavorite.vue";
 import { mapMutations } from "vuex";
 export default {
-  name: "rsTravel",
-  components: { kakaoMap, searchResult },
+  name: "rsSetPlan",
+  components: { kakaoMap, addMyFavorite },
   data() {
     return {
       message: "",

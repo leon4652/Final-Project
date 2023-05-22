@@ -13,8 +13,9 @@ const mapStore = {
 
     gugunList: [], // 구군 리스트를 저장할 배열 추가
     attInfoList: [], //어트랙션 정보들을 저장할 배열 {}
-    nowContentType:0, //콘텐츠 타입(ex:관광지:12, 숙박:25 ..)
-    contentTypeList:[12, 14, 15, 25, 28, 32, 38, 39],
+    nowContentType: 0, //콘텐츠 타입(ex:관광지:12, 숙박:25 ..)
+    contentTypeList: [12, 14, 15, 25, 28, 32, 38, 39],
+    mobility: 1, //이동수단
   },
   mutations: {
     //위도 경도 변경
@@ -49,13 +50,18 @@ const mapStore = {
     SET_NOW_CONTENT_TYPE(state, payload) {
       state.nowContentType = payload;
     },
+
+    SET_MOBILITY(state, payload) {
+      state.mobility = payload;
+    },
   },
-  getters: {
-  },
+  getters: {},
   actions: {
     fetchAttInfoList({ commit, state }, contentType) {
       axios
-        .get(`http://localhost/api/attraction/view/${contentType}/${state.sidoCode}/${state.gugunCode}`)
+        .get(
+          `http://localhost/api/attraction/view/${contentType}/${state.sidoCode}/${state.gugunCode}`
+        )
         .then((response) => {
           commit("SET_ATTINFO_LIST", response.data);
         })

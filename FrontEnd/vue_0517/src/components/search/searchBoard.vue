@@ -1,51 +1,60 @@
 <template>
   <div>
-    <h1>searchComp, 여행지 검색 페이지</h1>
+    <h1>여행지 검색 페이지</h1>
 
     <div class="select-container">
       <select class="custom-select" v-model="mobility">
-        <option value="0" selected>교통수단</option>
-        <option value="1">자동차</option>
+        <option value="1" selected>자동차</option>
         <option value="2">자전거</option>
         <option value="3">도보</option>
       </select>
-      <select class="custom-select" v-model="sidoCode" @change="handleSidoCodeChange">
+      <select
+        class="custom-select"
+        v-model="sidoCode"
+        @change="handleSidoCodeChange"
+      >
         <option value="0" selected>지역</option>
-        <option v-for="sido in sidoOptions" :key="sido.sidoCode" :value="sido.sidoCode">
+        <option
+          v-for="sido in sidoOptions"
+          :key="sido.sidoCode"
+          :value="sido.sidoCode"
+        >
           {{ sido.sidoName }}
         </option>
       </select>
     </div>
-    
   </div>
 </template>
 
 <script>
 import axios from "axios";
-import { mapState } from "vuex";
 import { mapMutations } from "vuex";
 export default {
   name: "SearchBoard",
   components: {},
-  computed: {
-    ...mapState("mapStore", ["searchWord"]),
-  },
+  computed: {},
   data() {
     return {
       searchInput: "",
       sidoCode: 0,
-      mobility: 0,
+      mobility: 1,
       sidoOptions: [],
     };
   },
   created() {
     this.fetchSidoOptions(); // 컴포넌트가 생성되면 서버에서 지역 옵션들을 가져온다.
   },
+  watch: {
+    mobility(newMobility) {
+      this.SET_MOBILITY(newMobility);
+    },
+  },
   methods: {
     ...mapMutations("mapStore", [
       "MOD_SEARCH_WORD",
       "SET_GUGUN",
       "SET_NOW_SIDO",
+      "SET_MOBILITY",
     ]),
     search() {
       //검색 결과 푸쉬
@@ -100,7 +109,7 @@ export default {
 
 <style scoped>
 .select-container {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .custom-select {

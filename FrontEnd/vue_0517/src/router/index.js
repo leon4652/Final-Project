@@ -4,6 +4,8 @@ import HomeView from "@/views/HomeView.vue";
 
 import SearchMap from "@/views/SearchMap.vue"; //검색하는 창
 import SearchResult from "@/views/SearchResult.vue"; //검색결과 창
+
+import rsSetPlan from "@/views/SearchResult/00_setPlan.vue";
 import rsMain from "@/views/SearchResult/01_main.vue";
 import rsTravel from "@/views/SearchResult/02_travel.vue";
 import rsCulture from "@/views/SearchResult/03_culture.vue";
@@ -45,6 +47,11 @@ const routes = [
     component: SearchResult,
     children: [
       //자식 컴포넌트 선언
+      {
+        path: "/rsSetPlan",
+        name: "/rsSetPlan",
+        component: rsSetPlan,
+      },
       {
         path: "/rsMain",
         name: "rsMain",
@@ -165,9 +172,8 @@ const routes = [
     path: "/storyboard",
     name: "storyboard",
     component: StoryBoard,
-    children: []
-  }
-  
+    children: [],
+  },
 ];
 
 const router = new VueRouter({
