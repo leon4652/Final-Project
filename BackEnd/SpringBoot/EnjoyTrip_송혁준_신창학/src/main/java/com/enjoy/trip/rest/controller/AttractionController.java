@@ -62,7 +62,7 @@ public class AttractionController {
 	}
 
 	// 시도코드 / 지역이름으로 탐색
-	@GetMapping("search/{regionName}/{sidoCode}")
+	@GetMapping("search/name/{regionName}/{sidoCode}")
 	public Gugun getRegion(@PathVariable("regionName") String regionName, @PathVariable("sidoCode") int sidoCode)
 			throws Exception {
 		return attractionService.searchGugun(regionName, sidoCode);
@@ -73,6 +73,12 @@ public class AttractionController {
 	public List<AttractionInfo> getAttractionInfo(@PathVariable("contentTypeId") int contentId,
 			@PathVariable("sidoCode") int sidoCode, @PathVariable("gugunCode") int gugunCode) throws Exception {
 		return attractionService.searchAtt(contentId, sidoCode, gugunCode);
+	}
+	
+	// (마커)좌표로 해당 위지 확인하기
+	@GetMapping("search/{lat}/{lan}")
+	public AttractionInfo getAttractionInfoUsingMarker(@PathVariable("lat") double lat, @PathVariable("lan") double lan) {
+		return attractionService.searchAttUsingMarker(lat, lan);
 	}
 	
 }

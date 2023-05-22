@@ -133,5 +133,13 @@
 		    ON ai.content_id = ad.content_id
 		 WHERE content_type_id = #{contentTypeId} and gugun_code = #{gugunCode} and sido_code = #{sidoCode};
 	</select>
+	<select id="searchAttUsingMarker" resultMap="AttResultMap">
+		SELECT ai.sido_code, ai.gugun_code, ai.title, ai.addr1, ai.first_image,
+			   ai.first_image2, ai.latitude, ai.longitude, ad.overview, ai.content_type_id
+		  FROM attraction_info ai JOIN attraction_description ad
+		    ON ai.content_id = ad.content_id
+		 WHERE ROUND(ai.latitude, 4) = ROUND(#{lat}, 4) and ROUND(ai.longitude, 4) = ROUND(#{lan}, 4)
+	</select>
+	
 
 </mapper>
