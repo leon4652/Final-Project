@@ -13,13 +13,11 @@
         <table border="1">
             <thead>
                 <tr>
-                    <th>내용1</th>
-                    <th>내용2</th>
-                    <th>내용3</th>
-                    <th>내용4</th>
-                    <th>내용5</th>
-                    <th>내용6</th>
-                    <th>내용7</th>
+                    <th>글 번호</th>
+                    <th>제목</th>
+                    <th>조회수</th>
+                    <th>작성자</th>
+                    <th>작성일</th>
                 </tr>
             </thead>
             <tbody>
@@ -32,42 +30,7 @@
                     <td>내용6</td>
                     <td>내용7</td>
                 </tr>
-                <tr>
-                    <td>내용1</td>
-                    <td>내용2</td>
-                    <td>내용3</td>
-                    <td>내용4</td>
-                    <td>내용5</td>
-                    <td>내용6</td>
-                    <td>내용7</td>
-                </tr>
-                <tr>
-                    <td>내용1</td>
-                    <td>내용2</td>
-                    <td>내용3</td>
-                    <td>내용4</td>
-                    <td>내용5</td>
-                    <td>내용6</td>
-                    <td>내용7</td>
-                </tr>
-                <tr>
-                    <td>내용1</td>
-                    <td>내용2</td>
-                    <td>내용3</td>
-                    <td>내용4</td>
-                    <td>내용5</td>
-                    <td>내용6</td>
-                    <td>내용7</td>
-                </tr>
-                <tr>
-                    <td>내용1</td>
-                    <td>내용2</td>
-                    <td>내용3</td>
-                    <td>내용4</td>
-                    <td>내용5</td>
-                    <td>내용6</td>
-                    <td>내용7</td>
-                </tr>
+                
             </tbody>
         </table>
     </section>
@@ -75,7 +38,7 @@
   </template>
   
   <script>
-  export default {
+    export default {
     name: "storyBoardComp",
     data() {
       return {
