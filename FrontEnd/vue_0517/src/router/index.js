@@ -172,7 +172,14 @@ const routes = [
     path: "/storyboard",
     name: "storyboard",
     component: StoryBoard,
-    children: [],
+    children: [
+      {
+        path: "info/:storyBoardNo",
+        name: "boardview",
+        component: () =>
+          import(/* webpackChunkName: "storyboard" */ "@/components/board/StoryBoardView.vue"),
+      }
+    ],
   },
 ];
 

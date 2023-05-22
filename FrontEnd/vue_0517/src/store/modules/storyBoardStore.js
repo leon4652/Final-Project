@@ -11,6 +11,8 @@ const storyBoardStore = {
     },
     mutations: {
         SET_STORYBOARD_LIST(state, storyBoards) {
+            // 초기화
+            state.storyBoards = [];
             storyBoards.forEach((story) => {
                 state.storyBoards.push(story);
             });
@@ -30,9 +32,10 @@ const storyBoardStore = {
     },
     actions: {
         // story board list 불러오기
-        async getStoryBoardList({commit}) {
+        async getStoryBoardList({ commit }) {
+            console.log("actions")
             await select (
-                ({data}) => {
+                ({ data }) => {
                     commit('SET_STORYBOARD_LIST' ,data)
                 },
                 (error) => {

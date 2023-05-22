@@ -7,7 +7,6 @@
     <td>{{ storyBoardHit }}</td>
     <td>{{ userNo }}</td>
     <td>{{ registDate | dateFormat }}</td>
-    <h3>123</h3>
   </tr>
 </template>
 
