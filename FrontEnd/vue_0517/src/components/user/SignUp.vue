@@ -1,4 +1,9 @@
 <template>
+  <!-- 
+    해야 할 일
+    아이디 중복 체크
+   -->
+
   <b-container class="bv-example-row mt-3">
     <b-row>
       <b-col>
@@ -17,6 +22,9 @@
                 required
                 placeholder="아이디 입력...."
               ></b-form-input>
+              <b-button type="button" variant="success" class="m-1" @click="checkDuplicate"
+                >아이디 중복 확인</b-button
+              >
             </b-form-group>
             <b-form-group label="비밀번호:" label-for="userPw">
               <b-form-input
@@ -71,7 +79,6 @@
 </template>
 
 <script>
-// import userStore from '@/store/modules/userStore';
 import { mapActions } from 'vuex';
 import SelectGugun from '../item/SelectGugun.vue';
 import SelectSido from '../item/SelectSido.vue';
@@ -125,6 +132,12 @@ export default {
     },
     selectGugun(gugunCode) {
       this.user.gugun = gugunCode;
+    },
+    async checkDuplicate() {
+      /**
+       * 서버에 입력 받은 아이디를 넘겨줌 -> 아이디만
+       * DB에서 전달 받은 아이디를 중복 체크 함
+       */
     },
   },
 };

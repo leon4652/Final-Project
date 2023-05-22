@@ -1,6 +1,8 @@
+import axios from "axios";
 const mapStore = {
   namespaced: true,
   state: {
+    cnt: 0,
     lat: 36.354935,
     lan: 127.298259,
     gugunCode: 0,
@@ -9,11 +11,18 @@ const mapStore = {
     sidoName: "",
     sidoImg:
       "https://www.urbanbrush.net/web/wp-content/uploads/edd/2022/12/urbanbrush-20221223093720209565.jpg",
-
     gugunList: [], // 구군 리스트를 저장할 배열 추가
-    attInfoList: [], //어트랙션 정보들을 저장할 배열
+    attInfoList: [], //어트랙션 정보들을 저장할 배열 {}
+    nowContentType: 0, //콘텐츠 타입(ex:관광지:12, 숙박:25 ..)
+    contentTypeList: [12, 14, 15, 25, 28, 32, 38, 39],
+    mobility: 1, //이동수단
+    isTripPlan: false, //여행 계획인지 구분
+    myRoute: [], //여행 계획 루트
   },
   mutations: {
+    SET_CNT(state, payload) {
+      state.cnt = payload;
+    },
     //위도 경도 변경
     SET_LAN_LAT(state, payload) {
       (state.lan = payload.lan), (state.lat = payload.lat);
@@ -42,14 +51,60 @@ const mapStore = {
     SET_ATTINFO_LIST(state, payload) {
       state.attInfoList = payload;
     },
-  },
-  getters: {
-    posMsg(state) {
-      let msg = "[현재 좌표] lan :" + state.lan + " lat :" + state.lat;
-      return msg;
+
+    SET_NOW_CONTENT_TYPE(state, payload) {
+      state.nowContentType = payload;
+    },
+
+    SET_MOBILITY(state, payload) {
+      state.mobility = payload;
+    },
+
+    SET_IS_TRIP_PLAN(state, payload) {
+      state.isTripPlan = payload;
+    },
+
+    ADD_MY_ROUTE(state, payload) {
+      state.myRoute.push(payload);
+    },
+
+    DEL_MY_ROUTE(state) {
+      state.myRoute = [];
     },
   },
-  actions: {},
+  getters: {},
+  actions: {
+    fetchAttInfoList({ commit, state }, contentType) {
+      axios
+        .get(
+          `http://localhost/api/attraction/view/${contentType}/${state.sidoCode}/${state.gugunCode}`
+        )
+        .then((response) => {
+          commit("SET_ATTINFO_LIST", response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+
+    getDetailsFromLatLng({ commit, state }, {lat, lan}) {
+      axios
+        .get(
+          `http://localhost/api/attraction/search/${lat}/${lan}`
+        )
+        .then((response) => {
+          commit("ADD_MY_ROUTE", response.data);
+          console.log(response.data);
+          for(var i = 0; i < state.myRoute.length; i++) {
+            console.log("루트 : " + state.myRoute[i].addr1);
+          }
+          
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+  },
 };
 
 export default mapStore;

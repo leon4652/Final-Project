@@ -11,6 +11,7 @@ import login from './modules/login';
 import userStore from './modules/userStore';
 
 import itemStore from './item/itemStore';
+import storyBoardStore from './modules/storyBoardStore'
 
 //step01;
 export default new Vuex.Store({
@@ -20,6 +21,7 @@ export default new Vuex.Store({
     login,
     userStore,
     itemStore,
+    storyBoardStore,
   },
   plugins: [
     createPersistedState({

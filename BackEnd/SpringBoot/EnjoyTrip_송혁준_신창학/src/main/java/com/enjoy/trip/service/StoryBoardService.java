@@ -10,7 +10,7 @@ public interface StoryBoardService {
 
 	StoryBoard getStoryBoard(int storyBoardNo) throws Exception;
 
-	void deleteStoryBoard(int storyBoardNo) throws Exception;
+	boolean deleteStoryBoard(int storyBoardNo) throws Exception;
 
 	void updateStoryBoard(StoryBoard storyBoard) throws Exception;
 

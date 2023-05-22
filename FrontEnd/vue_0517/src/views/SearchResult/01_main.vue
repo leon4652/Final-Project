@@ -1,25 +1,37 @@
 <template>
   <div>
-    <p>===========================</p>
-    하위 라우터 뷰 1 : 홈 이미지 / 날씨
-    <p>===================</p>
-    <kakao-map></kakao-map>
+    <img
+      class="set-image"
+      src="https://www.urbanbrush.net/web/wp-content/uploads/edd/2022/12/urbanbrush-20221223093720209565.jpg"
+      alt="Image"
+    />
   </div>
 </template>
 
 <script>
-import kakaoMap from "@/components/maps/kakaoMap.vue";
+import { mapMutations, mapState } from "vuex";
+
 export default {
   name: "rsMain",
-  components: { kakaoMap },
+  components: {},
+  computed: {
+    ...mapState("mapStore", ["nowContentType"]),
+  },
   data() {
     return {
       message: "",
     };
   },
   created() {},
-  methods: {},
+  methods: {
+    ...mapMutations("mapStore", ["SET_NOW_CONTENT_TYPE"]),
+  },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.set-image {
+  max-width: 700px;
+  height: 700px;
+}
+</style>

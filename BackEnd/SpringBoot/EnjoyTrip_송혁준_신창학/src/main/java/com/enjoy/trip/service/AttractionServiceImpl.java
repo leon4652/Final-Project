@@ -50,6 +50,11 @@ public class AttractionServiceImpl implements AttractionService {
 	public List<AttractionInfo> searchAtt(int contentTypeId, int sidoCode, int gugunCode) {
 		return attractionMapper.searchAtt(contentTypeId, sidoCode, gugunCode);
 	}
+
+	@Override
+	public AttractionInfo searchAttUsingMarker(double lat, double lan) {
+		return attractionMapper.searchAttUsingMarker(lat, lan);
+	}
 	
 	
 

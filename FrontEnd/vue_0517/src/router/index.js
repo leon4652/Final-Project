@@ -4,6 +4,8 @@ import HomeView from "@/views/HomeView.vue";
 
 import SearchMap from "@/views/SearchMap.vue"; //검색하는 창
 import SearchResult from "@/views/SearchResult.vue"; //검색결과 창
+
+import rsSetPlan from "@/views/SearchResult/00_setPlan.vue";
 import rsMain from "@/views/SearchResult/01_main.vue";
 import rsTravel from "@/views/SearchResult/02_travel.vue";
 import rsCulture from "@/views/SearchResult/03_culture.vue";
@@ -16,12 +18,19 @@ import rsRestaurant from "@/views/SearchResult/09_restaurant.vue";
 import rsReview from "@/views/SearchResult/10_review.vue";
 import SRViewERR from "@/views/SearchResult/SRViewERR";
 
+import StoryBoard from "@/views/board/storyBoard.vue"; // 자유게시판
+
 import MypageView from "@/views/MyPageView.vue"; // 마이페이지
 import UserView from "@/views/UserView.vue"; // 로그인
 
 Vue.use(VueRouter);
 
 const routes = [
+  {
+    path: "/storyBoard",
+    name: "storyBoard",
+    component: StoryBoard,
+  },
   {
     path: "/",
     name: "Home",
@@ -38,6 +47,11 @@ const routes = [
     component: SearchResult,
     children: [
       //자식 컴포넌트 선언
+      {
+        path: "/rsSetPlan",
+        name: "/rsSetPlan",
+        component: rsSetPlan,
+      },
       {
         path: "/rsMain",
         name: "rsMain",
@@ -151,6 +165,20 @@ const routes = [
         component: () =>
           import(/* webpackChunkName: "user" */ "@/components/user/SignUp.vue"),
       },
+    ],
+  },
+
+  {
+    path: "/storyboard",
+    name: "storyboard",
+    component: StoryBoard,
+    children: [
+      {
+        path: "info/:storyBoardNo",
+        name: "boardview",
+        component: () =>
+          import(/* webpackChunkName: "storyboard" */ "@/components/board/StoryBoardView.vue"),
+      }
     ],
   },
 ];
