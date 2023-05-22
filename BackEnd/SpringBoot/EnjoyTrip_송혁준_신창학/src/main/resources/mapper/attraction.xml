@@ -138,7 +138,7 @@
 			   ai.first_image2, ai.latitude, ai.longitude, ad.overview, ai.content_type_id
 		  FROM attraction_info ai JOIN attraction_description ad
 		    ON ai.content_id = ad.content_id
-		 WHERE ROUND(ai.latitude, 4) = ROUND(#{lat}, 4) and ROUND(ai.longitude, 4) = ROUND(#{lan}, 4)
+		 WHERE ROUND(ai.latitude, 5) = ROUND(#{lat}, 5) and ROUND(ai.longitude, 5) = ROUND(#{lan}, 5)
 	</select>
 	
 

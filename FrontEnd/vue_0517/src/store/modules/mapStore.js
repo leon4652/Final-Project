@@ -11,7 +11,6 @@ const mapStore = {
     sidoName: "",
     sidoImg:
       "https://www.urbanbrush.net/web/wp-content/uploads/edd/2022/12/urbanbrush-20221223093720209565.jpg",
-
     gugunList: [], // 구군 리스트를 저장할 배열 추가
     attInfoList: [], //어트랙션 정보들을 저장할 배열 {}
     nowContentType: 0, //콘텐츠 타입(ex:관광지:12, 숙박:25 ..)
@@ -67,12 +66,10 @@ const mapStore = {
 
     ADD_MY_ROUTE(state, payload) {
       state.myRoute.push(payload);
-      //여기에 받은 payload를 myRoute[]에 추가
     },
 
     DEL_MY_ROUTE(state) {
       state.myRoute = [];
-      //myRoute[]를 초기화
     },
   },
   getters: {},
@@ -90,13 +87,18 @@ const mapStore = {
         });
     },
 
-    getDetailsFromLatLng({ commit, state }, contentType) {
+    getDetailsFromLatLng({ commit, state }, {lat, lan}) {
       axios
         .get(
-          `http://localhost/api/attraction/view/${contentType}/${state.sidoCode}/${state.gugunCode}`
+          `http://localhost/api/attraction/search/${lat}/${lan}`
         )
         .then((response) => {
           commit("ADD_MY_ROUTE", response.data);
+          console.log(response.data);
+          for(var i = 0; i < state.myRoute.length; i++) {
+            console.log("루트 : " + state.myRoute[i].addr1);
+          }
+          
         })
         .catch((error) => {
           console.error(error);
