@@ -128,9 +128,6 @@ public class UserController {
 	public ResponseEntity<?> signUp(@RequestBody User user) throws Exception {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
-		System.out.println(user.getUserId());
-		System.out.println(user.getUserPw());
-		System.out.println(user.getUserName());
 		if (userService.signUp(user)) resultMap.put("message", SUCCESS);
 		else resultMap.put("message", FAIL);
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);

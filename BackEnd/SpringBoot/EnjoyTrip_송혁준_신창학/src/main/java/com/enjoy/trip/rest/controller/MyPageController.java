@@ -34,8 +34,6 @@ public class MyPageController {
 	
 	@PutMapping("{userNo}")
 	public int updateUser(@RequestBody User param, @PathVariable("userNo") int userNo) throws Exception {
-		System.out.println(param.toString());
-		System.out.println(userNo);
 		param.setUserNo(userNo);
 		return myPageService.updateUser(param);
 	}
