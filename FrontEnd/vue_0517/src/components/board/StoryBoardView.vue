@@ -55,6 +55,7 @@ export default {
     // },
   },
   created() {
+    this.board = {};
     let param = this.$route.params.storyBoardNo;
     // getArticle(
     //   param,
@@ -78,7 +79,9 @@ export default {
     },
     deleteBoard() {
       if (confirm("정말로 삭제?")) {
+        console.log("여기는")
         this.deleteStoryBoard(this.board.storyBoardNo)
+        console.log("확인")
         // console.log("여기")
         // if (this.isDelete === true) {
         //     console.log("성공")
