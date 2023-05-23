@@ -1,10 +1,7 @@
 <template>
   <tr>
     <td>{{ storyBoardNo }}</td>
-    <th class="text-left" @click="boardView">
-      {{ storyBoardTitle }}
-      <!-- <router-link :to="{ name: 'boardview', params: { storyBoardNo: storyBoardNo } }">{{ storyBoardTitle }}</router-link> -->
-    </th>
+    <th class="text-left" @click="boardView">{{ storyBoardTitle }}</th>
     <td>{{ storyBoardHit }}</td>
     <td>{{ userId }}</td>
     <td>{{ registDate | dateFormat }}</td>

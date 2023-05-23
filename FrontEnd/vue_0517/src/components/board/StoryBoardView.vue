@@ -11,7 +11,7 @@
       </b-col>
       <!-- 현재 로그인한 사람과 글쓴이가 같은 사람인지 확인 -->
       <b-col class="text-right" v-if="isWriter">
-        <b-button variant="outline-info" size="sm" @click="moveModifyArticle" class="mr-2">글수정</b-button>
+        <b-button variant="outline-info" size="sm" @click="moveModifyBoard" class="mr-2">글수정</b-button>
         <b-button variant="outline-danger" size="sm" @click="deleteBoard">글삭제</b-button>
       </b-col>
     </b-row>
@@ -45,7 +45,7 @@ export default {
   data() {
     return {
       board: {},
-      // 글쓴이와 현재 접속자가 같은지 확인
+      // 글쓴이와 현재 접속자가 같은지 확인하기 위한 변수
       isWriter: "",
     };
   },
@@ -59,15 +59,16 @@ export default {
     let param = this.$route.params.storyBoardNo;
     await this.getStoryBoard(param)
     this.board = this.storyBoard;
-    console.log(this.board.userNo);
+
+    // token에 있는 user 정보를 decode
     let user = jwt_decode(sessionStorage.getItem('access-token'));
-    console.log(user.userNo);
+
     if (this.board.userNo === user.userNo) this.isWriter = true;
     else this.isWriter = false;
   },
   methods: {
     ...mapActions(storyBoardStore, ['getStoryBoard', 'deleteStoryBoard']),
-    moveModifyArticle() {
+    moveModifyBoard() {
       this.$router.replace({
         name: "modify",
         params: { storyBoardNo: this.board.storyBoardNo },
