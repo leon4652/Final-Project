@@ -16,14 +16,16 @@
 	  <result property="updateDate" column="update_date"/>
 	  <result property="removeDate" column="remove_date"/>
 	  <result property="userName" column="user_name"/>
+	  <result property="userId" column="user_id"/>
 	</resultMap>
 
 	<select id="selectStoryBoard" resultMap="StoryBoardResultMap"> <!-- 조인 사용, user name까지 가져옴 -->
-	  SELECT s.*, u.user_name
+	  SELECT s.*, u.user_name, u.user_id
 	    FROM story_board s 
 	    LEFT JOIN user u 
 	   USING (user_no)
 	   WHERE s.remove_date is null
+	   ORDER BY story_board_no DESC
 	</select>
 	
 	<select id="getStoryBoard" parameterType="int" resultMap="StoryBoardResultMap">

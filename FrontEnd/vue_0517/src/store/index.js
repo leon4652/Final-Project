@@ -7,9 +7,7 @@ Vue.use(Vuex);
 
 import mapStore from './modules/mapStore';
 import myPageStore from './modules/myPageStore';
-import login from './modules/login';
 import userStore from './modules/userStore';
-
 import itemStore from './item/itemStore';
 import storyBoardStore from './modules/storyBoardStore'
 
@@ -18,7 +16,6 @@ export default new Vuex.Store({
   modules: {
     mapStore,
     myPageStore,
-    login,
     userStore,
     itemStore,
     storyBoardStore,
