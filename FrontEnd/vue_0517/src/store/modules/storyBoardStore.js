@@ -33,7 +33,6 @@ const storyBoardStore = {
     actions: {
         // story board list 불러오기
         async getStoryBoardList({ commit }) {
-            console.log("actions")
             await select (
                 ({ data }) => {
                     commit('SET_STORYBOARD_LIST' ,data)
@@ -58,6 +57,7 @@ const storyBoardStore = {
 
         // story board 작성
         async writeStoryBoard({commit}, storyBoard) {
+            console.log("여기인가")
             await write(
                 storyBoard,
                 ({data}) => {

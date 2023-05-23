@@ -178,6 +178,12 @@ const routes = [
         name: "boardview",
         component: () =>
           import(/* webpackChunkName: "storyboard" */ "@/components/board/StoryBoardView.vue"),
+      },
+      {
+        path: "write",
+        name: "write",
+        component: () =>
+          import(/* webpackChunkName: "storyboard" */ "@/components/board/item/StoryBoardInput.vue"),
       }
     ],
   },
