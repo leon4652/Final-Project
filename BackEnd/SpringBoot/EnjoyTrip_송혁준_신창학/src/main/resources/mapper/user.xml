@@ -20,6 +20,8 @@
 	 	<result column="update_date" property="updateDate" />
 	 	<result column="remove_date" property="removeDate" />
 	 	<result column="is_admin" property="isAdmin" />
+	 	<result column="sido_name" property="sidoName" />
+	 	<result column="gugun_name" property="gugunName" />
 	 </resultMap>
 	
 	<!-- 로그인 -->
@@ -31,9 +33,16 @@
 	</select>
 	
 	<select id="getUserById" parameterType="String" resultMap="UserMap">
-		SELECT *
-		  FROM user
+		SELECT u.*, s.sido_name, g.gugun_name
+		  FROM user u
+		  LEFT JOIN sido s
+		    ON u.sido = s.sido_code
+		  LEFT JOIN gugun g
+			ON u.sido = g.sido_code
 		 WHERE user_id = #{userId}
+		   AND u.sido = s.sido_code
+		   AND u.sido = g.sido_code
+		   AND u.gugun = g.gugun_code
 	</select>
 	
 	<select id="checkDuplicateId" parameterType="String" resultType="int">

@@ -1,24 +1,24 @@
-import { select, getBoard, write, deleteBoard, modify } from "@/api/storyBoard";
+import { select, getNotice, write, deleteNotice, modify } from "@/api/notice";
 
-const storyBoardStore = {
+const noticeStore = {
   namespaced: true,
   state: {
-    storyBoard: null,
-    storyBoards: [],
+    notice: null,
+    notices: [],
     isWrite: false,
     isDelete: false,
     isUpdate: false,
   },
   mutations: {
-    SET_STORYBOARD_LIST(state, storyBoards) {
+    SET_NOTICE_LIST(state, notices) {
       // 초기화
-      state.storyBoards = [];
-      storyBoards.forEach((story) => {
-        state.storyBoards.push(story);
+      state.notices = [];
+      notices.forEach((story) => {
+        state.notices.push(story);
       });
     },
-    SET_STORYBOARD(state, storyBoard) {
-      state.storyBoard = storyBoard;
+    SET_NOTICE(state, notice) {
+      state.notice = notice;
     },
     SET_IS_WRITE(state, isWrite) {
       state.isWrite = isWrite;
@@ -31,23 +31,23 @@ const storyBoardStore = {
     },
   },
   actions: {
-    // story board list 불러오기
-    async getStoryBoardList({ commit }) {
+    // notice list 불러오기
+    async getNoticeList({ commit }) {
       await select(
         ({ data }) => {
-          commit("SET_STORYBOARD_LIST", data);
+          commit("SET_NOTICE_LIST", data);
         },
         (error) => {
           console.log(error);
         }
       );
     },
-    // story board 정보 불러오기 -> view page로 넘길 것
-    async getStoryBoard({ commit }, storyBoardNo) {
-      await getBoard(
-        storyBoardNo,
+    // notice 정보 불러오기 -> view page로 넘길 것
+    async getNotice({ commit }, noticeNo) {
+      await getNotice(
+        noticeNo,
         ({ data }) => {
-          commit("SET_STORYBOARD", data);
+          commit("SET_NOTICE", data);
         },
         (error) => {
           console.log(error);
@@ -55,11 +55,10 @@ const storyBoardStore = {
       );
     },
 
-    // story board 작성
-    async writeStoryBoard({ commit }, storyBoard) {
-      console.log("여기인가");
+    // notice 작성
+    async writeNotice({ commit }, notice) {
       await write(
-        storyBoard,
+        notice,
         ({ data }) => {
           if (data.message === "success") {
             commit("SET_IS_WRITE", true);
@@ -71,10 +70,10 @@ const storyBoardStore = {
       );
     },
 
-    // story board 삭제
-    async deleteStoryBoard({ commit }, storyBoardNo) {
-      await deleteBoard(
-        storyBoardNo,
+    // notice 삭제
+    async deleteNoti({ commit }, noticeNo) {
+      await deleteNotice(
+        noticeNo,
         ({ data }) => {
           if (data.message === "success") {
             commit("SET_IS_DELETE", true);
@@ -86,10 +85,10 @@ const storyBoardStore = {
       );
     },
 
-    // story board 수정
-    async modifyStoryBoard({ commit }, storyBoard) {
+    // notice 수정
+    async modifyNotice({ commit }, notice) {
       await modify(
-        storyBoard,
+        notice,
         ({ data }) => {
           if (data.message === "success") {
             commit("SET_IS_UPDATE", true);
@@ -103,4 +102,4 @@ const storyBoardStore = {
   },
 };
 
-export default storyBoardStore;
+export default noticeStore;

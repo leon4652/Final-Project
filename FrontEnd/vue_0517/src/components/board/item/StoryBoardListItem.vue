@@ -9,10 +9,10 @@
 </template>
 
 <script>
-import moment from 'moment';
+import moment from "moment";
 
 export default {
-  name: 'StoryBoardListItem',
+  name: "StoryBoardListItem",
   props: {
     storyBoardNo: Number,
     userNo: Number,
@@ -24,12 +24,12 @@ export default {
   },
   filters: {
     dateFormat(registDate) {
-      return moment(new Date(registDate)).format('YY.MM.DD');
+      return moment(new Date(registDate)).format("YY.MM.DD");
     },
   },
   methods: {
     boardView() {
-      this.$router.push('/storyboard/info/' + this.storyBoardNo);
+      this.$router.push("/storyboard/info/" + this.storyBoardNo);
     },
   },
 };

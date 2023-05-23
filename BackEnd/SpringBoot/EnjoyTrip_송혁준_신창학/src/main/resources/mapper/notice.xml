@@ -13,13 +13,18 @@
   <result property="registDate" column="regist_date"/>
   <result property="updateDate" column="update_date"/>
   <result property="removeDate" column="remove_date"/>
+	<result property="userName" column="user_name"/>
+	<result property="userId" column="user_id"/>
 </resultMap>
 
 
  <select id="selectNotice" resultType="Notice">
- 	 select *
- 	 from notice
- 	 where remove_date is null
+	 SELECT n.*, u.user_name, u.user_id
+	   FROM notice n
+	   LEFT JOIN user u
+	  USING (user_no)
+	  WHERE n.remove_date is null
+	  ORDER BY notice_no DESC
  </select>
 
 <insert id="writeNotice">
@@ -41,9 +46,11 @@
 </update>
 
 <select id="getNotice" parameterType="int" resultType="Notice">
-	select *
-	  from notice
-	 where notice_no = #{noticeNo} and remove_date is null
+	select n.*, u.user_name, u.user_id
+	  from notice n
+	  join user u
+	    on n.user_no = u.user_no
+	 where notice_no = #{noticeNo} and n.remove_date is null
 </select>
 
 </mapper>

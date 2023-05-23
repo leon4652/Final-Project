@@ -10,7 +10,7 @@ public interface NoticeService {
 
 	void writeNotice(Notice param) throws Exception;
 
-	void deleteNotice(int noticeNo) throws Exception;
+	boolean deleteNotice(int noticeNo) throws Exception;
 
 	void updateNotice(Notice param) throws Exception;
 

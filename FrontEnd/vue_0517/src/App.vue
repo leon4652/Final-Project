@@ -3,6 +3,7 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/storyboard">자유게시판</router-link> |
+      <router-link to="/notice">공지사항</router-link> |
       <router-link to="/searchMap">여행지 검색</router-link> |
       <router-link to="/searchResult">여행지 검색 결과</router-link> |
 
@@ -21,6 +22,8 @@
 <script>
 import { mapMutations, mapState } from 'vuex';
 
+const userStore = 'userStore';
+
 export default {
   name: 'app',
   components: {},
@@ -28,13 +31,21 @@ export default {
     return {};
   },
   computed: {
-    ...mapState('userStore', ['isLogin']),
+    ...mapState(userStore, ['isLogin']),
   },
   created() {},
   methods: {
-    ...mapMutations('userStore', ['SET_LOGOUT']),
+    ...mapMutations(userStore, ['SET_LOGOUT']),
     logout() {
+      // 로그아웃하면 바로 로그아웃만 되는 문제 발생
+      // 밑에 코드를 다 실행 안함
+      console.log("delete")
       this.SET_LOGOUT();
+      const currentRoute = this.$route.path;
+      console.dir(currentRoute);
+      if (currentRoute.includes('mypage')) {
+        this.$route.push({name : 'Home'})
+      }
     },
   },
 };
