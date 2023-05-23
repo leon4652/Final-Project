@@ -33,7 +33,7 @@ export default {
       markers: [],
       maplevel: 7,
       geocoder: null,
-      makerInfo:[], //markerInfo 정보 저장
+      makerInfo: [], //markerInfo 정보 저장
     };
   },
 
@@ -79,7 +79,6 @@ export default {
           if (status === kakao.maps.services.Status.OK) {
             var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
             this.SET_LAN_LAT({ lat: coords.getLat(), lan: coords.getLng() });
-            this.loadMap(); //지도 다시 실행
           }
         }
       );
@@ -111,7 +110,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("mapStore",["getDetailsFromLatLng", "myRoute"]),
+    ...mapActions("mapStore", ["getDetailsFromLatLng", "myRoute"]),
     ...mapMutations("mapStore", [
       "SET_LAN_LAT",
       "SET_GUGUN_LIST",
@@ -119,7 +118,7 @@ export default {
       "SET_ATTINFO_LIST",
       "SET_NOW_CONTENT_TYPE",
       "SET_IS_TRIP_PLAN",
-      "SET_CNT"
+      "SET_CNT",
     ]),
     // api 불러오기
     loadScript() {
@@ -234,8 +233,8 @@ export default {
         //클릭이벤트 : markerName으로 저장. gugunUseName 처리 이후 라우터뷰 푸쉬
         kakao.maps.event.addListener(marker, "click", async () => {
           await this.getGugunUseName(markerName[index]); //정보 저장
-          const path = '/rsMain'; // 경로와 쿼리 파라미터 설정
-          
+          const path = "/rsMain"; // 경로와 쿼리 파라미터 설정
+
           this.$router.push(path); // 다른 뷰로 이동
         });
       });
@@ -253,7 +252,7 @@ export default {
     async getGugunUseName(regionName) {
       axios
         .get(
-          `http://localhost/api/attraction/search/${regionName}/${this.sidoCode}`
+          `http://localhost/api/attraction/search/name/${regionName}/${this.sidoCode}`
         )
         .then((response) => {
           this.SET_GUGUN({
@@ -327,15 +326,23 @@ export default {
         }
 
         var infowindow = new kakao.maps.InfoWindow({
-        content: `<div style=
+          content: `<div style=
         "max-width: 300px; background-color: #fff; border:1px solid #ccc; border-radius: 10px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); color: #333; 
         font-family: Arial, sans-serif; font-size: 16px; padding: 10px;">
-          <h3 style="font-size: 18px; font-weight: bold;">${this.attInfoList[i].title}</h3>
-          <span style="color: #0000FF; font-size: 14px;">${this.attInfoList[i].addr1}</span><br>
+          <h3 style="font-size: 18px; font-weight: bold;">${
+            this.attInfoList[i].title
+          }</h3>
+          <span style="color: #0000FF; font-size: 14px;">${
+            this.attInfoList[i].addr1
+          }</span><br>
           ${overview}<br>
-          ${this.attInfoList[i].firstImage ? `<img src="${this.attInfoList[i].firstImage}" style="max-width: 250px; height: 200px;" alt="Image">` : ''}
+          ${
+            this.attInfoList[i].firstImage
+              ? `<img src="${this.attInfoList[i].firstImage}" style="max-width: 250px; height: 200px;" alt="Image">`
+              : ""
+          }
         </div>`, // 인포윈도우에 표시할 내용
-      });
+        });
 
         //4. 마커 이벤트 처리
         kakao.maps.event.addListener(
@@ -350,16 +357,26 @@ export default {
           this.closeInfoWindowListener(infowindow)
         );
 
-        if(!this.isTripPlan) {
-          kakao.maps.event.addListener(marker, 'rightclick', function() {
-            alert(i + " : " + this.attInfoList[i].title);
-          }.bind(this));
-        }
-        else {
+        if (!this.isTripPlan) {
+          kakao.maps.event.addListener(
+            marker,
+            "rightclick",
+            function () {
+              alert(i + " : " + this.attInfoList[i].title);
+            }.bind(this)
+          );
+        } else {
           //마커의 주소값을 찾고, 이를 기반으로 axios 통신을 통해 해당 관광지 정보를 산출한다.
-          kakao.maps.event.addListener(marker, 'rightclick', function() {
-            this.getDetailsFromLatLng({lat : marker.getPosition().getLat(), lan : marker.getPosition().getLng()});
-          }.bind(this));
+          kakao.maps.event.addListener(
+            marker,
+            "rightclick",
+            function () {
+              this.getDetailsFromLatLng({
+                lat: marker.getPosition().getLat(),
+                lan: marker.getPosition().getLng(),
+              });
+            }.bind(this)
+          );
         }
       }
     },
