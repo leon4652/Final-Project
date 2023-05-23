@@ -29,10 +29,12 @@
 	</select>
 	
 	<select id="getStoryBoard" parameterType="int" resultMap="StoryBoardResultMap">
-		SELECT *
-		  FROM story_board
+		SELECT s.*, u.user_name, u.user_id
+		  FROM story_board s
+		  JOIN user u
+		 USING (user_no)
 		 WHERE story_board_no = #{storyBoardNo} 
-		   AND remove_date is null
+		   AND s.remove_date is null
 	</select> 
 	
 	<update id="deleteStoryBoard" parameterType="int">

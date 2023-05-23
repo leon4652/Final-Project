@@ -30,11 +30,11 @@
                 <b-form-input id="email" type="email" :value="users.email0" readonly></b-form-input>
               </b-form-group>
               <b-form-group label="시/도:" label-for="sido">
-                <b-form-input id="sido" :value="users.sido" readonly></b-form-input>
+                <b-form-input id="sido" :value="users.sidoName" readonly></b-form-input>
               </b-form-group>
 
               <b-form-group label="구/군:">
-                <b-form-input id="gugun" :value="users.gugun" readonly></b-form-input>
+                <b-form-input id="gugun" :value="users.gugunName" readonly></b-form-input>
               </b-form-group>
 
               <b-form-group label="생년월일:" label-for="birth">
@@ -172,6 +172,7 @@ export default {
     // 마이페이지 접근 시 로그인된 회원의 정보를 가져와야함
     await this.getUser();
     this.users = this.user;
+    console.dir(this.user)
 
     // selectedDate를 YYYY-MM-DD 형식으로 변경
     const year = String(this.user.birthYear);

@@ -7,11 +7,11 @@
       <div class="cell-right">
         <a href="#">회원가입 |</a>
         <a href="#">글 목록 |</a>
-        <router-link :to="{ name: 'storyboardWrite' }">글 작성 |</router-link>
+        <router-link :to="{ name: 'noticeWrite' }">글 작성 |</router-link>
       </div>
     </header> -->
 
-    <h1 class="con">게시글 목록</h1>
+    <h1 class="con">공지사항</h1>
     <section class="article-list table-common con">
       <table border="1">
         <thead>
@@ -24,9 +24,10 @@
           </tr>
         </thead>
         <tbody>
-          <story-board-list-item v-for="board in storyBoards" :key="board.boardNo" v-bind="board" />
+          <notice-list-item v-for="notice in noticeList" :key="notice.noticeNo" v-bind="notice" />
         </tbody>
       </table>
+
       <b-col class="text-right">
         <b-button variant="info" @click="moveWrite">글 작성</b-button>
       </b-col>
@@ -35,23 +36,23 @@
 </template>
 
 <script>
-import StoryBoardListItem from "@/components/board/item/StoryBoardListItem.vue";
 import { mapActions, mapState } from "vuex";
+import NoticeListItem from "./item/NoticeListItem.vue";
 
-const storyBoardStore = "storyBoardStore";
+const noticeStore = "noticeStore";
 
 export default {
-  name: "StoryBoardList",
+  name: "NoticeList",
   components: {
-    StoryBoardListItem,
+    NoticeListItem,
   },
   data() {
     return {
-      boards: [],
+      noticeList: [],
     };
   },
   computed: {
-    ...mapState(storyBoardStore, ["storyBoards"]),
+    ...mapState(noticeStore, ["notices"]),
   },
   created() {
     // let param = {
@@ -60,13 +61,13 @@ export default {
     //   key: null,
     //   word: null,
     // };
-    this.getStoryBoardList();
-    this.boards = this.storyBoards;
+    this.getNoticeList();
+    this.noticeList = this.notices;
   },
   methods: {
-    ...mapActions(storyBoardStore, ["getStoryBoardList"]),
+    ...mapActions(noticeStore, ["getNoticeList"]),
     moveWrite() {
-      this.$router.push({ name: "storyboardWrite" });
+      this.$router.push({ name: "noticeWrite" });
     },
   },
 };

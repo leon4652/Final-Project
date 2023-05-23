@@ -16,7 +16,21 @@ public class User {
 	private String updateDate;
 	private String removeDate;
 	private int isAdmin;
-	
+	private String sidoName;
+	private String gugunName;
+
+	public void setSidoName(String sidoName) {
+		this.sidoName = sidoName;
+	}
+	public void setGugunName(String gugunName) {
+		this.gugunName = gugunName;
+	}
+	public String getSidoName() {
+		return sidoName;
+	}
+	public String getGugunName() {
+		return gugunName;
+	}
 	public int getUserNo() {
 		return userNo;
 	}

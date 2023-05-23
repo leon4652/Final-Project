@@ -34,7 +34,6 @@ public class StoryBoardServiceImpl implements StoryBoardService {
 		} catch (SQLException e) {
 			check = false;
 		}
-		System.out.println(check);
 		return check;
 	}
 

@@ -25,20 +25,21 @@ import com.enjoy.trip.service.UserService;
 public class UserController {
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
-	
+
 	private UserService userService;
 	private JWTService jwtService;
-	
+
 	public UserController(UserService userService, JWTService jwtService) {
 		this.userService = userService;
 		this.jwtService = jwtService;
 	}
-	
+
 	// 로그인
 	@PostMapping("/login")
 	public ResponseEntity<Map<String, Object>> login(@RequestBody  User user) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
+		System.out.println(user.toString());
 		try {
 			User loginUser = userService.getUser(user);
 			if (loginUser != null) {
@@ -58,7 +59,7 @@ public class UserController {
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	
+
 	// 회원 상세 정보 가져오기
 	@GetMapping("/info/{userId}")
 	public ResponseEntity<Map<String, Object>> getInfo(@PathVariable("userId") String userId, HttpServletRequest request) {
@@ -80,7 +81,7 @@ public class UserController {
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	
+
 	// 로그아웃
 	@GetMapping("/logout/{userId}")
 	public ResponseEntity<?> removeToken(@PathVariable("userId") String userId) {
@@ -116,13 +117,13 @@ public class UserController {
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	
+
 	//아이디중복확인
 	@GetMapping("checkDuplicateId/{userId}")
 	public boolean checkDuplicateId(@PathVariable("userId") String userId) throws Exception {
 		return userService.checkDuplicateId(userId);
 	}
-	
+
 	//회원가입
 	@PostMapping("signUp")
 	public ResponseEntity<?> signUp(@RequestBody User user) throws Exception {
@@ -132,7 +133,7 @@ public class UserController {
 		else resultMap.put("message", FAIL);
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	
+
 	//비밀번호찾기
 	@PostMapping("findPw")
 	public User findPwByUser(@RequestBody User user) throws Exception {

@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "StoryBoard",
+  name: "NoticeBoard",
   components: {},
   data() {
     return {
