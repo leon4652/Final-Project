@@ -5,6 +5,7 @@
         <a href="#">회원가입 |</a>
         <a href="#">글 목록 |</a>
         <router-link :to="{ name: 'write' }">글 작성 |</router-link>
+
         <a href="#">글 작성 |</a>
       </div>
     </header>
@@ -22,7 +23,7 @@
           </tr>
         </thead>
         <tbody>
-          <story-board-list-item v-for="board in boards" :key="board.boardNo" v-bind="board" />
+          <story-board-list-item v-for="board in storyBoards" :key="board.boardNo" v-bind="board" />
         </tbody>
       </table>
     </section>

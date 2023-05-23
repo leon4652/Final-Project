@@ -47,6 +47,7 @@
 
 <script>
 import { mapActions } from 'vuex';
+import jwt_decode from 'jwt-decode';
 
 const storyBoardStore = "storyBoardStore";
 
@@ -86,6 +87,12 @@ export default {
     //   );
     //   this.isUserid = true;
     // }
+    /**
+     * token 뽑아서 id 넣기
+     * 
+     */
+    let user = jwt_decode(sessionStorage.getItem('access-token'));
+    this.board.userId = user.userId;
   },
   methods: {
     ...mapActions(storyBoardStore, ['writeStoryBoard']),

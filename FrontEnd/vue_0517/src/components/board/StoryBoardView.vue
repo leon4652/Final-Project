@@ -54,7 +54,7 @@ export default {
     //   return "";
     // },
   },
-  created() {
+  async created() {
     this.board = {};
     let param = this.$route.params.storyBoardNo;
     // getArticle(
@@ -66,7 +66,7 @@ export default {
     //     console.log(error);
     //   }
     // );
-    this.getStoryBoard(param)
+    await this.getStoryBoard(param)
     this.board = this.storyBoard;
   },
   methods: {
