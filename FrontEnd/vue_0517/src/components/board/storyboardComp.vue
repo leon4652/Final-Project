@@ -2,9 +2,10 @@
   <div>
     <header class="top-menu con row">
       <div class="cell-right">
-        <a href="#">회원가입</a>
-        <a href="#">글 목록</a>
-        <a href="#">글 작성</a>
+        <a href="#">회원가입 |</a>
+        <a href="#">글 목록 |</a>
+        <router-link :to="{ name: 'write' }">글 작성 |</router-link>
+        <a href="#">글 작성 |</a>
       </div>
     </header>
 
@@ -54,10 +55,8 @@ export default {
     //   key: null,
     //   word: null,
     // };
-    console.log("created")
     this.getStoryBoardList();
     this.boards = this.storyBoards;
-    console.dir(this.boards)
   },
   methods : {
     ...mapActions(storyBoardStore, ['getStoryBoardList']),
