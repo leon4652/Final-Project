@@ -53,6 +53,7 @@ const storyBoardStore = {
                     console.log(error);
                 }
             )
+            
         },
 
         // story board 작성

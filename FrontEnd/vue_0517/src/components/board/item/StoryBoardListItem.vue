@@ -1,8 +1,9 @@
 <template>
   <tr>
     <td>{{ storyBoardNo }}</td>
-    <th class="text-left">
-      <router-link :to="{ name: 'boardview', params: { storyBoardNo: storyBoardNo } }">{{ storyBoardTitle }}</router-link>
+    <th class="text-left" @click="boardView">
+      {{ storyBoardTitle }}
+      <!-- <router-link :to="{ name: 'boardview', params: { storyBoardNo: storyBoardNo } }">{{ storyBoardTitle }}</router-link> -->
     </th>
     <td>{{ storyBoardHit }}</td>
     <td>{{ userNo }}</td>
@@ -11,10 +12,10 @@
 </template>
 
 <script>
-import moment from "moment";
+import moment from 'moment';
 
 export default {
-  name: "StoryBoardListItem",
+  name: 'StoryBoardListItem',
   props: {
     storyBoardNo: Number,
     userNo: String,
@@ -24,7 +25,12 @@ export default {
   },
   filters: {
     dateFormat(registDate) {
-      return moment(new Date(registDate)).format("YY.MM.DD");
+      return moment(new Date(registDate)).format('YY.MM.DD');
+    },
+  },
+  methods: {
+    boardView() {
+      this.$router.push('/storyboard/info/' + this.storyBoardNo);
     },
   },
 };
