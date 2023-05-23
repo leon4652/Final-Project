@@ -1,5 +1,8 @@
 <template>
   <div>
+    <!-- 
+      글 작성 버튼으로 바꾸던지 수정 필요 
+    -->
     <header class="top-menu con row">
       <div class="cell-right">
         <a href="#">회원가입 |</a>
@@ -56,7 +59,6 @@ export default {
     // };
     this.getStoryBoardList();
     this.boards = this.storyBoards;
-    console.dir(this.boards)
   },
   methods : {
     ...mapActions(storyBoardStore, ['getStoryBoardList']),
