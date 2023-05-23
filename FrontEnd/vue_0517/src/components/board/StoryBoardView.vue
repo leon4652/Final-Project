@@ -8,13 +8,12 @@
     <b-row class="mb-1">
       <b-col class="text-left">
         <b-button variant="outline-primary" @click="moveList">목록</b-button>
-        <b-button variant="outline-info" size="sm" @click="moveModifyArticle" class="mr-2">글수정</b-button>
+      </b-col>
+      <!-- 현재 로그인한 사람과 글쓴이가 같은 사람인지 확인 -->
+      <b-col class="text-right" v-if="isWriter">
+        <b-button variant="outline-info" size="sm" @click="moveModifyBoard" class="mr-2">글수정</b-button>
         <b-button variant="outline-danger" size="sm" @click="deleteBoard">글삭제</b-button>
       </b-col>
-      <!-- <b-col class="text-right" v-if="userInfo.userid === board.userNo">
-        <b-button variant="outline-info" size="sm" @click="moveModifyArticle" class="mr-2">글수정</b-button>
-        <b-button variant="outline-danger" size="sm" @click="deleteArticle">글삭제</b-button>
-      </b-col> -->
     </b-row>
     <b-row class="mb-1">
       <b-col>
@@ -37,6 +36,7 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+import jwt_decode from 'jwt-decode';
 
 const storyBoardStore = "storyBoardStore";
 
@@ -45,62 +45,40 @@ export default {
   data() {
     return {
       board: {},
+      // 글쓴이와 현재 접속자가 같은지 확인하기 위한 변수
+      isWriter: "",
     };
   },
   computed: {
     ...mapState(storyBoardStore, ["storyBoard", 'isDelete', 'isUpdate']),
-    // message() {
-    //   if (this.article.content) return this.article.content.split("\n").join("<br>");
-    //   return "";
-    // },
   },
-  created() {
+  async created() {
+    // 기존에 있는 board를 초기화
     this.board = {};
+    // 링크에 있는 parameter인 storyBoardNo를 가져옴
     let param = this.$route.params.storyBoardNo;
-    // getArticle(
-    //   param,
-    //   ({ data }) => {
-    //     this.article = data;
-    //   },
-    //   (error) => {
-    //     console.log(error);
-    //   }
-    // );
-    this.getStoryBoard(param)
+    await this.getStoryBoard(param)
     this.board = this.storyBoard;
+
+    // token에 있는 user 정보를 decode
+    let user = jwt_decode(sessionStorage.getItem('access-token'));
+
+    if (this.board.userNo === user.userNo) this.isWriter = true;
+    else this.isWriter = false;
   },
   methods: {
     ...mapActions(storyBoardStore, ['getStoryBoard', 'deleteStoryBoard']),
-    moveModifyArticle() {
+    moveModifyBoard() {
       this.$router.replace({
-        name: "boardmodify",
-        params: { articleno: this.article.articleno },
+        name: "modify",
+        params: { storyBoardNo: this.board.storyBoardNo },
       });
     },
-    deleteBoard() {
+    async deleteBoard() {
+      // 글 삭제 후 목록 리스트로 이동
       if (confirm("정말로 삭제?")) {
-        console.log("여기는")
-        this.deleteStoryBoard(this.board.storyBoardNo)
-        console.log("확인")
-        // console.log("여기")
-        // if (this.isDelete === true) {
-        //     console.log("성공")
-        // }
-
-        // 삭제 성공하면 다시 목록으로 보내기
-        // if (this.isDelete === true){
-        //     this.this.$router.replace({
-        //     name: "boarddelete",
-        //     params: { articleno: this.article.articleno },
-        //     });
-        //     };
-        // }
-
-
-        // this.$router.replace({
-        //   name: "boarddelete",
-        //   params: { articleno: this.article.articleno },
-        // });
+        await this.deleteStoryBoard(this.board.storyBoardNo)
+        this.moveList();
       }
     },
     moveList() {

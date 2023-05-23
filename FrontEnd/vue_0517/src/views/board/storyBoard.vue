@@ -1,24 +1,21 @@
 <template>
   <b-container>
-    <storyboard-comp></storyboard-comp>
     <router-view></router-view>
-    </b-container>
+  </b-container>
 </template>
-  
-  <script>
-  import storyboardComp from "@/components/board/storyboardComp.vue";
-  export default {
-    name: "storyBoard",
-    components: { storyboardComp },
-    data() {
-      return {
-        message: "",
-      };
-    },
-    created() {},
-    methods: {},
-  };
-  </script>
-  
-  <style scoped></style>
-  
+
+<script>
+export default {
+  name: 'StoryBoard',
+  components: {},
+  data() {
+    return {
+      message: '',
+    };
+  },
+  created() {},
+  methods: {},
+};
+</script>
+
+<style scoped></style>

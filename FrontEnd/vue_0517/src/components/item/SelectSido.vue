@@ -28,13 +28,8 @@ export default {
   },
   computed: {
     ...mapState(itemStore, ['sidos']),
-    // sidos() {
-    //   return this.$store.state.sidos;
-    // },
   },
   created() {
-    // this.$store.dispatch("getSido");
-    // this.sidoList();
     this.CLEAR_SIDO_LIST();
     this.getSido();
   },
@@ -42,7 +37,6 @@ export default {
     ...mapActions(itemStore, ['getSido']),
     ...mapMutations(itemStore, ['CLEAR_SIDO_LIST']),
     changeSido() {
-      // console.log("시도 선택 ::: " + this.sidoCode);
       this.$emit('select-sido', this.sidoCode);
     },
   },

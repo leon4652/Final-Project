@@ -12,7 +12,14 @@ public class StoryBoard {
 	private String updateDate;
 	private String removeDate;
 	private String userName;
+	private String userId;
 	
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	public int getStoryBoardNo() {
 		return storyBoardNo;
 	}

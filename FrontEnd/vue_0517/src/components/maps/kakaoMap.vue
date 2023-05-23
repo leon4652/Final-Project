@@ -5,25 +5,27 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from "vuex";
-import axios from "axios";
+import { mapState, mapMutations, mapActions } from 'vuex';
+import axios from 'axios';
+const baseURL = process.env.VUE_APP_API_BASE_URL;
+
 export default {
-  name: "kakaoMap",
+  name: 'kakaoMap',
   components: {},
   computed: {
-    ...mapState("mapStore", [
-      "cnt",
-      "sidoCode",
-      "sidoName",
-      "gugunList",
-      "gugunCode",
-      "gugunName",
-      "lan",
-      "lat",
-      "nowContentType",
-      "attInfoList",
-      "contentTypeList",
-      "isTripPlan",
+    ...mapState('mapStore', [
+      'cnt',
+      'sidoCode',
+      'sidoName',
+      'gugunList',
+      'gugunCode',
+      'gugunName',
+      'lan',
+      'lat',
+      'nowContentType',
+      'attInfoList',
+      'contentTypeList',
+      'isTripPlan',
     ]),
   },
   data() {
@@ -33,7 +35,7 @@ export default {
       markers: [],
       maplevel: 7,
       geocoder: null,
-      makerInfo:[], //markerInfo 정보 저장
+      makerInfo: [], //markerInfo 정보 저장
     };
   },
 
@@ -44,7 +46,7 @@ export default {
 
       var geocoder = new kakao.maps.services.Geocoder();
       var searchName = this.sidoName;
-      if (this.sidoCode === 5) searchName = "광주광역시"; //광주의 경우 동명 처리
+      if (this.sidoCode === 5) searchName = '광주광역시'; //광주의 경우 동명 처리
 
       geocoder.addressSearch(searchName, (result, status) => {
         if (status === kakao.maps.services.Status.OK) {
@@ -56,7 +58,7 @@ export default {
 
       //바뀐 sidoCode를 토대로 axios를 통해 해당 시도의 구군리스트를 담아 vuex에 배열 형태로 저장
       axios
-        .get(`http://localhost/api/attraction/gugun/${this.sidoCode}`)
+        .get(baseURL + `/attraction/gugun/${this.sidoCode}`)
         .then((response) => {
           const getGugunList = response.data;
           this.SET_GUGUN_LIST(getGugunList); //구군리스트 등록
@@ -73,16 +75,12 @@ export default {
       this.maplevel = 7; //맵사이즈 변경
 
       var geocoder = new kakao.maps.services.Geocoder();
-      geocoder.addressSearch(
-        this.sidoName + " " + this.gugunName,
-        (result, status) => {
-          if (status === kakao.maps.services.Status.OK) {
-            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-            this.SET_LAN_LAT({ lat: coords.getLat(), lan: coords.getLng() });
-            this.loadMap(); //지도 다시 실행
-          }
+      geocoder.addressSearch(this.sidoName + ' ' + this.gugunName, (result, status) => {
+        if (status === kakao.maps.services.Status.OK) {
+          var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+          this.SET_LAN_LAT({ lat: coords.getLat(), lan: coords.getLng() });
         }
-      );
+      });
     },
   },
   created() {},
@@ -111,24 +109,24 @@ export default {
     }
   },
   methods: {
-    ...mapActions("mapStore",["getDetailsFromLatLng", "myRoute"]),
-    ...mapMutations("mapStore", [
-      "SET_LAN_LAT",
-      "SET_GUGUN_LIST",
-      "SET_GUGUN",
-      "SET_ATTINFO_LIST",
-      "SET_NOW_CONTENT_TYPE",
-      "SET_IS_TRIP_PLAN",
-      "SET_CNT"
+    ...mapActions('mapStore', ['getDetailsFromLatLng', 'myRoute']),
+    ...mapMutations('mapStore', [
+      'SET_LAN_LAT',
+      'SET_GUGUN_LIST',
+      'SET_GUGUN',
+      'SET_ATTINFO_LIST',
+      'SET_NOW_CONTENT_TYPE',
+      'SET_IS_TRIP_PLAN',
+      'SET_CNT',
     ]),
     // api 불러오기
     loadScript() {
-      const script = document.createElement("script");
+      const script = document.createElement('script');
       script.src =
-        "//dapi.kakao.com/v2/maps/sdk.js?appkey=" +
+        '//dapi.kakao.com/v2/maps/sdk.js?appkey=' +
         process.env.VUE_APP_KAKAO_MAP_API_KEY +
-        "&libraries=services,clusterer,drawing" +
-        "&autoload=false";
+        '&libraries=services,clusterer,drawing' +
+        '&autoload=false';
       /* global kakao */
       script.onload = () => window.kakao.maps.load(this.loadMap);
 
@@ -136,7 +134,7 @@ export default {
     },
     // 맵 출력하기
     loadMap() {
-      const container = document.getElementById("map");
+      const container = document.getElementById('map');
       const options = {
         center: new window.kakao.maps.LatLng(this.lat, this.lan),
         level: this.maplevel,
@@ -150,10 +148,7 @@ export default {
 
       // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성
       var mapTypeControl = new window.kakao.maps.MapTypeControl();
-      this.map.addControl(
-        mapTypeControl,
-        window.kakao.maps.ControlPosition.TOPRIGHT
-      ); // kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의, TOPRIGHT는 오른쪽 위를 의미한다.
+      this.map.addControl(mapTypeControl, window.kakao.maps.ControlPosition.TOPRIGHT); // kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의, TOPRIGHT는 오른쪽 위를 의미한다.
     },
 
     // 지정한 위치에 마커 불러오기
@@ -165,20 +160,17 @@ export default {
       const getAddressSearch = (gugunName) => {
         return new Promise((resolve, reject) => {
           const geocoder = new kakao.maps.services.Geocoder();
-          geocoder.addressSearch(
-            this.sidoName + " " + gugunName,
-            (result, status) => {
-              if (status === kakao.maps.services.Status.OK) {
-                const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-                const mLat = coords.getLat();
-                const mLan = coords.getLng();
-                const markerPosition = new kakao.maps.LatLng(mLat, mLan);
-                resolve(markerPosition); // 성공적으로 좌표를 얻으면 resolve 호출
-              } else {
-                reject(status); // 좌표를 얻지 못하면 reject 호출
-              }
+          geocoder.addressSearch(this.sidoName + ' ' + gugunName, (result, status) => {
+            if (status === kakao.maps.services.Status.OK) {
+              const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+              const mLat = coords.getLat();
+              const mLan = coords.getLng();
+              const markerPosition = new kakao.maps.LatLng(mLat, mLan);
+              resolve(markerPosition); // 성공적으로 좌표를 얻으면 resolve 호출
+            } else {
+              reject(status); // 좌표를 얻지 못하면 reject 호출
             }
-          );
+          });
         });
       };
 
@@ -190,7 +182,7 @@ export default {
             markerPositions.push(markerPosition); //배열에 값 추가
             markerName.push(gugun.gugunName);
           } catch (error) {
-            console.error("Error occurred during addressSearch:", error);
+            console.error('Error occurred during addressSearch:', error);
           }
         })
       );
@@ -198,14 +190,10 @@ export default {
       // 모든 마커 위치 정보가 추가된 후에 추가 로직 실행
       markerPositions.forEach((markerPosition, index) => {
         // 마커의 이미지정보를 가지고 있는 마커이미지를 생성합니다
-        var imageSrc = "/assets/pin12.png",
+        var imageSrc = '/assets/pin12.png',
           imageSize = new kakao.maps.Size(20, 24), // 마커이미지의 크기입니다
           imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다.
-        var markerImage = new kakao.maps.MarkerImage(
-          imageSrc,
-          imageSize,
-          imageOption
-        );
+        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 
         //마커 생성
         const marker = new kakao.maps.Marker({
@@ -223,19 +211,19 @@ export default {
         //마커 이벤트
         kakao.maps.event.addListener(
           marker,
-          "mouseover",
+          'mouseover',
           this.makeOverListener(this.map, marker, infowindow)
         );
 
-        kakao.maps.event.addListener(marker, "mouseout", function () {
+        kakao.maps.event.addListener(marker, 'mouseout', function () {
           infowindow.close();
         });
 
         //클릭이벤트 : markerName으로 저장. gugunUseName 처리 이후 라우터뷰 푸쉬
-        kakao.maps.event.addListener(marker, "click", async () => {
+        kakao.maps.event.addListener(marker, 'click', async () => {
           await this.getGugunUseName(markerName[index]); //정보 저장
           const path = '/rsMain'; // 경로와 쿼리 파라미터 설정
-          
+
           this.$router.push(path); // 다른 뷰로 이동
         });
       });
@@ -252,9 +240,7 @@ export default {
     },
     async getGugunUseName(regionName) {
       axios
-        .get(
-          `http://localhost/api/attraction/search/${regionName}/${this.sidoCode}`
-        )
+        .get(baseURL + `/attraction/search/name/${regionName}/${this.sidoCode}`)
         .then((response) => {
           this.SET_GUGUN({
             gugunCode: response.data.gugunCode,
@@ -270,7 +256,7 @@ export default {
     async loadContentMaker(code) {
       // //콘텐츠 타입 변경 시 해당 정보에 맞는 마커 생성
       //0. 지도 객체 생성
-      const container = document.getElementById("map");
+      const container = document.getElementById('map');
       const options = {
         center: new window.kakao.maps.LatLng(this.lat, this.lan),
         level: this.maplevel,
@@ -283,14 +269,11 @@ export default {
 
       // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성
       var mapTypeControl = new window.kakao.maps.MapTypeControl();
-      this.map.addControl(
-        mapTypeControl,
-        window.kakao.maps.ControlPosition.TOPRIGHT
-      ); // kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의, TOPRIGHT는 오른쪽 위를 의미한다.
+      this.map.addControl(mapTypeControl, window.kakao.maps.ControlPosition.TOPRIGHT); // kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의, TOPRIGHT는 오른쪽 위를 의미한다.
 
       // 1. 비동기 탐색 : 구군 마커 저장
       const response = await axios.get(
-        `http://localhost/api/attraction/view/${code}/${this.sidoCode}/${this.gugunCode}`
+        baseURL + `/attraction/view/${code}/${this.sidoCode}/${this.gugunCode}`
       );
       this.SET_ATTINFO_LIST(response.data);
 
@@ -298,15 +281,10 @@ export default {
       for (let i = 0; i < this.attInfoList.length; i++) {
         // 1. 마커이미지를 생성
 
-        var imageSrc =
-            "/assets/pin" + this.attInfoList[i].contentTypeId + ".png",
+        var imageSrc = '/assets/pin' + this.attInfoList[i].contentTypeId + '.png',
           imageSize = new kakao.maps.Size(30, 30), // 마커이미지의 크기입니다
           imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다.
-        var markerImage = new kakao.maps.MarkerImage(
-          imageSrc,
-          imageSize,
-          imageOption
-        );
+        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
 
         // 2. 마커 생성
         const marker = new kakao.maps.Marker({
@@ -323,43 +301,53 @@ export default {
         var maxOverviewLength = 30; // 최대 표시 길이 설정
         var overview = this.attInfoList[i].overview;
         if (overview.length > maxOverviewLength) {
-          overview = overview.substring(0, maxOverviewLength) + "...(생략)";
+          overview = overview.substring(0, maxOverviewLength) + '...(생략)';
         }
 
         var infowindow = new kakao.maps.InfoWindow({
-        content: `<div style=
+          content: `<div style=
         "max-width: 300px; background-color: #fff; border:1px solid #ccc; border-radius: 10px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); color: #333; 
         font-family: Arial, sans-serif; font-size: 16px; padding: 10px;">
           <h3 style="font-size: 18px; font-weight: bold;">${this.attInfoList[i].title}</h3>
           <span style="color: #0000FF; font-size: 14px;">${this.attInfoList[i].addr1}</span><br>
           ${overview}<br>
-          ${this.attInfoList[i].firstImage ? `<img src="${this.attInfoList[i].firstImage}" style="max-width: 250px; height: 200px;" alt="Image">` : ''}
+          ${
+            this.attInfoList[i].firstImage
+              ? `<img src="${this.attInfoList[i].firstImage}" style="max-width: 250px; height: 200px;" alt="Image">`
+              : ''
+          }
         </div>`, // 인포윈도우에 표시할 내용
-      });
+        });
 
         //4. 마커 이벤트 처리
         kakao.maps.event.addListener(
           marker,
-          "mouseover",
+          'mouseover',
           this.makeOverListener(this.map, marker, infowindow)
         );
 
-        kakao.maps.event.addListener(
-          marker,
-          "mouseout",
-          this.closeInfoWindowListener(infowindow)
-        );
+        kakao.maps.event.addListener(marker, 'mouseout', this.closeInfoWindowListener(infowindow));
 
-        if(!this.isTripPlan) {
-          kakao.maps.event.addListener(marker, 'rightclick', function() {
-            alert(i + " : " + this.attInfoList[i].title);
-          }.bind(this));
-        }
-        else {
+        if (!this.isTripPlan) {
+          kakao.maps.event.addListener(
+            marker,
+            'rightclick',
+            function () {
+              alert(i + ' : ' + this.attInfoList[i].title);
+            }.bind(this)
+          );
+        } else {
           //마커의 주소값을 찾고, 이를 기반으로 axios 통신을 통해 해당 관광지 정보를 산출한다.
-          kakao.maps.event.addListener(marker, 'rightclick', function() {
-            this.getDetailsFromLatLng({lat : marker.getPosition().getLat(), lan : marker.getPosition().getLng()});
-          }.bind(this));
+          kakao.maps.event.addListener(
+            marker,
+            'rightclick',
+            function () {
+              this.getDetailsFromLatLng({
+                lat: marker.getPosition().getLat(),
+                lan: marker.getPosition().getLng(),
+              });
+            }.bind(this)
+          );
         }
       }
     },

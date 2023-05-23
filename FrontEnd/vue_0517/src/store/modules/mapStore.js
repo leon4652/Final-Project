@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 const mapStore = {
   namespaced: true,
   state: {
@@ -6,11 +6,11 @@ const mapStore = {
     lat: 36.354935,
     lan: 127.298259,
     gugunCode: 0,
-    gugunName: "",
+    gugunName: '',
     sidoCode: 0,
-    sidoName: "",
+    sidoName: '',
     sidoImg:
-      "https://www.urbanbrush.net/web/wp-content/uploads/edd/2022/12/urbanbrush-20221223093720209565.jpg",
+      'https://www.urbanbrush.net/web/wp-content/uploads/edd/2022/12/urbanbrush-20221223093720209565.jpg',
     gugunList: [], // 구군 리스트를 저장할 배열 추가
     attInfoList: [], //어트랙션 정보들을 저장할 배열 {}
     nowContentType: 0, //콘텐츠 타입(ex:관광지:12, 숙박:25 ..)
@@ -77,28 +77,26 @@ const mapStore = {
     fetchAttInfoList({ commit, state }, contentType) {
       axios
         .get(
-          `http://localhost/api/attraction/view/${contentType}/${state.sidoCode}/${state.gugunCode}`
+          process.env.VUE_APP_API_BASE_URL +
+            `/attraction/view/${contentType}/${state.sidoCode}/${state.gugunCode}`
         )
         .then((response) => {
-          commit("SET_ATTINFO_LIST", response.data);
+          commit('SET_ATTINFO_LIST', response.data);
         })
         .catch((error) => {
           console.error(error);
         });
     },
 
-    getDetailsFromLatLng({ commit, state }, {lat, lan}) {
+    getDetailsFromLatLng({ commit, state }, { lat, lan }) {
       axios
-        .get(
-          `http://localhost/api/attraction/search/${lat}/${lan}`
-        )
+        .get(process.env.VUE_APP_API_BASE_URL + `/attraction/search/${lat}/${lan}`)
         .then((response) => {
-          commit("ADD_MY_ROUTE", response.data);
+          commit('ADD_MY_ROUTE', response.data);
           console.log(response.data);
-          for(var i = 0; i < state.myRoute.length; i++) {
-            console.log("루트 : " + state.myRoute[i].addr1);
+          for (var i = 0; i < state.myRoute.length; i++) {
+            console.log('루트 : ' + state.myRoute[i].addr1);
           }
-          
         })
         .catch((error) => {
           console.error(error);
