@@ -19,6 +19,8 @@ const myPageStore = {
     async getUser({ commit }) {
       await getUserInfo(
         ({ data }) => {
+          console.log("구분선")
+          console.dir(data)
           commit('SET_USER', data);
         },
         (error) => {
