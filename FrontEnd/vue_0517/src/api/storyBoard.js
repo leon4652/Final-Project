@@ -19,7 +19,7 @@ async function deleteBoard(storyBoardNo, success, fail) {
 }
 
 async function modify(storyBoard, success, fail) {
-    await api.put(`/storyboard/modify/`+ storyBoard.storyBoardNo, storyBoard).then(success).catch(fail);
+    await api.put(`/storyboard/update/`+ storyBoard.storyBoardNo, storyBoard).then(success).catch(fail);
 }
 
 export { select, getBoard, write, deleteBoard, modify };
