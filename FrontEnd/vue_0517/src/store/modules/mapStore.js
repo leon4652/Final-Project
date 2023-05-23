@@ -93,15 +93,35 @@ const mapStore = {
         .get(process.env.VUE_APP_API_BASE_URL + `/attraction/search/${lat}/${lan}`)
         .then((response) => {
           commit('ADD_MY_ROUTE', response.data);
-          console.log(response.data);
-          for (var i = 0; i < state.myRoute.length; i++) {
-            console.log('루트 : ' + state.myRoute[i].addr1);
-          }
+          console.log(state.myRoute);
         })
         .catch((error) => {
           console.error(error);
         });
     },
+
+    sendMyRoute({ state, commit }) {
+      var done = true;
+      if(state.myRoute.length == 0) alert("여정을 추가해주세요.");
+      else {
+        console.dir(state.myRoute);
+        axios.post(process.env.VUE_APP_API_BASE_URL + "/myroute/save", state.myRoute).
+      then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        done = false;
+        console.error(error);
+      });
+      }
+
+      if(done) {
+        alert("등록 완료!");
+        commit("DEL_MY_ROUTE");
+      }
+      else alert("에러가 발생했습니다.");
+    },
+    
   },
 };
 
