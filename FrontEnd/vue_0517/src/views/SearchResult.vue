@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>검색 결과 : {{ sidoName }} {{ gugunName }}</h1>
+    <h2>검색 결과 : {{ sidoName }} {{ gugunName }}</h2>
     <div id="nav">
       <router-link :to="{ path: '/rsSetPlan', query: { nowContentType: 10 } }"
         >여행계획</router-link

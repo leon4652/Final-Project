@@ -1,14 +1,14 @@
 <template>
-    <div class="background-image"></div>
+  <div>
+    <homeSearchComp> </homeSearchComp>
+  </div>
 </template>
 
 <script>
+import homeSearchComp from "@/components/search/homeSearchComp.vue";
 export default {
   name: "HomeView",
-  components: {},
+  components: { homeSearchComp },
 };
 </script>
-
-<style scoped>
-@import url("@/assets/background/bg.css");
-</style>
+<style scoped></style>
