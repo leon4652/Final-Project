@@ -35,9 +35,9 @@
             ref="content"
           ></b-form-textarea>
         </b-form-group>
-       <!-- <b-button type="submit" variant="primary" class="m-1" v-if="this.type === 'register'">글작성</b-button>
-        <b-button type="submit" variant="primary" class="m-1" v-else>글수정</b-button> -->
-        <b-button type="submit" variant="primary" class="m-1" >글작성</b-button>
+       <b-button type="submit" variant="primary" class="m-1" v-if="this.type === 'write'">글작성</b-button>
+        <b-button type="submit" variant="primary" class="m-1" v-else>글수정</b-button>
+        <!-- <b-button type="submit" variant="primary" class="m-1" >글작성</b-button> -->
 
         <b-button type="reset" variant="danger" class="m-1">초기화</b-button>
       </b-form>
@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import jwt_decode from 'jwt-decode';
 
 const storyBoardStore = "storyBoardStore";
@@ -69,30 +69,22 @@ export default {
   props: {
     type: { type: String },
   },
-  created() {
-    // if (this.type === "modify") {
-    //   let param = this.$route.params.articleno;
-    //   getArticle(
-    //     param,
-    //     ({ data }) => {
-    //       // this.article.articleno = data.article.articleno;
-    //       // this.article.userid = data.article.userid;
-    //       // this.article.subject = data.article.subject;
-    //       // this.article.content = data.article.content;
-    //       this.article = data;
-    //     },
-    //     (error) => {
-    //       console.log(error);
-    //     }
-    //   );
-    //   this.isUserid = true;
-    // }
+  computed: {
+    ...mapState(storyBoardStore, ['storyBoard'])
+  },
+  async created() {
+    if (this.type === "modify") {
+      let param = this.$route.params.storyBoardNo;
+      await this.getStoryBoard(param);
+      this.board = this.storyBoard;
+      this.isUserid = true;
+    }
     let user = jwt_decode(sessionStorage.getItem('access-token'));
     this.board.userId = user.userId;
     this.board.userNo = user.userNo;
   },
   methods: {
-    ...mapActions(storyBoardStore, ['writeStoryBoard']),
+    ...mapActions(storyBoardStore, ['writeStoryBoard', 'getStoryBoard', 'modifyStoryBoard']),
     async onSubmit(event) {
       event.preventDefault();
 
@@ -103,7 +95,7 @@ export default {
       err && !this.board.storyBoardContent && ((msg = "내용 입력해주세요"), (err = false), this.$refs.content.focus());
 
       if (!err) alert(msg);
-      else await this.writeStoryBoard(this.board);
+      else this.type === 'write' ? await this.writeStoryBoard(this.board) : await this.modifyStoryBoard(this.board);
 
       this.moveList();
     },

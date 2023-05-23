@@ -12,7 +12,7 @@
       <!-- 현재 로그인한 사람과 글쓴이가 같은 사람인지 확인 -->
       <b-col class="text-right" v-if="isWriter">
         <b-button variant="outline-info" size="sm" @click="moveModifyArticle" class="mr-2">글수정</b-button>
-        <b-button variant="outline-danger" size="sm" @click="deleteArticle">글삭제</b-button>
+        <b-button variant="outline-danger" size="sm" @click="deleteBoard">글삭제</b-button>
       </b-col>
     </b-row>
     <b-row class="mb-1">
@@ -69,8 +69,8 @@ export default {
     ...mapActions(storyBoardStore, ['getStoryBoard', 'deleteStoryBoard']),
     moveModifyArticle() {
       this.$router.replace({
-        name: "boardmodify",
-        params: { articleno: this.article.articleno },
+        name: "modify",
+        params: { storyBoardNo: this.board.storyBoardNo },
       });
     },
     async deleteBoard() {
