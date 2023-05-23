@@ -1,27 +1,5 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import HomeView from '@/views/HomeView.vue';
-
-import SearchMap from '@/views/SearchMap.vue'; //검색하는 창
-import SearchResult from '@/views/SearchResult.vue'; //검색결과 창
-
-import rsSetPlan from '@/views/SearchResult/00_setPlan.vue';
-import rsMain from '@/views/SearchResult/01_main.vue';
-import rsTravel from '@/views/SearchResult/02_travel.vue';
-import rsCulture from '@/views/SearchResult/03_culture.vue';
-import rsFestival from '@/views/SearchResult/04_festival.vue';
-import rsPlan from '@/views/SearchResult/05_plan.vue';
-import rsLeisure from '@/views/SearchResult/06_leisure.vue';
-import rsAmenity from '@/views/SearchResult/07_amenity.vue';
-import rsShopping from '@/views/SearchResult/08_shopping.vue';
-import rsRestaurant from '@/views/SearchResult/09_restaurant.vue';
-import rsReview from '@/views/SearchResult/10_review.vue';
-import SRViewERR from '@/views/SearchResult/SRViewERR';
-
-import StoryBoard from '@/views/board/storyBoard.vue'; // 자유게시판
-
-import MypageView from '@/views/MyPageView.vue'; // 마이페이지
-import UserView from '@/views/UserView.vue'; // 로그인
 
 Vue.use(VueRouter);
 
@@ -29,85 +7,85 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: HomeView,
+    component: () => import(/* webpackChunkName: "Home" */ '@/views/HomeView.vue'),
   },
   {
     path: '/searchMap',
     name: 'SearchMap',
-    component: SearchMap,
+    component: () => import(/* webpackChunkName: "SearchMap" */ '@/views/SearchMap.vue'),
   },
   {
     path: '/searchResult',
     name: 'SearchResult',
-    component: SearchResult,
+    component: () => import(/* webpackChunkName: "SearchResult" */ '@/views/SearchResult.vue'),
     children: [
       //자식 컴포넌트 선언
       {
         path: '/rsSetPlan',
         name: 'rsSetPlan',
-        component: rsSetPlan,
+        component: () => import(/* webpackChunkName: "SearchResult" */ '@/views/SearchResult/00_setPlan.vue'),
       },
       {
         path: '/rsMain',
         name: 'rsMain',
-        component: rsMain,
+        component: () => import(/* webpackChunkName: "SearchResult" */ '@/views/SearchResult/01_main.vue'),
       },
       {
         path: '/rsTravel',
         name: 'rsTravel',
-        component: rsTravel,
+        component: () => import(/* webpackChunkName: "SearchResult" */ '@/views/SearchResult/02_travel.vue'),
       },
       {
         path: '/rsCulture',
         name: 'rsCulture',
-        component: rsCulture,
+        component: () => import(/* webpackChunkName: "SearchResult" */ '@/views/SearchResult/03_culture.vue'),
       },
       {
         path: '/rsFestival',
         name: 'rsFestival',
-        component: rsFestival,
+        component: () => import(/* webpackChunkName: "SearchResult" */ '@/views/SearchResult/04_festival.vue'),
       },
       {
         path: '/rsPlan',
         name: 'rsPlan',
-        component: rsPlan,
+        component: () => import(/* webpackChunkName: "SearchResult" */ '@/views/SearchResult/05_plan.vue'),
       },
       {
         path: '/rsLeisure',
         name: 'rsLeisure',
-        component: rsLeisure,
+        component: () => import(/* webpackChunkName: "SearchResult" */ '@/views/SearchResult/06_leisure.vue'),
       },
       {
         path: '/rsAmenity',
         name: 'rsAmenity',
-        component: rsAmenity,
+        component: () => import(/* webpackChunkName: "SearchResult" */ '@/views/SearchResult/07_amenity.vue'),
       },
       {
         path: '/rsShopping',
         name: 'rsShopping',
-        component: rsShopping,
+        component: () => import(/* webpackChunkName: "SearchResult" */ '@/views/SearchResult/08_shopping.vue'),
       },
       {
         path: '/rsRestaurant',
         name: 'rsRestaurant',
-        component: rsRestaurant,
+        component: () => import(/* webpackChunkName: "SearchResult" */ '@/views/SearchResult/09_restaurant.vue'),
       },
       {
         path: '/rsReview',
         name: 'rsReview',
-        component: rsReview,
+        component: () => import(/* webpackChunkName: "SearchResult" */ '@/views/SearchResult/10_review.vue'),
       },
       {
         path: '/srViewERR',
         name: 'SRViewERR',
-        component: SRViewERR,
+        component: () => import(/* webpackChunkName: "SearchResult" */ '@/views/SearchResult/SRViewERR'),
       },
     ],
   },
   {
     path: '/mypage',
     name: 'myPage',
-    component: MypageView,
+    component: () => import(/* webpackChunkName: "myPage" */ '@/views/MyPageView.vue'),
     children: [
       {
         path: 'info',
@@ -132,7 +110,7 @@ const routes = [
   {
     path: '/user',
     name: 'user',
-    component: UserView,
+    component: () => import(/* webpackChunkName: "user" */ '@/views/UserView.vue'),
     children: [
       {
         path: 'login',
@@ -151,18 +129,17 @@ const routes = [
       },
     ],
   },
-
   {
     path: '/storyboard',
     name: 'storyboard',
-    component: StoryBoard,
+    component: () => import(/* webpackChunkName: "storyboard" */ '@/views/board/StoryBoard.vue'),
     redirect: '/storyboard/list',
     children: [
       {
         path: 'list',
         name: 'storyboardlist',
         component: () =>
-          import(/* webpackChunkName: "storyboard" */ '@/components/board/storyboardComp.vue'),
+          import(/* webpackChunkName: "storyboard" */ '@/components/board/StoryBoardList.vue'),
       },
       {
         path: 'info/:storyBoardNo',

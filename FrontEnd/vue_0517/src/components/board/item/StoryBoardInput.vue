@@ -10,7 +10,7 @@
             type="text"
             required
             ref="userId"
-            placeholder="작성자 입력..."
+            readonly
           ></b-form-input>
         </b-form-group>
 
@@ -59,7 +59,7 @@ export default {
         storyBoardNo: 0,
         userId: "",
         userName: "",
-        userNo: 3,
+        userNo: "",
         storyBoardTitle: "",
         storyBoardContent: "",
       },
@@ -87,16 +87,13 @@ export default {
     //   );
     //   this.isUserid = true;
     // }
-    /**
-     * token 뽑아서 id 넣기
-     * 
-     */
     let user = jwt_decode(sessionStorage.getItem('access-token'));
     this.board.userId = user.userId;
+    this.board.userNo = user.userNo;
   },
   methods: {
     ...mapActions(storyBoardStore, ['writeStoryBoard']),
-    onSubmit(event) {
+    async onSubmit(event) {
       event.preventDefault();
 
       let err = true;
@@ -106,7 +103,9 @@ export default {
       err && !this.board.storyBoardContent && ((msg = "내용 입력해주세요"), (err = false), this.$refs.content.focus());
 
       if (!err) alert(msg);
-      else this.writeStoryBoard(this.board)
+      else await this.writeStoryBoard(this.board);
+
+      this.moveList();
     },
     onReset(event) {
       event.preventDefault();
@@ -115,52 +114,8 @@ export default {
       this.board.storyBoardContent = "";
       this.moveList();
     },
-    registArticle() {
-      // let param = {
-      //   userid: this.article.userid,
-      //   subject: this.article.subject,
-      //   content: this.article.content,
-      // };
-      // writeArticle(
-      //   param,
-      //   ({ data }) => {
-      //     let msg = "등록 처리시 문제가 발생했습니다.";
-      //     if (data === "success") {
-      //       msg = "등록이 완료되었습니다.";
-      //     }
-      //     alert(msg);
-      //     this.moveList();
-      //   },
-      //   (error) => {
-      //     console.log(error);
-      //   }
-      // );
-    },
-    modifyArticle() {
-      // let param = {
-      //   articleno: this.article.articleno,
-      //   userid: this.article.userid,
-      //   subject: this.article.subject,
-      //   content: this.article.content,
-      // };
-      // modifyArticle(
-      //   param,
-      //   ({ data }) => {
-      //     let msg = "수정 처리시 문제가 발생했습니다.";
-      //     if (data === "success") {
-      //       msg = "수정이 완료되었습니다.";
-      //     }
-      //     alert(msg);
-      //     // 현재 route를 /list로 변경.
-      //     this.moveList();
-      //   },
-      //   (error) => {
-      //     console.log(error);
-      //   }
-      // );
-    },
     moveList() {
-      this.$router.push({ name: "boardlist" });
+      this.$router.push({ name: "storyboard" });
     },
   },
 };

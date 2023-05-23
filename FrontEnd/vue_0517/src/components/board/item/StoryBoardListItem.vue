@@ -6,7 +6,7 @@
       <!-- <router-link :to="{ name: 'boardview', params: { storyBoardNo: storyBoardNo } }">{{ storyBoardTitle }}</router-link> -->
     </th>
     <td>{{ storyBoardHit }}</td>
-    <td>{{ userNo }}</td>
+    <td>{{ userId }}</td>
     <td>{{ registDate | dateFormat }}</td>
   </tr>
 </template>
@@ -18,7 +18,9 @@ export default {
   name: 'StoryBoardListItem',
   props: {
     storyBoardNo: Number,
-    userNo: String,
+    userNo: Number,
+    userName: String,
+    userId: String,
     storyBoardTitle: String,
     storyBoardHit: Number,
     registDate: String,

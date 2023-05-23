@@ -5,8 +5,6 @@
         <a href="#">회원가입 |</a>
         <a href="#">글 목록 |</a>
         <router-link :to="{ name: 'write' }">글 작성 |</router-link>
-
-        <a href="#">글 작성 |</a>
       </div>
     </header>
 
@@ -37,7 +35,7 @@ import { mapActions, mapState } from 'vuex';
 const storyBoardStore = "storyBoardStore";
 
 export default {
-  name: 'storyBoardComp',
+  name: 'StoryBoardList',
   components: {
     StoryBoardListItem
   },
@@ -58,6 +56,7 @@ export default {
     // };
     this.getStoryBoardList();
     this.boards = this.storyBoards;
+    console.dir(this.boards)
   },
   methods : {
     ...mapActions(storyBoardStore, ['getStoryBoardList']),
