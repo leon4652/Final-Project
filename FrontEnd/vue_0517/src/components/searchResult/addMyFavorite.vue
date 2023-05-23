@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 export default {
   name: "addMyFavorite",
   components: {},
@@ -61,12 +61,12 @@ export default {
   created() {},
   methods: {
     ...mapMutations("mapStore", ["DEL_MY_ROUTE"]),
+    ...mapActions("mapStore", ["sendMyRoute"]),
     deleteMyRoute() {
       this.DEL_MY_ROUTE();
     },
     uploadMyRoute() {
-      alert("여행지 등록 예정");
-      alert("등록된 사이트 : " + this.myRoute[0].title);
+      this.sendMyRoute();
     },
   },
   computed: {
