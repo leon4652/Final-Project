@@ -1,6 +1,7 @@
 <template>
-  <div>
-    <button @click="deleteMyRoute">루트 삭제</button>
+  <div class="down">
+    <button @click="deleteMyRoute">삭제</button>
+    <button @click="uploadMyRoute">등록</button>
     <div>
       <div class="container">
         <div class="table-container">
@@ -29,9 +30,7 @@
                   />
                   <span v-else>No Image</span>
                 </td>
-                <td>
-                  예상 시간
-                </td>
+                <td>예상 시간</td>
               </tr>
             </tbody>
             <tfoot>
@@ -50,7 +49,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "addMyFavorite",
   components: {},
@@ -65,6 +64,9 @@ export default {
     deleteMyRoute() {
       this.DEL_MY_ROUTE();
     },
+    uploadMyRoute() {
+      alert("여행지 등록 예정");
+    },
   },
   computed: {
     ...mapState("mapStore", ["myRoute"]),
@@ -74,8 +76,13 @@ export default {
 
 <style scoped>
 @import url("@/assets/table/table.css");
+
 .image {
-  width: 100px; /* 이미지의 원하는 크기로 설정 */
+  width: 120px; /* 이미지의 원하는 크기로 설정 */
   height: 100px; /* 가로 크기에 맞춰 세로 크기 조절 */
+}
+
+.down {
+  margin-top: 100px;
 }
 </style>
