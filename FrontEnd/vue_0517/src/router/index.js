@@ -152,7 +152,15 @@ const routes = [
         name: 'write',
         component: () =>
           import(
-            /* webpackChunkName: "storyboard" */ '@/components/board/item/StoryBoardInput.vue'
+            /* webpackChunkName: "storyboard" */ '@/components/board/StoryBoardWrite.vue'
+          ),
+      },
+      {
+        path: 'modify/:storyBoardNo',
+        name: 'modify',
+        component: () =>
+          import(
+            /* webpackChunkName: "storyboard" */ '@/components/board/StoryBoardModify.vue'
           ),
       },
     ],
