@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <nav-bar></nav-bar>
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/storyboard">자유게시판</router-link> |
@@ -24,13 +23,12 @@
 <script>
 import jwtDecode from 'jwt-decode';
 import { mapMutations, mapState } from 'vuex';
-import NavBar from './views/NavBar.vue';
 
 const userStore = 'userStore';
 
 export default {
   name: 'app',
-  components: {NavBar},
+  components: {},
   data() {
     return {
       user: {
