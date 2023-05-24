@@ -326,7 +326,7 @@ export default {
 
         var infowindow = new kakao.maps.InfoWindow({
           content: `<div style=
-        "max-width: 300px; background-color: #fff; border:1px solid #ccc; border-radius: 10px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); color: #333; 
+        "max-width: 300px; background-color: #fff; border:1px solid #ccc; border-radius: 10px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); color: #333;
         font-family: Arial, sans-serif; font-size: 16px; padding: 10px;">
           <h3 style="font-size: 18px; font-weight: bold;">${
             this.attInfoList[i].title
@@ -356,27 +356,19 @@ export default {
           this.closeInfoWindowListener(infowindow)
         );
 
-        if (!this.isTripPlan) {
-          kakao.maps.event.addListener(
-            marker,
-            "rightclick",
-            function () {
-              alert(i + " : " + this.attInfoList[i].title);
-            }.bind(this)
-          );
-        } else {
-          //마커의 주소값을 찾고, 이를 기반으로 axios 통신을 통해 해당 관광지 정보를 산출한다.
-          kakao.maps.event.addListener(
-            marker,
-            "rightclick",
-            function () {
-              this.getDetailsFromLatLng({
-                lat: marker.getPosition().getLat(),
-                lan: marker.getPosition().getLng(),
-              });
-            }.bind(this)
-          );
-        }
+        //마커의 주소값을 찾고, 이를 기반으로 axios 통신을 통해 해당 관광지 정보를 산출한다.
+        kakao.maps.event.addListener(
+          marker,
+          "rightclick",
+          function () {
+            this.getDetailsFromLatLng({
+              lat: marker.getPosition().getLat(),
+              lan: marker.getPosition().getLng(),
+            });
+            if (!this.isTripPlan)
+              alert("장소가 여행계획에 추가되었습니다. 확인해보세요!");
+          }.bind(this)
+        );
       }
     },
   },
