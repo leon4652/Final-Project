@@ -1,5 +1,5 @@
 <template>
-  <div class="down">
+  <div>
     <div class="container">
       <div class="table-container">
         <table class="table table-bordered table-hover">
@@ -78,12 +78,7 @@ export default {
     },
   },
 };
+//@import url("@/assets/table/table.css");
 </script>
 
-<style scoped>
-@import url("@/assets/table/table.css");
-
-.down {
-  margin-top: 50px;
-}
-</style>
+<style scoped></style>

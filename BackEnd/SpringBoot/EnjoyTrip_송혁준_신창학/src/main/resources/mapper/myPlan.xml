@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.enjoy.trip.mapper.MyPlanMapper">
+
+
+  <insert id="saveMyPlanOrder" parameterType="java.util.List">
+      INSERT INTO my_plan_order (my_plan_no, idx, title, addr1, first_image, expect_time) 
+      VALUES 
+	    <foreach collection="list" item="myPlan" separator=",">
+      			(#{myPlan.myPlanNo}, #{myPlan.idx}, #{myPlan.title}, #{myPlan.addr1}, #{myPlan.firstImage}, #{myPlan.expectTime})
+    	</foreach>
+  </insert>
+
+  <insert id="saveMyPlan" parameterType="MyPlan">
+  INSERT INTO my_plan ( user_id, user_no, trip_title, my_plan_regist_date) 
+  VALUES (#{userId},#{userNo},#{tripTitle}, now())
+  </insert>
+ 
+  
+  <select id="getMaxPlanNo" resultType="int">
+  	select max(my_plan_no)
+  	  from my_plan
+  </select>
+
+</mapper>

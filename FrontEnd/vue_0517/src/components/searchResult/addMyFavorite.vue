@@ -1,7 +1,14 @@
 <template>
   <div class="down">
-    <button @click="deleteMyRoute">삭제</button>
-    <button @click="uploadMyRoute">등록</button>
+    <div>
+      <input v-model="tripTitle" placeholder="여행지 제목을 입력하세요." />
+      <textarea
+        v-model="tripContent"
+        placeholder="여행지 제목을 입력하세요."
+      ></textarea>
+      <button @click="deleteMyRoute">삭제</button>
+      <button @click="uploadMyRoute">등록</button>
+    </div>
     <div>
       <div class="container">
         <div class="table-container">
@@ -55,7 +62,8 @@ export default {
   components: {},
   data() {
     return {
-      message: "",
+      tripTitle: "나만의 여행 계획!",
+      tripContent: "너무 재밌었어요",
     };
   },
   created() {},
@@ -66,7 +74,7 @@ export default {
       this.DEL_MY_ROUTE();
     },
     uploadMyRoute() {
-      this.sendMyRoute();
+      this.sendMyRoute(this.tripTitle);
     },
   },
   computed: {
@@ -76,7 +84,6 @@ export default {
 </script>
 
 <style scoped>
-@import url("@/assets/table/table.css");
 .image {
   width: 120px; /* 이미지의 원하는 크기로 설정 */
   height: 100px; /* 가로 크기에 맞춰 세로 크기 조절 */
@@ -84,5 +91,9 @@ export default {
 
 .down {
   margin-top: 100px;
+}
+
+.table-container {
+  max-height: 600px;
 }
 </style>
