@@ -1,57 +1,55 @@
 <template>
   <div>
-    <!-- 
-      글 작성 버튼으로 바꾸던지 수정 필요 
-    -->
-    <!-- <header class="top-menu con row">
-      <div class="cell-right">
-        <a href="#">회원가입 |</a>
-        <a href="#">글 목록 |</a>
-        <router-link :to="{ name: 'noticeWrite' }">글 작성 |</router-link>
-      </div>
-    </header> -->
+    <b-table striped hover :items="notices" :fields="fields">
+      <template v-slot:head()="data">
+        <tr>
+          <th v-for="field in data.fields" :key="field.key" :class="{'text-left': field.key === 'noticeTitle'}">
+            {{ field.label }}
+          </th>
+        </tr>
+      </template>
+      <template v-slot:default="data">
+        <tr v-for="item in data.items" :key="item.noticeNo">
+          <td>{{ item.noticeNo }}</td>
+          <td class="text-left" @click="noticeView(item)">{{ item.noticeTitle }}</td>
+          <td>{{ item.noticeHit }}</td>
+          <td>{{ item.userId }}</td>
+          <td>{{ item.registDate | dateFormat }}</td>
+        </tr>
+      </template>
 
-    <h1 class="con">공지사항</h1>
-    <section class="article-list table-common con">
-      <table border="1">
-        <thead>
-          <tr>
-            <th>글 번호</th>
-            <th>제목</th>
-            <th>조회수</th>
-            <th>작성자</th>
-            <th>작성일</th>
-          </tr>
-        </thead>
-        <tbody>
-          <notice-list-item v-for="notice in notices" :key="notice.noticeNo" v-bind="notice" />
-        </tbody>
-      </table>
-
+    </b-table>
       <b-col class="text-right" v-if="this.isAdmin === 1">
         <b-button variant="info" @click="moveWrite">글 작성</b-button>
       </b-col>
-    </section>
   </div>
 </template>
 
 <script>
+import moment from 'moment';
 import { mapActions, mapState } from "vuex";
-import NoticeListItem from "./item/NoticeListItem.vue";
 import jwt_decode from 'jwt-decode';
 
 const noticeStore = "noticeStore";
 
 export default {
-  name: "NoticeList",
-  components: {
-    NoticeListItem,
-  },
   data() {
     return {
-      noticeList: [],
-      isAdmin : '',
-    };
+      fields: [
+        { key: 'noticeNo', label: '글 번호', sortable: true },
+        { key: 'noticeTitle', label: '제목', sortable: false },
+        // { key: 'noticeHit', label: '조회수', sortable: true },
+        { key: 'userId', label: '작성자', sortable: true },
+        { key: 'registDate', label: '작성일', sortable: true }
+      ],
+      noticeList: [
+        // { noticeNo: 1, noticeTitle: '첫 번째 공지', noticeHit: 10, userId: 'user1', registDate: '2023-01-01' },
+        // { noticeNo: 2, noticeTitle: '두 번째 공지', noticeHit: 5, userId: 'user2', registDate: '2023-01-02' },
+        // { noticeNo: 3, noticeTitle: '세 번째 공지', noticeHit: 8, userId: 'user3', registDate: '2023-01-03' },
+        // { noticeNo: 4, noticeTitle: '네 번째 공지', noticeHit: 3, userId: 'user4', registDate: '2023-01-04' }
+      ],
+      isAdmin: '',
+    }
   },
   computed: {
     ...mapState(noticeStore, ["notices"]),
@@ -62,27 +60,24 @@ export default {
     }
   },
   created() {
-    // let param = {
-    //   pg: 1,
-    //   spp: 20,
-    //   key: null,
-    //   word: null,
-    // };
     this.getNoticeList();
     this.noticeList = this.notices;
 
     let user = jwt_decode(sessionStorage.getItem('access-token'));
     this.isAdmin = user.isAdmin;
+    console.log(this.isAdmin)
   },
   methods: {
     ...mapActions(noticeStore, ["getNoticeList"]),
+    noticeView(notice) {
+      this.$router.push('/notice/info/' + notice.noticeNo);
+    },
+    dateFormat(registDate) {
+      return moment(new Date(registDate)).format('YY.MM.DD');
+    },
     moveWrite() {
       this.$router.push({ name: "noticeWrite" });
     },
-  },
-};
+  }
+}
 </script>
-
-<style scoped>
-@import url("@/assets/board/board.css");
-</style>
