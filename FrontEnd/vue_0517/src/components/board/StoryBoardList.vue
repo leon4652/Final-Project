@@ -35,13 +35,13 @@
 </template>
 
 <script>
-import StoryBoardListItem from "@/components/board/item/StoryBoardListItem.vue";
-import { mapActions, mapState } from "vuex";
+import StoryBoardListItem from '@/components/board/item/StoryBoardListItem.vue';
+import { mapActions, mapState } from 'vuex';
 
-const storyBoardStore = "storyBoardStore";
+const storyBoardStore = 'storyBoardStore';
 
 export default {
-  name: "StoryBoardList",
+  name: 'StoryBoardList',
   components: {
     StoryBoardListItem,
   },
@@ -51,7 +51,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(storyBoardStore, ["storyBoards"]),
+    ...mapState(storyBoardStore, ['storyBoards']),
   },
   created() {
     // let param = {
@@ -64,14 +64,14 @@ export default {
     this.boards = this.storyBoards;
   },
   methods: {
-    ...mapActions(storyBoardStore, ["getStoryBoardList"]),
+    ...mapActions(storyBoardStore, ['getStoryBoardList']),
     moveWrite() {
-      this.$router.push({ name: "storyboardWrite" });
+      this.$router.push({ name: 'storyboardWrite' });
     },
   },
 };
 </script>
 
 <style scoped>
-@import url("@/assets/board/board.css");
+@import url('@/assets/board/board.css');
 </style>

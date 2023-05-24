@@ -24,11 +24,11 @@
           </tr>
         </thead>
         <tbody>
-          <notice-list-item v-for="notice in noticeList" :key="notice.noticeNo" v-bind="notice" />
+          <notice-list-item v-for="notice in notices" :key="notice.noticeNo" v-bind="notice" />
         </tbody>
       </table>
 
-      <b-col class="text-right">
+      <b-col class="text-right" v-if="this.isAdmin === 1">
         <b-button variant="info" @click="moveWrite">글 작성</b-button>
       </b-col>
     </section>
@@ -38,6 +38,7 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import NoticeListItem from "./item/NoticeListItem.vue";
+import jwt_decode from 'jwt-decode';
 
 const noticeStore = "noticeStore";
 
@@ -49,10 +50,16 @@ export default {
   data() {
     return {
       noticeList: [],
+      isAdmin : '',
     };
   },
   computed: {
     ...mapState(noticeStore, ["notices"]),
+  },
+  watch: {
+    notices(){
+      this.noticeList = this.notices;
+    }
   },
   created() {
     // let param = {
@@ -63,6 +70,9 @@ export default {
     // };
     this.getNoticeList();
     this.noticeList = this.notices;
+
+    let user = jwt_decode(sessionStorage.getItem('access-token'));
+    this.isAdmin = user.isAdmin;
   },
   methods: {
     ...mapActions(noticeStore, ["getNoticeList"]),

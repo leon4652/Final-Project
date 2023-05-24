@@ -32,6 +32,11 @@ const userStore = {
     SET_USER_INFO: (state, userInfo) => {
       state.isLogin = true;
       state.userInfo = userInfo;
+
+
+
+      console.log("mutation에서 호출한 것")
+      console.dir(userInfo)
     },
     SET_IS_SIGNUP: (state, isSignUp) => {
       state.isSignUp = isSignUp;
@@ -52,7 +57,6 @@ const userStore = {
         user,
         ({ data }) => {
           if (data.message === 'success') {
-            console.log(data.message);
             let accessToken = data['access-token'];
             let refreshToken = data['refresh-token'];
             // console.log("login success token created!!!! >> ", accessToken, refreshToken);
@@ -75,9 +79,13 @@ const userStore = {
     async getUserInfo({ commit, dispatch }, token) {
       let decodeToken = jwtDecode(token);
       await findById(
-        decodeToken.userid,
+        decodeToken.userId,
         ({ data }) => {
           if (data.message === 'success') {
+
+            console.log("getUserInfo 함수 호출")
+            console.dir(data)
+
             commit('SET_USER_INFO', data.userInfo);
             // console.log("3. getUserInfo data >> ", data);
           } else {
@@ -112,7 +120,7 @@ const userStore = {
             console.log('갱신 실패');
             // 다시 로그인 전 DB에 저장된 RefreshToken 제거.
             await logout(
-              state.userInfo.userid,
+              state.userInfo.userId,
               ({ data }) => {
                 if (data.message === 'success') {
                   console.log('리프레시 토큰 제거 성공');
@@ -135,9 +143,9 @@ const userStore = {
         }
       );
     },
-    async userLogout({ commit }, userid) {
+    async userLogout({ commit }, userId) {
       await logout(
-        userid,
+        userId,
         ({ data }) => {
           if (data.message === 'success') {
             commit('SET_IS_LOGIN', false);
