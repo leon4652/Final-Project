@@ -6,8 +6,10 @@ import com.enjoy.trip.dto.MyPlan;
 
 public interface MyPlanService {
 
-	void saveMyPlan(List<MyPlan> mp) throws Exception;
-
 	void saveMyPlan(MyPlan myPlan) throws Exception;
+
+	int getMaxPlanNo() throws Exception;
+
+	void saveMyPlanOrder(List<MyPlan> mp) throws Exception;
 	
 }

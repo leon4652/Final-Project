@@ -8,7 +8,9 @@ import com.enjoy.trip.dto.MyPlan;
 
 @Mapper
 public interface MyPlanMapper {
-	//void saveMyPlan(List<MyPlan> mp) throws Exception;
+	void saveMyPlanOrder(List<MyPlan> mp) throws Exception;
 
-	void saveMyPlan(MyPlan myPlan);
+	void saveMyPlan(MyPlan myPlan) throws Exception;
+
+	int getMaxPlanNo() throws Exception;
 }

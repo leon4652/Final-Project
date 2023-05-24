@@ -32,11 +32,13 @@ public class MyPlanController {
 		 myplanOrder : myplanno(받아와야 함), title, addr, first_image, expecttime
 		 */
 		
-		
-		//myPlan 타입 저장
+		//1. myPlan 타입 저장
 		myPlanService.saveMyPlan(mp.get(0));
-		//현재 최대 myPlan값 가져오기
-		//order 저장 (myPlan값)
-//		myPlanService.saveMyPlanOrder(mp);
+		//3. order 저장 (myPlan값), 현재 최대 myPlan값 가져오기
+		int myPlanNo = myPlanService.getMaxPlanNo();
+		for (MyPlan myPlan : mp) {
+			myPlan.setMyPlanNo(myPlanNo);
+		}
+		myPlanService.saveMyPlanOrder(mp);
 	}
 }

@@ -84,6 +84,6 @@ export default {
 @import url("@/assets/table/table.css");
 
 .down {
-  margin-top: 50px;
+  max-height: 600px;
 }
 </style>

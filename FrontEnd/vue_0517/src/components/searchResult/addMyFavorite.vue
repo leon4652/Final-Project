@@ -2,6 +2,10 @@
   <div class="down">
     <div>
       <input v-model="tripTitle" placeholder="여행지 제목을 입력하세요." />
+      <textarea
+        v-model="tripContent"
+        placeholder="여행지 제목을 입력하세요."
+      ></textarea>
       <button @click="deleteMyRoute">삭제</button>
       <button @click="uploadMyRoute">등록</button>
     </div>
@@ -58,7 +62,8 @@ export default {
   components: {},
   data() {
     return {
-      tripTitle: "",
+      tripTitle: "나만의 여행 계획!",
+      tripContent: "너무 재밌었어요",
     };
   },
   created() {},
@@ -87,5 +92,9 @@ export default {
 
 .down {
   margin-top: 100px;
+}
+
+.table-container {
+  max-height: 600px;
 }
 </style>

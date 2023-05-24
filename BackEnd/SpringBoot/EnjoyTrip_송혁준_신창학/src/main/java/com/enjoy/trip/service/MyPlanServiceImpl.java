@@ -15,12 +15,18 @@ public class MyPlanServiceImpl implements MyPlanService {
 		this.myPlanMapper = myPlanMapper;
 	}
 
-	public void saveMyPlan(List<MyPlan> mp) throws Exception {
-		//myPlanMapper.saveMyPlan(mp);
-	}
-
 	@Override
 	public void saveMyPlan(MyPlan myPlan) throws Exception {
 		myPlanMapper.saveMyPlan(myPlan);
+	}
+
+	@Override
+	public int getMaxPlanNo() throws Exception {
+		return myPlanMapper.getMaxPlanNo();
+	}
+
+	@Override
+	public void saveMyPlanOrder(List<MyPlan> mp) throws Exception {
+		myPlanMapper.saveMyPlanOrder(mp);	
 	}
 }

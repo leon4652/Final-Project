@@ -57,6 +57,5 @@ export default {
 
 .search-container {
   flex: 1; /* 자동으로 너비를 조절하여 공간을 차지 */
-  overflow: hidden; /* 부모 요소의 영역을 넘어가는 내용을 숨김 */
 }
 </style>
