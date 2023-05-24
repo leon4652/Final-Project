@@ -78,7 +78,39 @@ export default {
     },
   },
 };
-//@import url("@/assets/table/table.css");
 </script>
 
-<style scoped></style>
+<style scoped>
+.container {
+  max-height: 650px;
+  overflow: auto;
+}
+.table-container {
+  max-height: 600px;
+}
+
+.overview {
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 60%;
+}
+
+.overview.expanded {
+  white-space: normal;
+}
+
+.image-cell {
+  max-width: 350px;
+}
+
+.image-cell.expanded {
+  width: 60%;
+}
+
+.image {
+  max-width: 100%;
+  height: auto;
+}
+</style>
