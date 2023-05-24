@@ -27,8 +27,8 @@ export default {
       fields: [
         { key: 'storyBoardNo', label: '글 번호', sortable: true },
         { key: 'storyBoardTitle', label: '제목', sortable: false },
-        { key: 'storyBoardHit', label: '조회수', sortable: false },
-        { key: 'userId', label: '작성자', sortable: true },
+        { key: 'storyBoardHit', label: '조회수', sortable: true },
+        { key: 'userId', label: '작성자', sortable: false },
         { key: 'registDate', label: '작성일', sortable: true },
       ],
       boards: [],
