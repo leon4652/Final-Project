@@ -1,56 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-	
+
 <mapper namespace="com.enjoy.trip.mapper.NoticeMapper">
 
-<resultMap type="Notice" id="noticeResultMap">
-  <result property="noticeNo" column="notice_no"/>
-  <result property="userNo" column="user_no"/>
-  <result property="noticeTitle" column="notice_title"/>
-  <result property="noticeContent" column="notice_content"/>
-  <result property="isNotice" column="is_notice"/>
-  <result property="registDate" column="regist_date"/>
-  <result property="updateDate" column="update_date"/>
-  <result property="removeDate" column="remove_date"/>
-	<result property="userName" column="user_name"/>
-	<result property="userId" column="user_id"/>
-</resultMap>
+	<resultMap type="Notice" id="noticeResultMap">
+		<result property="noticeNo" column="notice_no" />
+		<result property="userNo" column="user_no" />
+		<result property="noticeTitle" column="notice_title" />
+		<result property="noticeContent" column="notice_content" />
+		<result property="isNotice" column="is_notice" />
+		<result property="registDate" column="regist_date" />
+		<result property="updateDate" column="update_date" />
+		<result property="removeDate" column="remove_date" />
+		<result property="userName" column="user_name" />
+		<result property="userId" column="user_id" />
+	</resultMap>
 
 
- <select id="selectNotice" resultType="Notice">
-	 SELECT n.*, u.user_name, u.user_id
-	   FROM notice n
-	   LEFT JOIN user u
-	  USING (user_no)
-	  WHERE n.remove_date is null
-	  ORDER BY notice_no DESC
- </select>
+	<select id="selectNotice" resultType="Notice">
+		SELECT n.*, u.user_name, u.user_id
+		FROM notice n
+		LEFT JOIN user u
+		USING (user_no)
+		WHERE n.remove_date is null
+		ORDER BY notice_no DESC
+	</select>
 
-<insert id="writeNotice">
-	insert into notice(notice_title, notice_content, user_no, regist_date) 
-	values(#{noticeTitle}, #{noticeContent}, #{userNo}, now())
-</insert>
+	<insert id="writeNotice">
+		insert into notice(notice_title, notice_content, user_no, regist_date)
+		values(#{noticeTitle}, #{noticeContent}, #{userNo}, now())
+	</insert>
 
-<update id="deleteNotice" parameterType="int">
-	update notice
-	   set remove_date = now()
-	 where notice_no = #{noticeNo}
-</update>
-<update id="updateNotice" parameterType="Notice">
-	update notice
-	   set update_date = now(),
-	   	   notice_title = #{noticeTitle},
-	   	   notice_content = #{noticeContent}
-	 where notice_no = #{noticeNo}
-</update>
+	<update id="deleteNotice" parameterType="int">
+		update notice
+		set remove_date = now()
+		where notice_no = #{noticeNo}
+	</update>
+	<update id="updateNotice" parameterType="Notice">
+		update notice
+		set update_date = now(),
+		notice_title = #{noticeTitle},
+		notice_content = #{noticeContent}
+		where notice_no = #{noticeNo}
+	</update>
 
-<select id="getNotice" parameterType="int" resultType="Notice">
-	select n.*, u.user_name, u.user_id
-	  from notice n
-	  join user u
-	    on n.user_no = u.user_no
-	 where notice_no = #{noticeNo} and n.remove_date is null
-</select>
+	<select id="getNotice" parameterType="int" resultType="Notice">
+		select n.*, u.user_name, u.user_id
+		from notice n
+		join user u
+		on n.user_no = u.user_no
+		where notice_no = #{noticeNo} and n.remove_date is null
+	</select>
 
 </mapper>

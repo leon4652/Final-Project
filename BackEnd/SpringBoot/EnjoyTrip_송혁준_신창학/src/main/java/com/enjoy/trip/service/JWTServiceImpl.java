@@ -29,17 +29,18 @@ public class JWTServiceImpl implements JWTService {
 	private static final int ACCESS_TOKEN_EXPIRE_MINUTES = 1; // 분단위
 	private static final int REFRESH_TOKEN_EXPIRE_MINUTES = 2; // 주단위
 
+	
 	@Override
-	public String createAccessToken(String key, String userId, int userNo) {
-		return create(key, userId, userNo, "access-token", 1000 * 60 * ACCESS_TOKEN_EXPIRE_MINUTES);
+	public String createAccessToken(User user) {
+		return create(user, "access-token", 1000 * 60 * 60 * 24 *  ACCESS_TOKEN_EXPIRE_MINUTES);
 	}
 
 	@Override
-	public String createRefreshToken(String key, String userId, int userNo) {
-		return create(key, userId, userNo, "refresh-token", 1000 * 60 * 60 * 24 * 7 * REFRESH_TOKEN_EXPIRE_MINUTES);
+	public String createRefreshToken(User user) {
+		return create(user, "refresh-token", 1000 * 60 * 60 * 24 * 7 * REFRESH_TOKEN_EXPIRE_MINUTES);
 	}
 
-	private String create(String key, String userId, int userNo, String subject, long expire) {
+	private String create(User user, String subject, long expire) {
 		Claims claims = Jwts.claims()
 				// 토큰 제목 설정 ex) access-token, refresh-token
 				.setSubject(subject)
@@ -49,8 +50,9 @@ public class JWTServiceImpl implements JWTService {
 				.setExpiration(new Date(System.currentTimeMillis() + expire));
 
 		// 저장할 data의 key, value
-		claims.put(key, userId);
-		claims.put("userNo", userNo);
+		claims.put("userId", user.getUserId());
+		claims.put("userNo", user.getUserNo());
+		claims.put("isAdmin", user.getIsAdmin());		
 
 		String jwt = Jwts.builder()
 				// Header 설정 : 토큰의 타입, 해쉬 알고리즘 정보 세팅.
@@ -60,7 +62,7 @@ public class JWTServiceImpl implements JWTService {
 
 		return jwt;
 	}
-
+	
 	private byte[] generateKey() {
 		byte[] key = null;
 		try {
@@ -95,15 +97,7 @@ public class JWTServiceImpl implements JWTService {
 		try {
 			claims = Jwts.parser().setSigningKey(SALT.getBytes("UTF-8")).parseClaimsJws(jwt);
 		} catch (Exception e) {
-//			if (logger.isInfoEnabled()) {
-//				e.printStackTrace();
-//			} else {
-//			}
-//			throw new UnAuthorizedException();
-//			개발환경
-//			Map<String,Object> testMap = new HashMap<>();
-//			testMap.put("userid", userid);
-//			return testMap;
+			e.printStackTrace();
 		}
 		Map<String, Object> value = claims.getBody();
 		/**

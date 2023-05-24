@@ -8,7 +8,6 @@ const myPageStore = {
   },
   mutations: {
     SET_USER(state, user) {
-      console.dir(user);
       state.user = user;
     },
     SET_IS_UPDATE(state, isUpdate) {
@@ -19,8 +18,6 @@ const myPageStore = {
     async getUser({ commit }) {
       await getUserInfo(
         ({ data }) => {
-          console.log("구분선")
-          console.dir(data)
           commit('SET_USER', data);
         },
         (error) => {
