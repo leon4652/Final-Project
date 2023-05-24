@@ -1,5 +1,6 @@
 <template>
   <div>
+    <main-carousel></main-carousel>
     <homeSwiperComp></homeSwiperComp>
     <homeSearchComp> </homeSearchComp>
   </div>
@@ -8,9 +9,11 @@
 <script>
 import homeSwiperComp from "@/components/search/homeSwiperComp.vue";
 import homeSearchComp from "@/components/search/homeSearchComp.vue";
+import MainCarousel from '@/components/item/MainCarousel.vue';
 export default {
   name: "HomeView",
-  components: { homeSearchComp, homeSwiperComp },
+  components: { homeSearchComp, homeSwiperComp, MainCarousel },
 };
 </script>
-<style scoped></style>
+<st,
+    MainCarouselyle scoped></style>

@@ -38,6 +38,7 @@ export default {
 <style scoped>
 .flex-container {
   display: flex;
+
   justify-content: space-between;
   align-items: flex-start;
 }
@@ -50,13 +51,14 @@ export default {
   flex: 1; /* 자동으로 너비를 조절하여 공간을 차지 */
   width: 30%;
   height: 30%;
-  padding: 20px;
+  padding: 23px;
   margin-right: 10px; /* 요소 사이의 우측 간격 설정 */
   margin-left: 10px; /* 요소 사이의 우측 간격 설정 */
 }
 
 .search-container {
   flex: 1; /* 자동으로 너비를 조절하여 공간을 차지 */
-  overflow: hidden; /* 부모 요소의 영역을 넘어가는 내용을 숨김 */
+  margin-right: 10px;
+  margin-bottom: 30px;
 }
 </style>

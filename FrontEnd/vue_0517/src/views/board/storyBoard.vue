@@ -6,11 +6,11 @@
 
 <script>
 export default {
-  name: 'StoryBoard',
+  name: "StoryBoard",
   components: {},
   data() {
     return {
-      message: '',
+      message: "",
     };
   },
   created() {},

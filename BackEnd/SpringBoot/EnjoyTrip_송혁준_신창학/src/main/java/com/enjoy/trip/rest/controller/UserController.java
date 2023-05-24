@@ -25,25 +25,26 @@ import com.enjoy.trip.service.UserService;
 public class UserController {
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
-	
+
 	private UserService userService;
 	private JWTService jwtService;
-	
+
 	public UserController(UserService userService, JWTService jwtService) {
 		this.userService = userService;
 		this.jwtService = jwtService;
 	}
-	
+
 	// 로그인
 	@PostMapping("/login")
 	public ResponseEntity<Map<String, Object>> login(@RequestBody  User user) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		try {
+			// user_id, user_no, is_admin 정보를 담고 있는 user 객체
 			User loginUser = userService.getUser(user);
 			if (loginUser != null) {
-				String accessToken = jwtService.createAccessToken("userId", loginUser.getUserId(), loginUser.getUserNo());// key, data
-				String refreshToken = jwtService.createRefreshToken("userId", loginUser.getUserId(), loginUser.getUserNo());// key, data
+				String accessToken = jwtService.createAccessToken(loginUser);
+				String refreshToken = jwtService.createRefreshToken(loginUser);
 				resultMap.put("access-token", accessToken);
 				resultMap.put("refresh-token", refreshToken);
 				resultMap.put("message", SUCCESS);
@@ -58,7 +59,7 @@ public class UserController {
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	
+
 	// 회원 상세 정보 가져오기
 	@GetMapping("/info/{userId}")
 	public ResponseEntity<Map<String, Object>> getInfo(@PathVariable("userId") String userId, HttpServletRequest request) {
@@ -80,7 +81,7 @@ public class UserController {
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	
+
 	// 로그아웃
 	@GetMapping("/logout/{userId}")
 	public ResponseEntity<?> removeToken(@PathVariable("userId") String userId) {
@@ -106,7 +107,12 @@ public class UserController {
 		String token = request.getHeader("refresh-token");
 		Map<String, Object> map = jwtService.get(token);
 		if (jwtService.checkToken(token)) {
-			String accessToken = jwtService.createAccessToken("userId", (String) map.get("userId"), Integer.parseInt((String) map.get("userNo")));
+			User refreshUser = new User();
+			refreshUser.setUserId((String) map.get("userId"));
+			refreshUser.setUserNo(Integer.parseInt((String) map.get("userNo")));
+			refreshUser.setIsAdmin(Integer.parseInt((String) map.get("isAdmin")));
+			
+			String accessToken = jwtService.createAccessToken(refreshUser);
 			resultMap.put("access-token", accessToken);
 			resultMap.put("message", SUCCESS);
 			status = HttpStatus.ACCEPTED;
@@ -116,13 +122,13 @@ public class UserController {
 		}
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	
+
 	//아이디중복확인
 	@GetMapping("checkDuplicateId/{userId}")
 	public boolean checkDuplicateId(@PathVariable("userId") String userId) throws Exception {
 		return userService.checkDuplicateId(userId);
 	}
-	
+
 	//회원가입
 	@PostMapping("signUp")
 	public ResponseEntity<?> signUp(@RequestBody User user) throws Exception {
@@ -132,7 +138,7 @@ public class UserController {
 		else resultMap.put("message", FAIL);
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
-	
+
 	//비밀번호찾기
 	@PostMapping("findPw")
 	public User findPwByUser(@RequestBody User user) throws Exception {

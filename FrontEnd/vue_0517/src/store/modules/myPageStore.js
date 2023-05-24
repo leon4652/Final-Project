@@ -8,7 +8,6 @@ const myPageStore = {
   },
   mutations: {
     SET_USER(state, user) {
-      console.dir(user);
       state.user = user;
     },
     SET_IS_UPDATE(state, isUpdate) {

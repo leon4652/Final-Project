@@ -30,11 +30,11 @@
                 <b-form-input id="email" type="email" :value="users.email0" readonly></b-form-input>
               </b-form-group>
               <b-form-group label="시/도:" label-for="sido">
-                <b-form-input id="sido" :value="users.sido" readonly></b-form-input>
+                <b-form-input id="sido" :value="users.sidoName" readonly></b-form-input>
               </b-form-group>
 
               <b-form-group label="구/군:">
-                <b-form-input id="gugun" :value="users.gugun" readonly></b-form-input>
+                <b-form-input id="gugun" :value="users.gugunName" readonly></b-form-input>
               </b-form-group>
 
               <b-form-group label="생년월일:" label-for="birth">

@@ -1,5 +1,6 @@
 package com.enjoy.trip.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -25,8 +26,15 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public void deleteNotice(int noticeNo) throws Exception {
-		noticeMapper.deleteNotice(noticeNo);
+	public boolean deleteNotice(int noticeNo) throws Exception {
+		boolean check = true;
+		try {
+			noticeMapper.deleteNotice(noticeNo);
+		} catch (SQLException e) {
+			check = false;
+		}
+		return check;
+
 	}
 
 	@Override

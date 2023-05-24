@@ -10,6 +10,7 @@ import myPageStore from './modules/myPageStore';
 import userStore from './modules/userStore';
 import itemStore from './item/itemStore';
 import storyBoardStore from './modules/storyBoardStore'
+import noticeStore from './modules/noticeStore'
 
 //step01;
 export default new Vuex.Store({
@@ -19,6 +20,7 @@ export default new Vuex.Store({
     userStore,
     itemStore,
     storyBoardStore,
+    noticeStore,
   },
   plugins: [
     createPersistedState({

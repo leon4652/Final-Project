@@ -8,10 +8,10 @@ import com.enjoy.trip.dto.User;
 
 public interface JWTService {
 
-	String createAccessToken(String key, String userId, int userNo);
-
-	String createRefreshToken(String key, String userId, int userNo);
-
+	String createAccessToken(User user);
+	
+	String createRefreshToken(User user);
+	
 	boolean checkToken(String header);
 
 	Map<String, Object> get(String key);
