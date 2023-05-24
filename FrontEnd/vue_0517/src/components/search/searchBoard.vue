@@ -4,9 +4,9 @@
 
     <div class="select-container">
       <select class="custom-select" v-model="mobility">
-        <option value="1" selected>자동차</option>
-        <option value="2">자전거</option>
-        <option value="3">도보</option>
+        <option value="60" selected>자동차</option>
+        <option value="20">자전거</option>
+        <option value="5">도보</option>
       </select>
       <select class="custom-select" v-model="sidoCode" @change="handleSidoCodeChange">
         <option value="0" selected>지역</option>
