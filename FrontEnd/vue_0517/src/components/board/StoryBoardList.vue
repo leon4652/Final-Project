@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="storyBoardList">
     <h1 class="con">게시판</h1>
     <b-col class="text-right">
-      <b-button variant="info" @click="moveWrite">글 작성</b-button>
+      <b-button class="writeBtn" variant="info" @click="moveWrite">글 작성</b-button>
     </b-col>
     <b-table striped hover :items="storyBoards" :fields="fields">
       <template v-slot:cell(storyBoardTitle)="row">
@@ -55,4 +55,11 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.storyBoardList{
+  margin-top: 10px;
+}
+.writeBtn{
+  margin-bottom: 5px;
+}
+</style>
