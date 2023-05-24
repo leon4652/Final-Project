@@ -1,9 +1,8 @@
 <template>
   <div>
     <div class="flex-container">
-      <div class="container">
-        <kakao-map class="map-container"></kakao-map>
-      </div>
+      <kakao-map class="map-container"></kakao-map>
+
       <div class="search-container">
         <search-result></search-result>
       </div>
@@ -45,14 +44,8 @@ export default {
 .map-container {
   width: 100%;
   height: 100%;
-}
-.container {
   flex: 1; /* 자동으로 너비를 조절하여 공간을 차지 */
-  width: 30%;
-  height: 30%;
-  padding: 20px;
-  margin-right: 10px; /* 요소 사이의 우측 간격 설정 */
-  margin-left: 10px; /* 요소 사이의 우측 간격 설정 */
+  margin-left: 30px;
 }
 
 .search-container {

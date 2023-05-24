@@ -84,7 +84,6 @@ export default {
 </script>
 
 <style scoped>
-@import url("@/assets/table/table.css");
 .image {
   width: 120px; /* 이미지의 원하는 크기로 설정 */
   height: 100px; /* 가로 크기에 맞춰 세로 크기 조절 */
