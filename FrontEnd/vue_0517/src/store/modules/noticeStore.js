@@ -13,8 +13,13 @@ const noticeStore = {
     SET_NOTICE_LIST(state, notices) {
       // 초기화
       state.notices = [];
-      notices.forEach((story) => {
-        state.notices.push(story);
+      notices.forEach((notice) => {
+        state.notices.push({
+          noticeNo: notice.noticeNo, 
+          noticeTitle: notice.noticeTitle, 
+          userId: notice.userId,
+          registDate: notice.registDate,
+        });
       });
     },
     SET_NOTICE(state, notice) {

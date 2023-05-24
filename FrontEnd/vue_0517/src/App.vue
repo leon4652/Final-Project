@@ -44,6 +44,7 @@ export default {
     // 아이디랑 이름 나오고 싶은데
     if (sessionStorage.getItem('access-token')) {
       this.user = jwtDecode(sessionStorage.getItem('access-token'));
+      console.dir(this.user)
       // let id = jwtDecode(sessionStorage.getItem("userId"));
       // let name = jwtDecode(sessionStorage.getItem("userName"));
       // this.userId = id;
