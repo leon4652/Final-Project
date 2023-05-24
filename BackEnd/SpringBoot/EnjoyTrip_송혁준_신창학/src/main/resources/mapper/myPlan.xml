@@ -14,8 +14,8 @@
   </insert>
 
   <insert id="saveMyPlan" parameterType="MyPlan">
-  INSERT INTO my_plan ( user_id, user_no, trip_title, my_plan_regist_date) 
-  VALUES (#{userId},#{userNo},#{tripTitle}, now())
+  INSERT INTO my_plan ( user_id, user_no, trip_title, my_plan_regist_date, trip_content) 
+  VALUES (#{userId},#{userNo},#{tripTitle}, now(), #{tripContent})
   </insert>
  
   

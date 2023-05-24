@@ -26,6 +26,8 @@ export default {
       "attInfoList",
       "contentTypeList",
       "isTripPlan",
+      "myRoute",
+      "mobility"
     ]),
   },
   data() {
@@ -36,6 +38,8 @@ export default {
       maplevel: 10,
       geocoder: null,
       makerInfo: [], //markerInfo 정보 저장
+      eLat:null, //좌표 거리(시간) 계산용 좌표
+      eLng:null,
     };
   },
 
@@ -111,7 +115,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("mapStore", ["getDetailsFromLatLng", "myRoute"]),
+    ...mapActions("mapStore", ["getDetailsFromLatLng"]),
     ...mapMutations("mapStore", [
       "SET_LAN_LAT",
       "SET_GUGUN_LIST",
@@ -120,6 +124,9 @@ export default {
       "SET_NOW_CONTENT_TYPE",
       "SET_IS_TRIP_PLAN",
       "SET_CNT",
+      "DEL_EXPECT_TIME",
+      "ADD_EXPECT_TIME"
+
     ]),
     // api 불러오기
     loadScript() {
@@ -154,6 +161,9 @@ export default {
         mapTypeControl,
         window.kakao.maps.ControlPosition.TOPRIGHT
       ); // kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의, TOPRIGHT는 오른쪽 위를 의미한다.
+
+
+      /// KAKAO_DRAW
     },
 
     // 지정한 위치에 마커 불러오기
@@ -356,14 +366,29 @@ export default {
           this.closeInfoWindowListener(infowindow)
         );
 
-        //마커의 주소값을 찾고, 이를 기반으로 axios 통신을 통해 해당 관광지 정보를 산출한다.
+        //우클릭 이벤트 로직
         kakao.maps.event.addListener(
           marker,
-          "rightclick",
+          "click",
           function () {
+            const nowlat = marker.getPosition().getLat();
+            const nowlng = marker.getPosition().getLng();
+            //1. 거리 계산 로직
+            //처음 스타트일 경우 현재 마커 좌표를 저장
+            if(this.myRoute.length == 0) {
+              this.DEL_EXPECT_TIME();
+              //현재 값이자, 다음 마커 선택 시 거리 비교용 값
+              this.eLat = nowlat; this.eLng = nowlng;
+            }
+            else {
+              //아닐 경우 이전 좌표값과 거리 비교
+              this.calDist(this.eLat, this.eLng, nowlat, nowlng); 
+              this.eLat = nowlat; this.eLng = nowlng; //계산 후 좌표 초기화
+            }
+            //2. 지역 정보 수집
             this.getDetailsFromLatLng({
-              lat: marker.getPosition().getLat(),
-              lan: marker.getPosition().getLng(),
+              lat: nowlat,
+              lan: nowlng,
             });
             if (!this.isTripPlan)
               alert("장소가 여행계획에 추가되었습니다. 확인해보세요!");
@@ -371,6 +396,31 @@ export default {
         );
       }
     },
+
+    calDist(lat1, lon1, lat2, lon2) {
+      //위도와 경도를 기반으로 거리를 계산
+      const earthRadius = 6371; // 지구 반경 (단위: km)
+
+      // 위도와 경도를 라디안 단위로 변환
+      const radianLat1 = lat1 * (Math.PI / 180);
+      const radianLon1 = lon1 * (Math.PI / 180);
+      const radianLat2 = lat2 * (Math.PI / 180);
+      const radianLon2 = lon2 * (Math.PI / 180);
+
+      // 두 지점의 차이 계산
+      const deltaLat = radianLat2 - radianLat1;
+      const deltaLon = radianLon2 - radianLon1;
+
+      // Haversine 공식 계산
+      const a = Math.sin(deltaLat / 2) ** 2
+        + Math.cos(radianLat1) * Math.cos(radianLat2) * Math.sin(deltaLon / 2) ** 2;
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+      // 거리 계산
+      const result = earthRadius * c;// dist(km)
+      this.ADD_EXPECT_TIME(Math.round((result / this.mobility * 60 * 100))/100);
+    }
+
   },
 };
 </script>
@@ -378,9 +428,9 @@ export default {
 <style scoped>
 #map {
   width: 100%;
-  height: 600px;
-  border: 1px solid #ccc; /* 테두리 스타일 추가 */
+  height: 650px;
+  border: 2px solid #ccc; /* 테두리 스타일 추가 */
   border-radius: 5px; /* 테두리 둥글게 설정 */
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
 }
 </style>

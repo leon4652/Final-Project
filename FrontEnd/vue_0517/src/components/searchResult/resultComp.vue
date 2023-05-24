@@ -84,6 +84,13 @@ export default {
 .container {
   max-height: 650px;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #ccc; /* 테두리 스타일 추가 */
+  border-radius: 5px; /* 테두리 둥글게 설정 */
+  overflow: auto; /* 내용이 넘칠 경우 숨김 처리 */
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
+  margin-top: 30px;
 }
 .table-container {
   max-height: 600px;
