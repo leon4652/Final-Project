@@ -1,5 +1,9 @@
 <template>
   <div>
+    <h1 class="con">공지사항</h1>
+      <b-col class="text-right" v-if="this.isAdmin === 1">
+        <b-button variant="info" @click="moveWrite">글 작성</b-button>
+      </b-col>
     <b-table striped hover :items="notices" :fields="fields">
       <template v-slot:head()="data">
         <tr>
@@ -11,7 +15,7 @@
       <template v-slot:default="data">
         <tr v-for="item in data.items" :key="item.noticeNo">
           <td>{{ item.noticeNo }}</td>
-          <td class="text-left" @click="noticeView(item)">{{ item.noticeTitle }}</td>
+          <td class="text-left" @click="noticeView(item.noticeNo)">{{ item.noticeTitle }}</td>
           <td>{{ item.noticeHit }}</td>
           <td>{{ item.userId }}</td>
           <td>{{ item.registDate | dateFormat }}</td>
@@ -19,9 +23,6 @@
       </template>
 
     </b-table>
-      <b-col class="text-right" v-if="this.isAdmin === 1">
-        <b-button variant="info" @click="moveWrite">글 작성</b-button>
-      </b-col>
   </div>
 </template>
 
@@ -38,16 +39,10 @@ export default {
       fields: [
         { key: 'noticeNo', label: '글 번호', sortable: true },
         { key: 'noticeTitle', label: '제목', sortable: false },
-        // { key: 'noticeHit', label: '조회수', sortable: true },
         { key: 'userId', label: '작성자', sortable: true },
         { key: 'registDate', label: '작성일', sortable: true }
       ],
-      noticeList: [
-        // { noticeNo: 1, noticeTitle: '첫 번째 공지', noticeHit: 10, userId: 'user1', registDate: '2023-01-01' },
-        // { noticeNo: 2, noticeTitle: '두 번째 공지', noticeHit: 5, userId: 'user2', registDate: '2023-01-02' },
-        // { noticeNo: 3, noticeTitle: '세 번째 공지', noticeHit: 8, userId: 'user3', registDate: '2023-01-03' },
-        // { noticeNo: 4, noticeTitle: '네 번째 공지', noticeHit: 3, userId: 'user4', registDate: '2023-01-04' }
-      ],
+      noticeList: [],
       isAdmin: '',
     }
   },
@@ -69,8 +64,9 @@ export default {
   },
   methods: {
     ...mapActions(noticeStore, ["getNoticeList"]),
-    noticeView(notice) {
-      this.$router.push('/notice/info/' + notice.noticeNo);
+    noticeView(noticeNo) {
+      console.log(123)
+      this.$router.push('/notice/info/' + noticeNo);
     },
     dateFormat(registDate) {
       return moment(new Date(registDate)).format('YY.MM.DD');
