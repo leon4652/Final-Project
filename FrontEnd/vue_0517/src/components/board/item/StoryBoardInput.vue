@@ -45,7 +45,9 @@
             ref="content"
           ></b-form-textarea>
         </b-form-group>
-        <b-button type="submit" variant="primary" class="m-1" v-if="this.type === 'write'">글작성</b-button>
+        <b-button type="submit" variant="primary" class="m-1" v-if="this.type === 'write'"
+          >글작성</b-button
+        >
         <b-button type="submit" variant="primary" class="m-1" v-else>글수정</b-button>
 
         <b-button type="reset" variant="danger" class="m-1">초기화</b-button>
@@ -55,22 +57,22 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
-import jwt_decode from 'jwt-decode';
+import { mapActions, mapState } from "vuex";
+import jwt_decode from "jwt-decode";
 
-const storyBoardStore = 'storyBoardStore';
+const storyBoardStore = "storyBoardStore";
 
 export default {
-  name: 'StoryBoardInput',
+  name: "StoryBoardInput",
   data() {
     return {
       board: {
         storyBoardNo: 0,
-        userId: '',
-        userName: '',
-        userNo: '',
-        storyBoardTitle: '',
-        storyBoardContent: '',
+        userId: "",
+        userName: "",
+        userNo: "",
+        storyBoardTitle: "",
+        storyBoardContent: "",
       },
       isUserid: false,
     };
@@ -80,10 +82,10 @@ export default {
     type: { type: String },
   },
   computed: {
-    ...mapState(storyBoardStore, ['storyBoard']),
+    ...mapState(storyBoardStore, ["storyBoard"]),
   },
   async created() {
-    if (this.type === 'modify') {
+    if (this.type === "modify") {
       // 쿼리문에 내가 필요한 parameter가 있을때 params.변수명으로 접근
       let param = this.$route.params.storyBoardNo;
       await this.getStoryBoard(param);
@@ -92,47 +94,48 @@ export default {
     }
     // 세션에서 정보 가져오기
     // jwt_decode inport하기
-    let user = jwt_decode(sessionStorage.getItem('access-token'));
+    let user = jwt_decode(sessionStorage.getItem("access-token"));
     this.board.userId = user.userId;
     this.board.userNo = user.userNo;
   },
   methods: {
-    ...mapActions(storyBoardStore, ['writeStoryBoard', 'getStoryBoard', 'modifyStoryBoard']),
+    ...mapActions(storyBoardStore, ["writeStoryBoard", "getStoryBoard", "modifyStoryBoard"]),
     async onSubmit(event) {
       event.preventDefault();
 
       let err = true;
-      let msg = '';
+      let msg = "";
       // 각 항목의 입력값이 있는지 확인, 없다면 해당 ref로 focus가 이동함
       !this.board.userNo &&
-        ((msg = '작성자 입력해주세요'), (err = false), this.$refs.userId.focus());
+        ((msg = "작성자 입력해주세요"), (err = false), this.$refs.userId.focus());
       err &&
         !this.board.storyBoardTitle &&
-        ((msg = '제목 입력해주세요'), (err = false), this.$refs.title.focus());
+        ((msg = "제목 입력해주세요"), (err = false), this.$refs.title.focus());
       err &&
         !this.board.storyBoardContent &&
-        ((msg = '내용 입력해주세요'), (err = false), this.$refs.content.focus());
-      
+        ((msg = "내용 입력해주세요"), (err = false), this.$refs.content.focus());
+
       if (!err) alert(msg);
       else
-        this.type === 'write'
+        this.type === "write"
           ? await this.writeStoryBoard(this.board)
           : await this.modifyStoryBoard(this.board);
 
       this.moveList();
     },
-    onReset(event) { // 초기화 버튼 눌렀을 때 실행하는 함수
+    onReset(event) {
+      // 초기화 버튼 눌렀을 때 실행하는 함수
       event.preventDefault();
       this.board.storyBoardNo = 0;
-      this.board.storyBoardTitle = '';
-      this.board.storyBoardContent = '';
+      this.board.storyBoardTitle = "";
+      this.board.storyBoardContent = "";
       this.moveList();
     },
     moveList() {
-      this.$router.push({ name: 'storyboard' });
+      this.$router.push({ name: "storyboard" });
     },
   },
 };
 </script>
 
-<style></style>
+<style scoped></style>
