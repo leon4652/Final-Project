@@ -11,20 +11,7 @@ public class Notice {
 	private String removeDate;
 	private String userName;
 	private String userId;
-
-	public String getUserId() {
-		return userId;
-	}
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+	
 	public int getNoticeNo() {
 		return noticeNo;
 	}
@@ -72,5 +59,17 @@ public class Notice {
 	}
 	public void setRemoveDate(String removeDate) {
 		this.removeDate = removeDate;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 }

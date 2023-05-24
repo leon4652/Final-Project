@@ -21,6 +21,7 @@
                 v-model="user.userId"
                 required
                 placeholder="아이디 입력...."
+                ref="userId"
               ></b-form-input>
               <b-button type="button" variant="success" class="m-1" @click="checkDuplicate"
                 >아이디 중복 확인</b-button
@@ -33,6 +34,7 @@
                 v-model="user.userPw"
                 required
                 placeholder="비밀번호 입력...."
+                ref="password"
               ></b-form-input>
             </b-form-group>
             <b-form-group label="이름:" label-for="userName">
@@ -41,6 +43,7 @@
                 v-model="user.userName"
                 required
                 placeholder="이름 입력...."
+                ref="name"
               ></b-form-input>
             </b-form-group>
             <b-form-group label="이메일:" label-for="email">
@@ -56,7 +59,7 @@
               <select-sido @select-sido="selectSido"></select-sido>
             </b-form-group>
 
-            <b-form-group label="구/군:">
+            <b-form-group label="구/군:" ref="gugun">
               <select-gugun :sidoCode="sidoCode" @select-gugun="selectGugun"></select-gugun>
             </b-form-group>
 
@@ -107,12 +110,32 @@ export default {
   methods: {
     ...mapActions('userStore', ['userSignup']),
     async confirm() {
-      // store에 있는 state에 있는 isSignUp에 따라 동작하도록 변경해야함
-      await this.userSignup(this.user)
-        .then(() => {
-          this.$router.push({ name: 'login' });
-        })
-        .catch(console.log('실패'));
+      let err = true;
+      let msg = "";
+      // 입력값 중에 필수 입력 -> 아이디, 비밀번호, 이름 입력이 없으면 focus
+         !this.user.userId &&
+        ((msg = "아이디 입력해주세요"), (err = false), this.$refs.userId.focus());
+      err &&
+        !this.user.userPw &&
+        ((msg = "비밀번호 입력해주세요"), (err = false), this.$refs.password.focus());
+      err &&
+        !this.user.userName &&
+        ((msg = "이름 입력해주세요"), (err = false), this.$refs.name.focus());
+
+      // 시도만 입력하고 구군을 입력안하면 안되도록
+      err &&
+        this.user.sido && !this.user.gugun &&
+        ((msg = "구군 정보 입력해주세요"), (err = false), this.$refs.name.focus());
+
+      if (!err) alert(msg)
+      else {
+        // store에 있는 state에 있는 isSignUp에 따라 동작하도록 변경해야함
+        await this.userSignup(this.user)
+          .then(() => {
+            this.$router.push({ name: 'login' });
+          })
+          .catch(console.log('실패'));
+      }
     },
     customDateFormatter(value) {
       value = this.selectedDate;

@@ -57,7 +57,6 @@ const storyBoardStore = {
 
     // story board 작성
     async writeStoryBoard({ commit }, storyBoard) {
-      console.log("여기인가");
       await write(
         storyBoard,
         ({ data }) => {

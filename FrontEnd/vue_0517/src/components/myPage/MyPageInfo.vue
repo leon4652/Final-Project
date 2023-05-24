@@ -172,7 +172,6 @@ export default {
     // 마이페이지 접근 시 로그인된 회원의 정보를 가져와야함
     await this.getUser();
     this.users = this.user;
-    console.dir(this.user)
 
     // selectedDate를 YYYY-MM-DD 형식으로 변경
     const year = String(this.user.birthYear);

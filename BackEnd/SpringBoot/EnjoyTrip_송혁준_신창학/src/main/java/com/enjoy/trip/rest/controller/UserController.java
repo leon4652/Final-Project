@@ -39,12 +39,12 @@ public class UserController {
 	public ResponseEntity<Map<String, Object>> login(@RequestBody  User user) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
-		System.out.println(user.toString());
 		try {
+			// user_id, user_no, is_admin 정보를 담고 있는 user 객체
 			User loginUser = userService.getUser(user);
 			if (loginUser != null) {
-				String accessToken = jwtService.createAccessToken("userId", loginUser.getUserId(), loginUser.getUserNo());// key, data
-				String refreshToken = jwtService.createRefreshToken("userId", loginUser.getUserId(), loginUser.getUserNo());// key, data
+				String accessToken = jwtService.createAccessToken(loginUser);
+				String refreshToken = jwtService.createRefreshToken(loginUser);
 				resultMap.put("access-token", accessToken);
 				resultMap.put("refresh-token", refreshToken);
 				resultMap.put("message", SUCCESS);
@@ -107,7 +107,12 @@ public class UserController {
 		String token = request.getHeader("refresh-token");
 		Map<String, Object> map = jwtService.get(token);
 		if (jwtService.checkToken(token)) {
-			String accessToken = jwtService.createAccessToken("userId", (String) map.get("userId"), Integer.parseInt((String) map.get("userNo")));
+			User refreshUser = new User();
+			refreshUser.setUserId((String) map.get("userId"));
+			refreshUser.setUserNo(Integer.parseInt((String) map.get("userNo")));
+			refreshUser.setIsAdmin(Integer.parseInt((String) map.get("isAdmin")));
+			
+			String accessToken = jwtService.createAccessToken(refreshUser);
 			resultMap.put("access-token", accessToken);
 			resultMap.put("message", SUCCESS);
 			status = HttpStatus.ACCEPTED;

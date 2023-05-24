@@ -1,7 +1,28 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import store from "@/store";
 
 Vue.use(VueRouter);
+
+// https://v3.router.vuejs.org/kr/guide/advanced/navigation-guards.html
+const onlyAuthUser = async (to, from, next) => {
+  const checkUserInfo = store.getters["userStore/checkUserInfo"];
+  const checkToken = store.getters["userStore/checkToken"];
+  let token = sessionStorage.getItem("access-token");
+  console.log("로그인 처리 전", checkUserInfo, token);
+
+  if (checkUserInfo != null && token) {
+    console.log("토큰 유효성 체크하러 가자!!!!");
+    await store.dispatch("userStore/getUserInfo", token);
+  }
+  if (!checkToken || checkUserInfo === null) {
+    alert("로그인이 필요한 페이지입니다..");
+    router.push({ name: "login" });
+  } else {
+    console.log("로그인 했다!!!!!!!!!!!!!.");
+    next();
+  }
+};
 
 const routes = [
   {
@@ -102,18 +123,21 @@ const routes = [
       {
         path: "info",
         name: "myPageInfo",
+        beforeEnter: onlyAuthUser,
         component: () =>
           import(/* webpackChunkName: "myPage" */ "@/components/myPage/MyPageInfo.vue"),
       },
       {
         path: "board",
         name: "myPageBoard",
+        beforeEnter: onlyAuthUser,
         component: () =>
           import(/* webpackChunkName: "myPage" */ "@/components/myPage/MyPageBoard.vue"),
       },
       {
         path: "comment",
         name: "myPageComment",
+        beforeEnter: onlyAuthUser,
         component: () =>
           import(/* webpackChunkName: "myPage" */ "@/components/myPage/MyPageComment.vue"),
       },
@@ -162,12 +186,14 @@ const routes = [
       {
         path: "write",
         name: "storyboardWrite",
+        beforeEnter: onlyAuthUser,
         component: () =>
           import(/* webpackChunkName: "storyboard" */ "@/components/board/StoryBoardWrite.vue"),
       },
       {
         path: "modify/:storyBoardNo",
         name: "storyboardModify",
+        beforeEnter: onlyAuthUser,
         component: () =>
           import(/* webpackChunkName: "storyboard" */ "@/components/board/StoryBoardModify.vue"),
       },
@@ -194,12 +220,14 @@ const routes = [
       {
         path: "write",
         name: "noticeWrite",
+        beforeEnter: onlyAuthUser,
         component: () =>
           import(/* webpackChunkName: "notice" */ "@/components/notice/NoticeWrite.vue"),
       },
       {
         path: "modify/:noticeNo",
         name: "noticeModify",
+        beforeEnter: onlyAuthUser,
         component: () =>
           import(/* webpackChunkName: "notice" */ "@/components/notice/NoticeModify.vue"),
       },
