@@ -1,7 +1,10 @@
 <template>
   <div class="down">
-    <button @click="deleteMyRoute">삭제</button>
-    <button @click="uploadMyRoute">등록</button>
+    <div>
+      <input v-model="tripTitle" placeholder="여행지 제목을 입력하세요." />
+      <button @click="deleteMyRoute">삭제</button>
+      <button @click="uploadMyRoute">등록</button>
+    </div>
     <div>
       <div class="container">
         <div class="table-container">
@@ -55,7 +58,7 @@ export default {
   components: {},
   data() {
     return {
-      message: "",
+      tripTitle: "",
     };
   },
   created() {},
@@ -66,7 +69,7 @@ export default {
       this.DEL_MY_ROUTE();
     },
     uploadMyRoute() {
-      this.sendMyRoute();
+      this.sendMyRoute(this.tripTitle);
     },
   },
   computed: {
