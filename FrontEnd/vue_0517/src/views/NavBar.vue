@@ -18,8 +18,14 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-form>
-            <b-form-input size="m" class="mr-sm-2" placeholder="여행지를 검색하세요"></b-form-input>
-            <b-button size="m" class="my-2 my-sm-0" type="submit">검색</b-button>
+            <b-form-input
+              size="m"
+              class="mr-sm-2"
+              placeholder="여행지를 검색하세요"
+            ></b-form-input>
+            <b-button size="m" class="my-2 my-sm-0" type="submit"
+              >검색</b-button
+            >
           </b-nav-form>
 
           <!-- 로그인 전 -->
@@ -37,6 +43,7 @@
                 <router-link to="/mypage" class="profileLink">Profile</router-link>
               </b-dropdown-item>
               <b-dropdown-item href="" @click="logout">Sign Out</b-dropdown-item>
+
             </b-nav-item-dropdown>
           </div>
         </b-navbar-nav>

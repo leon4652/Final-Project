@@ -3,6 +3,8 @@ package com.enjoy.trip.rest.controller;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,13 +27,6 @@ public class MyPlanController {
 	}
 	@PostMapping("save")
 	public void saveMyPlan(@RequestBody List<MyPlan> mp) throws Exception {
-		
-		//myPlan 객체로 왔다. 이걸 파싱해서 하나는 myPlan으로, 하나는 myPlanOrder로 보내야 함
-		/*
-		 myPlan : myplanno(자동), userid, userno, triptitle, myplanlike, myplanhit 
-		 myplanOrder : myplanno(받아와야 함), title, addr, first_image, expecttime
-		 */
-		
 		//1. myPlan 타입 저장
 		myPlanService.saveMyPlan(mp.get(0));
 		//3. order 저장 (myPlan값), 현재 최대 myPlan값 가져오기
@@ -40,5 +35,10 @@ public class MyPlanController {
 			myPlan.setMyPlanNo(myPlanNo);
 		}
 		myPlanService.saveMyPlanOrder(mp);
+	}
+	
+	@GetMapping("review/{sidoCode}/{gugunCode}")
+	public List<MyPlan> getThisLocationReviews(@PathVariable("sidoCode") int sidoCode, @PathVariable("gugunCode") int gugunCode) throws Exception {
+		return myPlanService.getThisLocationReviews(sidoCode, gugunCode);
 	}
 }

@@ -1,12 +1,14 @@
 <template>
   <div>
     <div class="full-container">
-      <div class="container">
-        <h2 style="margin-top : 15px">나만의 여행 계획표를 등록하세요</h2>
+      <div class="amf-container">
+        <h2 style="margin-top: 15px">나만의 여행 계획표를 등록하세요</h2>
         <div class="write-container">
           <div class="write">
             <div>제목 : <input class="title-input" v-model="tripTitle" /></div>
-            <div style="margin-top : 15px"><textarea v-model="tripContent"></textarea></div>
+            <div style="margin-top: 15px">
+              <textarea v-model="tripContent"></textarea>
+            </div>
           </div>
           <div class="btn">
             <button @click="uploadMyRoute">등록</button>
@@ -40,7 +42,7 @@
                   />
                   <span v-else>No Image</span>
                 </td>
-                <td>{{ expectTime[index]}}</td>
+                <td>{{ convertTime(expectTime[index]) }}</td>
               </tr>
             </tbody>
             <tfoot>
@@ -59,7 +61,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions} from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 export default {
   name: "addMyFavorite",
   components: {},
@@ -77,12 +79,24 @@ export default {
       this.DEL_MY_ROUTE();
     },
     uploadMyRoute() {
-      this.sendMyRoute({ tripTitle : this.tripTitle, tripContent : this.tripContent});
+      this.sendMyRoute({
+        tripTitle: this.tripTitle,
+        tripContent: this.tripContent,
+      });
     },
-
+    convertTime(minutes) {
+      //60분 넘어갈 시 시간 변환 실행
+      if (minutes >= 60) {
+        const hours = Math.floor(minutes / 60);
+        const remainingMinutes = Math.round(minutes % 60);
+        return `${hours}시간 ${remainingMinutes}분`;
+      } else {
+        return `${minutes}분`;
+      }
+    },
   },
   computed: {
-    ...mapState("mapStore", ["myRoute","expectTime"]),
+    ...mapState("mapStore", ["myRoute", "expectTime"]),
   },
 };
 </script>
@@ -123,9 +137,10 @@ export default {
   display: flex; /* 요소들을 가로로 배치 */
   justify-content: space-between;
 }
-.container {
+.amf-container {
   max-height: 650px;
   overflow: auto;
+  padding: 10px;
 }
 .image {
   width: 120px; /* 이미지의 원하는 크기로 설정 */
