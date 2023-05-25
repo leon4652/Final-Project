@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.enjoy.trip.mapper.MyPlanMapper">
+
+<!-- myPlan 게시글 저장 -->
+  <insert id="saveMyPlan" parameterType="MyPlan">
+  INSERT INTO my_plan ( user_id, user_no, trip_title, my_plan_regist_date, trip_content, sido_code, gugun_code) 
+  VALUES (#{userId},#{userNo},#{tripTitle}, now(), #{tripContent}, #{sidoCode}, #{gugunCode})
+  </insert>
+  
+  <!-- 게시글의 고유 넘버링을 얻어온다 -->
+  <select id="getMaxPlanNo" resultType="int">
+  	select max(my_plan_no)
+  	  from my_plan
+  </select>
+  
+  <!-- 게시글의 상세 루트 저장 -->
+  <insert id="saveMyPlanOrder" parameterType="java.util.List">
+      INSERT INTO my_plan_order (my_plan_no, idx, title, addr1, first_image, expect_time) 
+      VALUES 
+	    <foreach collection="list" item="myPlan" separator=",">
+      			(#{myPlan.myPlanNo}, #{myPlan.idx}, #{myPlan.title}, #{myPlan.addr1}, #{myPlan.firstImage}, #{myPlan.expectTime})
+    	</foreach>
+  </insert>
+
+  
+	  <!-- 지역에 따른 게시글 조회 -->
+<resultMap id="myPlanResultMap" type="MyPlan">
+    <result property="userId" column="user_id" />
+    <result property="myPlanHit" column="my_plan_hit" />
+    <result property="myPlanLike" column="my_plan_like" />
+    <result property="tripTitle" column="trip_title" />
+    <result property="tripContent" column="trip_content" />
+    <result property="myPlanRegistDate" column="my_plan_regist_date"/>
+    <result property="myPlanNo" column="my_plan_no"/>
+    <result property="idx" column="idx"/>
+</resultMap>
+
+<select id="getThisLocationReviews" resultMap="myPlanResultMap">
+    SELECT * 
+    FROM my_plan
+    WHERE sido_code = #{sidoCode} AND gugun_code = #{gugunCode} 
+</select>
+
+<!-- myPlanNo로 상세 루트 가져오기 -->
+<select id="getMyPlanOrder" resultMap="myPlanOrderResultMap">
+    SELECT * 
+    FROM my_plan_order
+    WHERE my_plan_no = #{myPlanNo}
+</select>
+
+<resultMap id="myPlanOrderResultMap" type="MyPlan">
+    <result property="myPlanNo" column="my_plan_no"/>
+    <result property="idx" column="idx"/>
+    <result property="title" column="title"/>
+    <result property="addr1" column="addr1"/>
+    <result property="firstImage" column="first_image"/>
+    <result property="expectTime" column="expect_time"/>
+</resultMap>
+
+<!-- 좋아요 ++ -->
+<update id="planLikeUp">
+	 update my_plan 
+	    set my_plan_like = my_plan_like + 1 
+	  where my_plan_no = #{myPlanNo};
+</update>
+
+<!-- 조회수 ++ -->
+<update id="planHitUp">
+	 update my_plan 
+	    set my_plan_hit = my_plan_hit + 1 
+	  where my_plan_no = #{myPlanNo};
+</update>
+
+</mapper>

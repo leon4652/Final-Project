@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.enjoy.trip.mapper.UserMapper">
+
+	 <resultMap type="User" id="UserMap">
+	 	<result column="user_no" property="userNo" />
+	 	<result column="user_id" property="userId" />
+	 	<result column="user_pw" property="userPw" />
+	 	<result column="user_name" property="userName" />
+	 	<result column="email0" property="email0" />
+	 	<result column="email1" property="email1" />
+	 	<result column="sido" property="sido" />
+	 	<result column="gugun" property="gugun" />
+	 	<result column="birth_year" property="birthYear" />
+	 	<result column="birth_month" property="birthMonth" />
+	 	<result column="birth_date" property="birthDate" />
+	 	<result column="regist_date" property="registDate" />
+	 	<result column="update_date" property="updateDate" />
+	 	<result column="remove_date" property="removeDate" />
+	 	<result column="is_admin" property="isAdmin" />
+	 </resultMap>
+	
+	<!-- 로그인 -->
+	<select id="getUser" parameterType="User" resultMap="UserMap">
+		SELECT user_id, user_name, user_no
+		  FROM user
+		 WHERE user_id = #{userId}
+		   AND user_pw = #{userPw}
+	</select>
+	
+	<select id="getUserById" parameterType="String" resultMap="UserMap">
+		SELECT *
+		  FROM user
+		 WHERE user_id = #{userId}
+	</select>
+	
+	<select id="checkDuplicateId" parameterType="String" resultType="int">
+		SELECT COUNT(*) 
+		  FROM user 
+		 WHERE user_id = #{userId}
+	</select>
+	
+	<insert id="insertUser" parameterType="User">
+		INSERT INTO user(user_id, user_pw, user_name, email0, sido, gugun, birth_year, birth_month, birth_date)
+		VALUES (#{userId}, #{userPw}, #{userName}, #{email0}, #{sido}, #{gugun}, #{birthYear}, #{birthMonth}, #{birthDate})
+	</insert>
+	
+	<!-- token 관련 sql -->
+	
+	 <update id="updateRefreshToken" parameterType="map">
+	 	UPDATE user
+		   SET token = #{token}
+		 WHERE user_id = #{userId}
+	 </update>
+	 
+	 <update id="deleteRefreshToken" parameterType="map">
+	 	UPDATE user 
+	 	   SET token = #{token}
+	 	 WHERE user_id = #{userId}
+	 </update>
+	 
+	 <select id="getRefreshToken" parameterType="string" resultType="string">
+		SELECT token
+		  FROM user
+		 WHERE user_id = #{userId}
+	</select>
+	
+</mapper>

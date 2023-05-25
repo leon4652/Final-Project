@@ -35,7 +35,7 @@ export default {
       map: null,
       positions: [],
       markers: [],
-      maplevel: 10,
+      maplevel: 8,
       geocoder: null,
       makerInfo: [], //markerInfo 정보 저장
       eLat: null, //좌표 거리(시간) 계산용 좌표
