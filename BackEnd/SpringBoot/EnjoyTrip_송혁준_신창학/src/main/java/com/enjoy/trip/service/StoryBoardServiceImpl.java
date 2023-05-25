@@ -46,4 +46,9 @@ public class StoryBoardServiceImpl implements StoryBoardService {
 	public void writeStoryBoard(StoryBoard storyBoard) throws Exception {
 		storyBoardMapper.writeStoryBoard(storyBoard);
 	}
+
+	@Override
+	public List<StoryBoard> subSelectStoryBoard() throws Exception {
+		return storyBoardMapper.subSelectStoryBoard();
+	}
 }

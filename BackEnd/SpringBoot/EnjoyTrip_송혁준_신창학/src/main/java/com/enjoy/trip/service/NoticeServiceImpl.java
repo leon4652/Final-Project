@@ -47,5 +47,10 @@ public class NoticeServiceImpl implements NoticeService {
 		return noticeMapper.getNotice(noticeNo);
 	}
 
+	@Override
+	public List<Notice> subSelectNotice() throws Exception {
+		return noticeMapper.subSelectNotice();
+	}
+
 
 }

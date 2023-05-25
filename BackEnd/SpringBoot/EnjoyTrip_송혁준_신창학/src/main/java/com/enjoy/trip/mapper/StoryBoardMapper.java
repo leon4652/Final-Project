@@ -22,4 +22,6 @@ public interface StoryBoardMapper {
 
 	void writeStoryBoard(StoryBoard storyBoard) throws SQLException;
 
+	List<StoryBoard> subSelectStoryBoard() throws SQLException;
+
 }

@@ -16,4 +16,6 @@ public interface NoticeService {
 
 	Notice getNotice(int noticeNo) throws Exception;
 
+	List<Notice> subSelectNotice() throws Exception;
+
 }
