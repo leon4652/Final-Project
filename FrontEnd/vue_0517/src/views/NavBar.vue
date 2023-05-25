@@ -1,6 +1,11 @@
 <template>
   <div class="navbarContainer">
-    <b-navbar toggleable="lg" type="dark" variant="light" class="gradient-navbar">
+    <b-navbar
+      toggleable="lg"
+      type="dark"
+      variant="light"
+      class="gradient-navbar"
+    >
       <b-navbar-brand class="routerLink">
         <router-link to="/">Home</router-link>
       </b-navbar-brand>
@@ -9,17 +14,38 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav class="routerLink">
-          <b-nav-item><router-link to="/storyboard">자유게시판</router-link></b-nav-item>
-          <b-nav-item><router-link to="/notice">공지사항</router-link></b-nav-item>
-          <b-nav-item><router-link to="/searchMap">여행지 검색</router-link></b-nav-item>
-          <b-nav-item><router-link to="/rsMain">여행지 검색 결과</router-link></b-nav-item>
+          <b-nav-item
+            ><router-link to="/storyboard">자유게시판</router-link></b-nav-item
+          >
+          <b-nav-item
+            ><router-link to="/notice">공지사항</router-link></b-nav-item
+          >
+          <b-nav-item
+            ><router-link to="/searchMap">여행지 검색</router-link></b-nav-item
+          >
+          <b-nav-item
+            ><router-link to="/rsMain"
+              >여행지 검색 결과</router-link
+            ></b-nav-item
+          >
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-form>
-            <b-form-input size="m" class="mr-sm-2" placeholder="여행지를 검색하세요"></b-form-input>
-            <b-button size="m" class="my-2 my-sm-0" type="submit">검색</b-button>
+            <b-form-input
+              size="m"
+              class="mr-sm-2"
+              placeholder="여행지를 검색하세요"
+              v-model="keyword"
+            ></b-form-input>
+            <b-button
+              size="m"
+              class="my-2 my-sm-0"
+              type="submit"
+              @click="searchKeyWord"
+              >검색</b-button
+            >
           </b-nav-form>
 
           <!-- 로그인 전 -->
@@ -34,9 +60,13 @@
                 <em>{{ user.userId }}</em>
               </template>
               <b-dropdown-item href="">
-                <router-link to="/mypage" class="profileLink">Profile</router-link>
+                <router-link to="/mypage" class="profileLink"
+                  >Profile</router-link
+                >
               </b-dropdown-item>
-              <b-dropdown-item href="" @click="logout">Sign Out</b-dropdown-item>
+              <b-dropdown-item href="" @click="logout"
+                >Sign Out</b-dropdown-item
+              >
             </b-nav-item-dropdown>
           </div>
         </b-navbar-nav>
@@ -46,54 +76,58 @@
 </template>
 
 <script>
-import jwtDecode from 'jwt-decode';
+import jwtDecode from "jwt-decode";
 
-import { mapMutations, mapState } from 'vuex';
+import { mapMutations, mapState } from "vuex";
 
-const userStore = 'userStore';
+const userStore = "userStore";
 
 export default {
-  name: 'NavBar',
+  name: "NavBar",
   components: {},
   data() {
     return {
       user: {
-        userId: '',
-        userName: '',
+        userId: "",
+        userName: "",
+        keyword: "",
       },
     };
   },
   computed: {
-    ...mapState(userStore, ['isLogin', 'userInfo']),
+    ...mapState(userStore, ["isLogin", "userInfo"]),
   },
   watch: {
-    isLogin(){
+    isLogin() {
       this.parseUser();
-    }
+    },
   },
   created() {
-    if (sessionStorage.getItem('access-token')) {
-      this.user = jwtDecode(sessionStorage.getItem('access-token'));
+    if (sessionStorage.getItem("access-token")) {
+      this.user = jwtDecode(sessionStorage.getItem("access-token"));
     }
   },
   methods: {
-    ...mapMutations(userStore, ['SET_LOGOUT']),
+    ...mapMutations(userStore, ["SET_LOGOUT"]),
     logout() {
       this.SET_LOGOUT();
       location.reload();
     },
     moveLogin() {
       // this.$router.push({ name: "login" });
-      this.$router.push({ name: 'login' }).catch((err) => {
-        if (err.name !== 'NavigationDuplicated') {
+      this.$router.push({ name: "login" }).catch((err) => {
+        if (err.name !== "NavigationDuplicated") {
           throw err;
         }
       });
     },
     parseUser() {
-      if (sessionStorage.getItem('access-token')) {
-        this.user = jwtDecode(sessionStorage.getItem('access-token'));
+      if (sessionStorage.getItem("access-token")) {
+        this.user = jwtDecode(sessionStorage.getItem("access-token"));
       }
+    },
+    searchKeyWord() {
+      alert(this.keyword);
     },
   },
 };
@@ -118,7 +152,7 @@ export default {
   color: white;
   border: none;
 }
-.loginBtn:hover{
+.loginBtn:hover {
   background-color: orange;
 }
 a {
@@ -132,7 +166,7 @@ a:hover {
 .profileLink {
   color: black;
 }
-em{
+em {
   color: black;
   opacity: 0.7;
 }
