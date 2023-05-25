@@ -66,8 +66,4 @@ export default {
 a {
   color: black;
 }
-/* a:hover {
-  text-decoration: none;
-  color: black;
-} */
 </style>

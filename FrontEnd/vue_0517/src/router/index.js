@@ -128,20 +128,6 @@ const routes = [
         component: () =>
           import(/* webpackChunkName: "myPage" */ "@/components/myPage/MyPageInfo.vue"),
       },
-      {
-        path: "board",
-        name: "myPageBoard",
-        beforeEnter: onlyAuthUser,
-        component: () =>
-          import(/* webpackChunkName: "myPage" */ "@/components/myPage/MyPageBoard.vue"),
-      },
-      {
-        path: "comment",
-        name: "myPageComment",
-        beforeEnter: onlyAuthUser,
-        component: () =>
-          import(/* webpackChunkName: "myPage" */ "@/components/myPage/MyPageComment.vue"),
-      },
     ],
   },
   {

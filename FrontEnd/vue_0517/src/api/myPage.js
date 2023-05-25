@@ -3,10 +3,6 @@ import tokenHttp from '@/api/tokenHttp.js';
 
 const api = apiInstance();
 
-// async function getUserInfo(userNo, success, fail) {
-//   await api.get(`/mypage/${userNo}`).then(success).catch(fail);
-// }
-
 async function getUserInfo(success, fail) {
   await tokenHttp.get(`/mypage/`).then(success).catch(fail);
 }

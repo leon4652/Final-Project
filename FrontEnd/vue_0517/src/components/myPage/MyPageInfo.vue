@@ -1,12 +1,4 @@
 <template>
-  <!-- 
-  해야할 일
-  1. 정보를 받아올 때 시도 코드가 아니라 지역 이름이 나오도록
-  
-  2. 생년월일을 받아올 때 YYYY-MM-DD 형식으로 받아오기
-
-  3. 생년월일을 수정하면 YYYY-MM-DD 형식으로 저장
- -->
   <div>
     <h2>User Profile</h2>
     <b-container class="bv-example-row mt-3" v-if="!editMode" @submit.prevent="save">
@@ -39,13 +31,6 @@
 
               <b-form-group label="생년월일:" label-for="birth">
                 <b-form-input id="birth" :value="selectedDate" readonly></b-form-input>
-                <!-- <b-form-datepicker
-                  id="birth"
-                  :value="user.birthYear"
-                  :value-as-date="true"
-                  :formatter="customDateFormatter()"
-                  readonly
-                ></b-form-datepicker> -->
               </b-form-group>
               <b-button type="button" variant="success" class="m-1" @click="editMode = true"
                 >수정하기</b-button

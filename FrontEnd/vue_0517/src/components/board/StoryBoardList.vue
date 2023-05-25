@@ -61,7 +61,6 @@ export default {
 }
 .writeBtn {
   margin-bottom: 10px;
-  /* background: linear-gradient(to right, #00c9ff, #92fe9d); */
   background-color: #ff8a00;
   border: none;
 }
@@ -72,8 +71,4 @@ export default {
 a {
   color: black;
 }
-/* a:hover {
-  text-decoration: none;
-  color: black;
-} */
 </style>

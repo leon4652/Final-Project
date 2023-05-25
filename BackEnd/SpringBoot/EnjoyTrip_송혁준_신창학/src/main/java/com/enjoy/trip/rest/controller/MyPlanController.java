@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-import com.enjoy.trip.dto.MyRoute;
 import com.enjoy.trip.dto.MyPlan;
-import com.enjoy.trip.service.AttractionService;
 import com.enjoy.trip.service.MyPlanService;
 
 @CrossOrigin("*")
