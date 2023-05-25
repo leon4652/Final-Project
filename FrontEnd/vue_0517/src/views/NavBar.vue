@@ -66,6 +66,11 @@ export default {
   computed: {
     ...mapState(userStore, ['isLogin', 'userInfo']),
   },
+  watch: {
+    isLogin(){
+      this.parseUser();
+    }
+  },
   created() {
     if (sessionStorage.getItem('access-token')) {
       this.user = jwtDecode(sessionStorage.getItem('access-token'));
@@ -85,12 +90,17 @@ export default {
         }
       });
     },
+    parseUser() {
+      if (sessionStorage.getItem('access-token')) {
+        this.user = jwtDecode(sessionStorage.getItem('access-token'));
+      }
+    },
   },
 };
 </script>
 
 <style scoped>
-.navbarContainer{
+.navbarContainer {
   margin-bottom: 20px;
 }
 .gradient-navbar {
@@ -100,13 +110,16 @@ export default {
   /* #FF6B6B와 #F8B500 */
   /* #F7971E와 #FFD200 */
   /* #FF416C와 #FF4B2B */
-  background: linear-gradient(to right, #00C9FF , #92FE9D);
+  background: linear-gradient(to right, #00c9ff, #92fe9d);
 }
 .loginBtn {
   margin-left: 5px;
   background-color: #ff8a00;
   color: white;
   border: none;
+}
+.loginBtn:hover{
+  background-color: orange;
 }
 a {
   color: white;
@@ -118,5 +131,9 @@ a:hover {
 }
 .profileLink {
   color: black;
+}
+em{
+  color: black;
+  opacity: 0.7;
 }
 </style>

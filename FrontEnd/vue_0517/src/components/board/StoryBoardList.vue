@@ -4,7 +4,7 @@
     <b-col class="text-right">
       <b-button class="writeBtn" variant="info" @click="moveWrite">글 작성</b-button>
     </b-col>
-    <b-table striped hover :items="storyBoards" :fields="fields">
+    <b-table hover :items="storyBoards" :fields="fields">
       <template v-slot:cell(storyBoardTitle)="row">
         <router-link :to="`/storyboard/info/${row.item.storyBoardNo}`">{{ row.value }}</router-link>
       </template>
@@ -56,11 +56,18 @@ export default {
 </script>
 
 <style scoped>
-.storyBoardList {
+.storyBoardList { 
   margin-top: 10px;
 }
 .writeBtn {
-  margin-bottom: 5px;
+  margin-bottom: 10px;
+  /* background: linear-gradient(to right, #00c9ff, #92fe9d); */
+  background-color: #ff8a00;
+  border: none;
+}
+.writeBtn:hover{
+  background-color: orange;
+  /* color: black; */
 }
 a {
   color: black;
