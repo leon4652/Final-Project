@@ -30,6 +30,11 @@ public class NoticeController {
 	public List<Notice> select() throws Exception {
 		return noticeService.selectNotice();
 	}
+	
+	@GetMapping("/sublist")
+	public List<Notice> subSelect() throws Exception {
+		return noticeService.subSelectNotice();
+	}
 
 	@PostMapping("/write")
 	public void writeNotice(@RequestBody Notice param) throws Exception {

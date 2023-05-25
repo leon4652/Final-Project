@@ -1,10 +1,11 @@
-import { select, getBoard, write, deleteBoard, modify } from "@/api/storyBoard";
+import { select, getBoard, write, deleteBoard, modify, subSelect } from '@/api/storyBoard';
 
 const storyBoardStore = {
   namespaced: true,
   state: {
     storyBoard: null,
     storyBoards: [],
+    subStory: [],
     isWrite: false,
     isDelete: false,
     isUpdate: false,
@@ -29,13 +30,19 @@ const storyBoardStore = {
     SET_IS_UPDATE(state, isUpdate) {
       state.isUpdate = isUpdate;
     },
+    SET_SUBLIST(state, storyBoards) {
+      state.subStory = [];
+      storyBoards.forEach((storyBoard) => {
+        state.subStory.push(storyBoard);
+      });
+    },
   },
   actions: {
     // story board list 불러오기
     async getStoryBoardList({ commit }) {
       await select(
         ({ data }) => {
-          commit("SET_STORYBOARD_LIST", data);
+          commit('SET_STORYBOARD_LIST', data);
         },
         (error) => {
           console.log(error);
@@ -47,7 +54,7 @@ const storyBoardStore = {
       await getBoard(
         storyBoardNo,
         ({ data }) => {
-          commit("SET_STORYBOARD", data);
+          commit('SET_STORYBOARD', data);
         },
         (error) => {
           console.log(error);
@@ -60,8 +67,8 @@ const storyBoardStore = {
       await write(
         storyBoard,
         ({ data }) => {
-          if (data.message === "success") {
-            commit("SET_IS_WRITE", true);
+          if (data.message === 'success') {
+            commit('SET_IS_WRITE', true);
           }
         },
         (error) => {
@@ -75,8 +82,8 @@ const storyBoardStore = {
       await deleteBoard(
         storyBoardNo,
         ({ data }) => {
-          if (data.message === "success") {
-            commit("SET_IS_DELETE", true);
+          if (data.message === 'success') {
+            commit('SET_IS_DELETE', true);
           }
         },
         (error) => {
@@ -90,9 +97,19 @@ const storyBoardStore = {
       await modify(
         storyBoard,
         ({ data }) => {
-          if (data.message === "success") {
-            commit("SET_IS_UPDATE", true);
+          if (data.message === 'success') {
+            commit('SET_IS_UPDATE', true);
           }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
+    async getSubList({ commit }) {
+      await subSelect(
+        ({ data }) => {
+          commit('SET_SUBLIST', data);
         },
         (error) => {
           console.log(error);

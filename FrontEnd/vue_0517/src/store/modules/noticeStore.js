@@ -1,4 +1,4 @@
-import { select, getNotice, write, deleteNotice, modify } from "@/api/notice";
+import { select, getNotice, write, deleteNotice, modify, subSelect } from '@/api/notice';
 
 const noticeStore = {
   namespaced: true,
@@ -8,6 +8,7 @@ const noticeStore = {
     isWrite: false,
     isDelete: false,
     isUpdate: false,
+    subNotices: [],
   },
   mutations: {
     SET_NOTICE_LIST(state, notices) {
@@ -15,8 +16,8 @@ const noticeStore = {
       state.notices = [];
       notices.forEach((notice) => {
         state.notices.push({
-          noticeNo: notice.noticeNo, 
-          noticeTitle: notice.noticeTitle, 
+          noticeNo: notice.noticeNo,
+          noticeTitle: notice.noticeTitle,
           userId: notice.userId,
           registDate: notice.registDate,
         });
@@ -34,13 +35,24 @@ const noticeStore = {
     SET_IS_UPDATE(state, isUpdate) {
       state.isUpdate = isUpdate;
     },
+    SET_SUBLIST(state, subNotices) {
+      state.subNotices = [];
+      subNotices.forEach((notice) => {
+        state.subNotices.push({
+          noticeNo: notice.noticeNo,
+          noticeTitle: notice.noticeTitle,
+          userId: notice.userId,
+          registDate: notice.registDate,
+        });
+      });
+    },
   },
   actions: {
     // notice list 불러오기
     async getNoticeList({ commit }) {
       await select(
         ({ data }) => {
-          commit("SET_NOTICE_LIST", data);
+          commit('SET_NOTICE_LIST', data);
         },
         (error) => {
           console.log(error);
@@ -52,7 +64,7 @@ const noticeStore = {
       await getNotice(
         noticeNo,
         ({ data }) => {
-          commit("SET_NOTICE", data);
+          commit('SET_NOTICE', data);
         },
         (error) => {
           console.log(error);
@@ -65,8 +77,8 @@ const noticeStore = {
       await write(
         notice,
         ({ data }) => {
-          if (data.message === "success") {
-            commit("SET_IS_WRITE", true);
+          if (data.message === 'success') {
+            commit('SET_IS_WRITE', true);
           }
         },
         (error) => {
@@ -80,8 +92,8 @@ const noticeStore = {
       await deleteNotice(
         noticeNo,
         ({ data }) => {
-          if (data.message === "success") {
-            commit("SET_IS_DELETE", true);
+          if (data.message === 'success') {
+            commit('SET_IS_DELETE', true);
           }
         },
         (error) => {
@@ -95,9 +107,21 @@ const noticeStore = {
       await modify(
         notice,
         ({ data }) => {
-          if (data.message === "success") {
-            commit("SET_IS_UPDATE", true);
+          if (data.message === 'success') {
+            commit('SET_IS_UPDATE', true);
           }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
+
+    // subSelect 5개만 가져오기
+    async subList({ commit }) {
+      await subSelect(
+        ({ data }) => {
+          commit('SET_SUBLIST', data);
         },
         (error) => {
           console.log(error);

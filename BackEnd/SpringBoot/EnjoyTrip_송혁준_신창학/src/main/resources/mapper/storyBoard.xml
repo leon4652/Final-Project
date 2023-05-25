@@ -28,6 +28,18 @@
 	   ORDER BY story_board_no DESC
 	</select>
 	
+	<!-- List<StoryBoard> subSelectStoryBoard() throws SQLException; -->
+	<select id="subSelectStoryBoard" resultMap="StoryBoardResultMap"> <!-- 조인 사용, user name까지 가져옴 -->
+	  SELECT s.*, u.user_name, u.user_id
+	    FROM story_board s 
+	    LEFT JOIN user u 
+	   USING (user_no)
+	   WHERE s.remove_date is null
+	   ORDER BY story_board_no DESC
+	   LIMIT 5
+	</select>
+	
+	
 	<select id="getStoryBoard" parameterType="int" resultMap="StoryBoardResultMap">
 		SELECT s.*, u.user_name, u.user_id
 		  FROM story_board s
