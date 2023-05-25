@@ -47,13 +47,18 @@ public class AttractionServiceImpl implements AttractionService {
 	}
 
 	@Override
-	public List<AttractionInfo> searchAtt(int contentTypeId, int sidoCode, int gugunCode) {
+	public List<AttractionInfo> searchAtt(int contentTypeId, int sidoCode, int gugunCode) throws Exception {
 		return attractionMapper.searchAtt(contentTypeId, sidoCode, gugunCode);
 	}
 
 	@Override
-	public AttractionInfo searchAttUsingMarker(double lat, double lan) {
+	public AttractionInfo searchAttUsingMarker(double lat, double lan) throws Exception {
 		return attractionMapper.searchAttUsingMarker(lat, lan);
+	}
+
+	@Override
+	public int[] getSidoCodeUsingKeyWord(String keyWord) throws Exception {
+		return attractionMapper.getSidoCodeUsingKeyWord(keyWord);
 	}
 	
 	

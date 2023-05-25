@@ -37,7 +37,7 @@
               size="m"
               class="mr-sm-2"
               placeholder="여행지를 검색하세요"
-              v-model="keyword"
+              v-model="keyWord"
             ></b-form-input>
             <b-button
               size="m"
@@ -76,10 +76,10 @@
 </template>
 
 <script>
+import axios from "axios";
 import jwtDecode from "jwt-decode";
 
-import { mapMutations, mapState } from "vuex";
-
+import { mapMutations, mapState, mapActions } from "vuex";
 const userStore = "userStore";
 
 export default {
@@ -90,7 +90,7 @@ export default {
       user: {
         userId: "",
         userName: "",
-        keyword: "",
+        keyWord: "",
       },
     };
   },
@@ -109,6 +109,7 @@ export default {
   },
   methods: {
     ...mapMutations(userStore, ["SET_LOGOUT"]),
+    ...mapActions("mapStore", ["searchKeyWord"]),
     logout() {
       this.SET_LOGOUT();
       location.reload();
@@ -126,8 +127,21 @@ export default {
         this.user = jwtDecode(sessionStorage.getItem("access-token"));
       }
     },
-    searchKeyWord() {
-      alert(this.keyword);
+    async searchKeyWord() {
+      alert(process.env.VUE_APP_API_BASE_URL + `attraction/search/keyword/${this.keyWord}`)
+      await axios
+        .get(
+          process.env.VUE_APP_API_BASE_URL + `attraction/search/keyword/`
+        )
+        .then((response) => {
+          alert("진입")
+          console.dir(response);
+
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      alert("끝");
     },
   },
 };

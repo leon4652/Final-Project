@@ -21,8 +21,10 @@ public interface AttractionService {
 
 	Gugun searchGugun(String regionName, int sidoCode) throws Exception;
 
-	List<AttractionInfo> searchAtt(int contentTypeId, int sidoCode, int gugunCode);
+	List<AttractionInfo> searchAtt(int contentTypeId, int sidoCode, int gugunCode) throws Exception;
 
-	AttractionInfo searchAttUsingMarker(double lat, double lan);
+	AttractionInfo searchAttUsingMarker(double lat, double lan) throws Exception;
+
+	int[] getSidoCodeUsingKeyWord(String keyWord) throws Exception;
 
 }

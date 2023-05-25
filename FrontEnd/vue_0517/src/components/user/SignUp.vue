@@ -181,7 +181,6 @@ export default {
       if (this.user.userId) {
         await this.duplicateId(this.user.userId);
         this.isDuplicate = this.isDuplicated;
-        if(!this.isDuplicated) alert("아이디가 중복되었습니다.")
       }
     },
   },

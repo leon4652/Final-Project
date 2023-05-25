@@ -39,4 +39,14 @@ public class MyPlanServiceImpl implements MyPlanService {
 	public List<MyPlan> getMyPlanOrder(int myPlanNo) throws Exception {
 		return myPlanMapper.getMyPlanOrder(myPlanNo);
 	}
+
+	@Override
+	public void planLikeUp(int myPlanNo) throws Exception {
+		myPlanMapper.planLikeUp(myPlanNo);
+	}
+
+	@Override
+	public void planHitUp(int myPlanNo) throws Exception {
+		myPlanMapper.planHitUp(myPlanNo);
+	}
 }

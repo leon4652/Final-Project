@@ -136,5 +136,10 @@
 		 WHERE ROUND(ai.latitude, 5) = ROUND(#{lat}, 5) and ROUND(ai.longitude, 5) = ROUND(#{lan}, 5)
 	</select>
 	
+	<select id="getSidoCodeUsingKeyWord" parameterType="String" resultType="int">
+		select sido_code, sido_name
+  		  from sido
+ 		 where sido_name like CONCAT('%', #{keyWord}, '%');
+	</select>
 
 </mapper>

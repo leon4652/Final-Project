@@ -15,4 +15,8 @@ public interface MyPlanService {
 	List<MyPlan> getThisLocationReviews(int sidoCode, int gugunCode) throws Exception;
 	
 	List<MyPlan> getMyPlanOrder(int myPlanNo) throws Exception;
+
+	void planLikeUp(int myPlanNo) throws Exception;
+
+	void planHitUp(int myPlanNo) throws Exception;
 }

@@ -60,4 +60,18 @@
     <result property="expectTime" column="expect_time"/>
 </resultMap>
 
+<!-- 좋아요 ++ -->
+<update id="planLikeUp">
+	 update my_plan 
+	    set my_plan_like = my_plan_like + 1 
+	  where my_plan_no = #{myPlanNo};
+</update>
+
+<!-- 조회수 ++ -->
+<update id="planHitUp">
+	 update my_plan 
+	    set my_plan_hit = my_plan_hit + 1 
+	  where my_plan_no = #{myPlanNo};
+</update>
+
 </mapper>

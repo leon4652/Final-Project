@@ -87,14 +87,32 @@ export default {
   methods: {
     openModal(review) {
       this.selectedReview = review; // 선택된 리뷰를 저장
-      this.getTripOrders(review.myPlanNo);
-      this.showModal = true;
+      axios.put(process.env.VUE_APP_API_BASE_URL + `/myplan/review/hitup/${this.selectedReview.myPlanNo}`)
+    .then((response) => {
+      console.log(response);
+      this.getTripOrders(review.myPlanNo); //로직 수행(경로 받아오기)
+      this.showModal = true; //모달 켜기
+    })
+    .catch((error) => {
+      console.error(error);
+    });
     },
     closeModal() {
       this.showModal = false;
     },
-    likeEvent() {
-      alert("여기 에러 발생");
+    async likeEvent() {
+      var myPlanNo = this.selectedReview.myPlanNo
+      if (myPlanNo) {
+        try {
+          await axios.put(
+            process.env.VUE_APP_API_BASE_URL +
+              `/myplan/review/like/${myPlanNo}`
+          );
+          location.reload();  //새로고침
+        } catch (error) {
+          console.error(error);
+        }
+      }
     },
     async getTripOrders(myPlanNo) {
       if (myPlanNo) {

@@ -77,8 +77,14 @@ public class AttractionController {
 	
 	// (마커)좌표로 해당 위지 확인하기
 	@GetMapping("search/{lat}/{lan}")
-	public AttractionInfo getAttractionInfoUsingMarker(@PathVariable("lat") double lat, @PathVariable("lan") double lan) {
+	public AttractionInfo getAttractionInfoUsingMarker(@PathVariable("lat") double lat, @PathVariable("lan") double lan) throws Exception {
 		return attractionService.searchAttUsingMarker(lat, lan);
+	}
+	
+	//키워드 이름으로 지역 찾아서 시도코드 반환하기
+	@GetMapping("search/keyword/{keyWord}")
+	public int[] getSidoCodeUsingKeyWord(@PathVariable("keyWord") String keyWord) throws Exception {
+		return attractionService.getSidoCodeUsingKeyWord(keyWord);
 	}
 	
 }

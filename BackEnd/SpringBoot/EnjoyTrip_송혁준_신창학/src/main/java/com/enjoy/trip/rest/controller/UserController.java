@@ -126,6 +126,7 @@ public class UserController {
 	//아이디중복확인
 	@GetMapping("checkDuplicateId/{userId}")
 	public boolean checkDuplicateId(@PathVariable("userId") String userId) throws Exception {
+		System.out.println(userId);
 		return userService.checkDuplicateId(userId);
 	}
 

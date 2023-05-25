@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,6 +48,16 @@ public class MyPlanController {
 	public List<MyPlan> getMyPlanOrder(@PathVariable("myPlanNo") int myPlanNo) throws Exception {
 		return myPlanService.getMyPlanOrder(myPlanNo);
 	}
+	
+	@PutMapping("review/like/{myPlanNo}")
+	public void planLikeUp(@PathVariable("myPlanNo") int myPlanNo) throws Exception {
+		myPlanService.planLikeUp(myPlanNo);
+	}
+	@PutMapping("review/hitup/{myPlanNo}")
+	public void planHitUp(@PathVariable("myPlanNo") int myPlanNo) throws Exception {
+		myPlanService.planHitUp(myPlanNo);
+	}
+	
 	
 	
 }
