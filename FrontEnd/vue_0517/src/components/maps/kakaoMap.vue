@@ -27,7 +27,7 @@ export default {
       "contentTypeList",
       "isTripPlan",
       "myRoute",
-      "mobility"
+      "mobility",
     ]),
   },
   data() {
@@ -35,11 +35,11 @@ export default {
       map: null,
       positions: [],
       markers: [],
-      maplevel: 10,
+      maplevel: 8,
       geocoder: null,
       makerInfo: [], //markerInfo 정보 저장
-      eLat:null, //좌표 거리(시간) 계산용 좌표
-      eLng:null,
+      eLat: null, //좌표 거리(시간) 계산용 좌표
+      eLng: null,
     };
   },
 
@@ -125,8 +125,7 @@ export default {
       "SET_IS_TRIP_PLAN",
       "SET_CNT",
       "DEL_EXPECT_TIME",
-      "ADD_EXPECT_TIME"
-
+      "ADD_EXPECT_TIME",
     ]),
     // api 불러오기
     loadScript() {
@@ -161,9 +160,6 @@ export default {
         mapTypeControl,
         window.kakao.maps.ControlPosition.TOPRIGHT
       ); // kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의, TOPRIGHT는 오른쪽 위를 의미한다.
-
-
-      /// KAKAO_DRAW
     },
 
     // 지정한 위치에 마커 불러오기
@@ -375,15 +371,16 @@ export default {
             const nowlng = marker.getPosition().getLng();
             //1. 거리 계산 로직
             //처음 스타트일 경우 현재 마커 좌표를 저장
-            if(this.myRoute.length == 0) {
+            if (this.myRoute.length == 0) {
               this.DEL_EXPECT_TIME();
               //현재 값이자, 다음 마커 선택 시 거리 비교용 값
-              this.eLat = nowlat; this.eLng = nowlng;
-            }
-            else {
+              this.eLat = nowlat;
+              this.eLng = nowlng;
+            } else {
               //아닐 경우 이전 좌표값과 거리 비교
-              this.calDist(this.eLat, this.eLng, nowlat, nowlng); 
-              this.eLat = nowlat; this.eLng = nowlng; //계산 후 좌표 초기화
+              this.calDist(this.eLat, this.eLng, nowlat, nowlng);
+              this.eLat = nowlat;
+              this.eLng = nowlng; //계산 후 좌표 초기화
             }
             //2. 지역 정보 수집
             this.getDetailsFromLatLng({
@@ -412,15 +409,17 @@ export default {
       const deltaLon = radianLon2 - radianLon1;
 
       // Haversine 공식 계산
-      const a = Math.sin(deltaLat / 2) ** 2
-        + Math.cos(radianLat1) * Math.cos(radianLat2) * Math.sin(deltaLon / 2) ** 2;
+      const a =
+        Math.sin(deltaLat / 2) ** 2 +
+        Math.cos(radianLat1) *
+          Math.cos(radianLat2) *
+          Math.sin(deltaLon / 2) ** 2;
       const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
       // 거리 계산
-      const result = earthRadius * c;// dist(km)
-      this.ADD_EXPECT_TIME(Math.round((result / this.mobility * 60 * 100))/100);
-    }
-
+      const result = earthRadius * c; // dist(km)
+      this.ADD_EXPECT_TIME(Math.round((result / this.mobility) * 60 * 10) / 10);
+    },
   },
 };
 </script>

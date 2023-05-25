@@ -1,5 +1,5 @@
 <template>
-<!-- 
+  <!-- 
   해야할 일
   1. 정보를 받아올 때 시도 코드가 아니라 지역 이름이 나오도록
   
@@ -136,11 +136,11 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
-import SelectGugun from '../item/SelectGugun.vue';
-import SelectSido from '../item/SelectSido.vue';
+import { mapActions, mapState } from "vuex";
+import SelectGugun from "../item/SelectGugun.vue";
+import SelectSido from "../item/SelectSido.vue";
 
-const myPageStore = 'myPageStore';
+const myPageStore = "myPageStore";
 
 export default {
   components: { SelectGugun, SelectSido },
@@ -150,12 +150,12 @@ export default {
         userId: null,
         userPw: null,
         userName: null,
-        email0: '',
+        email0: "",
         sido: 0,
         gugun: 0,
         birthYear: 0,
-        birthMonth: '',
-        birthDate: '',
+        birthMonth: "",
+        birthDate: "",
       },
       selectedDate: null,
       editMode: false,
@@ -166,7 +166,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(myPageStore, ['user', 'isUpdate']),
+    ...mapState(myPageStore, ["user", "isUpdate"]),
   },
   async created() {
     // 마이페이지 접근 시 로그인된 회원의 정보를 가져와야함
@@ -175,9 +175,9 @@ export default {
 
     // selectedDate를 YYYY-MM-DD 형식으로 변경
     const year = String(this.user.birthYear);
-    const month = String(this.user.birthMonth).padStart(2, '0');
-    const day = String(this.user.birthDate).padStart(2, '0');
-    this.selectedDate = `${year}-${month}-${day}`
+    const month = String(this.user.birthMonth).padStart(2, "0");
+    const day = String(this.user.birthDate).padStart(2, "0");
+    this.selectedDate = `${year}-${month}-${day}`;
   },
   methods: {
     resetValidation() {
@@ -188,9 +188,9 @@ export default {
       this.editMode = false;
     },
 
-    ...mapActions(myPageStore, ['getUser', 'updateUser']),
+    ...mapActions(myPageStore, ["getUser", "updateUser"]),
     async confirm() {
-      if (this.inputValue === '') {
+      if (this.inputValue === "") {
         this.showErrorMessage = true;
       } else {
         this.editMode = false;
@@ -200,9 +200,9 @@ export default {
         .then(() => {
           // isUpdate가 0이 아니면 state에 있는 user를 화면에 보여주고
           // 다시 mypage로 이동
-          if (this.isUpdate !== 0) this.$router.push({ name: 'myPage' });
+          if (this.isUpdate !== 0) this.$router.push({ name: "Home" });
         })
-        .catch(console.log('실패'));
+        .catch(console.log("실패"));
     },
     customDateFormatter(value) {
       value = this.selectedDate;

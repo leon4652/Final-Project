@@ -4,7 +4,7 @@
     <b-col class="text-right">
       <b-button class="writeBtn" variant="info" @click="moveWrite">글 작성</b-button>
     </b-col>
-    <b-table striped hover :items="storyBoards" :fields="fields">
+    <b-table hover :items="storyBoards" :fields="fields">
       <template v-slot:cell(storyBoardTitle)="row">
         <router-link :to="`/storyboard/info/${row.item.storyBoardNo}`">{{ row.value }}</router-link>
       </template>
@@ -16,26 +16,26 @@
 </template>
 
 <script>
-import moment from "moment";
-import { mapActions, mapState } from "vuex";
+import moment from 'moment';
+import { mapActions, mapState } from 'vuex';
 
-const storyBoardStore = "storyBoardStore";
+const storyBoardStore = 'storyBoardStore';
 
 export default {
   data() {
     return {
       fields: [
-        { key: "storyBoardNo", label: "글 번호", sortable: true },
-        { key: "storyBoardTitle", label: "제목", sortable: false },
-        { key: "storyBoardHit", label: "조회수", sortable: true },
-        { key: "userId", label: "작성자", sortable: false },
-        { key: "registDate", label: "작성일", sortable: true },
+        { key: 'storyBoardNo', label: '글 번호', sortable: true },
+        { key: 'storyBoardTitle', label: '제목', sortable: false },
+        { key: 'storyBoardHit', label: '조회수', sortable: true },
+        { key: 'userId', label: '작성자', sortable: false },
+        { key: 'registDate', label: '작성일', sortable: true },
       ],
       boards: [],
     };
   },
   computed: {
-    ...mapState(storyBoardStore, ["storyBoards"]),
+    ...mapState(storyBoardStore, ['storyBoards']),
   },
   created() {
     this.getStoryBoardList();
@@ -43,23 +43,37 @@ export default {
   },
   filters: {
     dateFormat(registDate) {
-      return moment(new Date(registDate)).format("YY.MM.DD HH:mm");
+      return moment(new Date(registDate)).format('YY.MM.DD HH:mm');
     },
   },
   methods: {
-    ...mapActions(storyBoardStore, ["getStoryBoardList"]),
+    ...mapActions(storyBoardStore, ['getStoryBoardList']),
     moveWrite() {
-      this.$router.push({ name: "storyboardWrite" });
+      this.$router.push({ name: 'storyboardWrite' });
     },
   },
 };
 </script>
 
 <style scoped>
-.storyBoardList{
+.storyBoardList { 
   margin-top: 10px;
 }
-.writeBtn{
-  margin-bottom: 5px;
+.writeBtn {
+  margin-bottom: 10px;
+  /* background: linear-gradient(to right, #00c9ff, #92fe9d); */
+  background-color: #ff8a00;
+  border: none;
 }
+.writeBtn:hover{
+  background-color: orange;
+  /* color: black; */
+}
+a {
+  color: black;
+}
+/* a:hover {
+  text-decoration: none;
+  color: black;
+} */
 </style>
