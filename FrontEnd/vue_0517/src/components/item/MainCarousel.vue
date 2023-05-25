@@ -3,75 +3,25 @@
     <b-carousel
       id="carousel-1"
       v-model="slide"
-      :interval="0"
+      :interval="4000"
       controls
       indicators
       background="#ababab"
-      img-width="980"
+      img-width="1024"
       img-height="480"
       style="text-shadow: 1px 1px 2px #333"
       @sliding-start="onSlideStart"
       @sliding-end="onSlideEnd"
     >
-      <!-- Text slides with image -->
-      <b-carousel-slide
-        caption="First slide"
-        text="Nulla vitae elit libero, a pharetra augue mollis interdum."
-        img-src="https://www.popco.net/zboard/data/photo_gallery/2017/09/17/194634705159be75dba9fc9.jpg"
-        img-height="1024px"
-        img-width="480px"
-      >
-        <!-- <img src="https://www.popco.net/zboard/data/photo_gallery/2017/09/17/194634705159be75dba9fc9.jpg"> -->
-        <!-- <template #img>
-    <div class="carousel-image">
-      <img src="https://www.popco.net/zboard/data/photo_gallery/2017/09/17/194634705159be75dba9fc9.jpg" alt="Slide Image">
-    </div>
-  </template> -->
-      </b-carousel-slide>
+      <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=52" />
 
-      <b-carousel-slide
-        caption="First slide"
-        text="Nulla vitae elit libero, a pharetra augue mollis interdum."
-      >
-        <template #img>
-          <div class="carousel-image">
-            <img
-              src="https://www.popco.net/zboard/data/photo_gallery/2017/09/17/194634705159be75dba9fc9.jpg"
-              alt="Slide Image"
-            />
-          </div>
-        </template>
-      </b-carousel-slide>
+      <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=54" />
 
-      <!-- Slides with custom text -->
-      <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=54">
-        <h1>Hello world!</h1>
-      </b-carousel-slide>
+      <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=12" />
 
-      <!-- Slides with image only -->
-      <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=58"></b-carousel-slide>
+      <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=55" />
 
-      <!-- Slides with img slot -->
-      <!-- Note the classes .d-block and .img-fluid to prevent browser default image alignment -->
-      <b-carousel-slide>
-        <template #img>
-          <img
-            class="d-block img-fluid w-100"
-            width="1024"
-            height="480"
-            src="https://picsum.photos/1024/480/?image=55"
-            alt="image slot"
-          />
-        </template>
-      </b-carousel-slide>
-
-      <!-- Slide with blank fluid image to maintain slide aspect ratio -->
-      <b-carousel-slide caption="Blank Image" img-blank img-alt="Blank image">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eros felis, tincidunt
-          a tincidunt eget, convallis vel est. Ut pellentesque ut lacus vel interdum.
-        </p>
-      </b-carousel-slide>
+      <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=10" />
     </b-carousel>
   </div>
 </template>
@@ -82,7 +32,6 @@ export default {
   data() {
     return {
       slide: 0,
-      sliding: null,
     };
   },
   methods: {
@@ -104,5 +53,4 @@ export default {
   margin-right: 10%;
   margin-bottom: 20px;
 }
-
 </style>
