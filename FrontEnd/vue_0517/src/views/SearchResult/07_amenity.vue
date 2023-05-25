@@ -4,7 +4,7 @@
       <div class="container">
         <kakao-map class="map-container"></kakao-map>
       </div>
-      <div class="search-container">
+      <div class="rsa-search-container">
         <search-result></search-result>
       </div>
     </div>
@@ -56,7 +56,7 @@ export default {
   margin-left: 10px; /* 요소 사이의 우측 간격 설정 */
 }
 
-.search-container {
+.rsa-search-container {
   flex: 1; /* 자동으로 너비를 조절하여 공간을 차지 */
   margin-right: 10px;
   margin-bottom: 30px;

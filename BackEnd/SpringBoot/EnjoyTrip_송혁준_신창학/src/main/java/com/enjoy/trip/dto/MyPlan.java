@@ -14,8 +14,23 @@ public class MyPlan {
 	private int userNo;
 	private String tripTitle;
 	private String tripContent;
+	private String sidoCode;
+	private String gugunCode;
 	
 	
+	
+	public String getSidoCode() {
+		return sidoCode;
+	}
+	public void setSidoCode(String sidoCode) {
+		this.sidoCode = sidoCode;
+	}
+	public String getGugunCode() {
+		return gugunCode;
+	}
+	public void setGugunCode(String gugunCode) {
+		this.gugunCode = gugunCode;
+	}
 	public String getTripContent() {
 		return tripContent;
 	}

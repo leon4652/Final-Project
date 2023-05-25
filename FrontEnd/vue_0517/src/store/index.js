@@ -1,16 +1,17 @@
 // import http from "@/api/http";
-import Vue from 'vue';
-import Vuex from 'vuex';
-import createPersistedState from 'vuex-persistedstate';
+import Vue from "vue";
+import Vuex from "vuex";
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
-import mapStore from './modules/mapStore';
-import myPageStore from './modules/myPageStore';
-import userStore from './modules/userStore';
-import itemStore from './item/itemStore';
-import storyBoardStore from './modules/storyBoardStore'
-import noticeStore from './modules/noticeStore'
+import mapStore from "./modules/mapStore";
+import myPageStore from "./modules/myPageStore";
+import userStore from "./modules/userStore";
+import itemStore from "./item/itemStore";
+import storyBoardStore from "./modules/storyBoardStore";
+import noticeStore from "./modules/noticeStore";
+import routeStore from "./modules/routeStore";
 
 //step01;
 export default new Vuex.Store({
@@ -21,6 +22,7 @@ export default new Vuex.Store({
     itemStore,
     storyBoardStore,
     noticeStore,
+    routeStore,
   },
   plugins: [
     createPersistedState({
