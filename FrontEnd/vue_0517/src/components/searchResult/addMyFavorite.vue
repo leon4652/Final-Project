@@ -2,17 +2,28 @@
   <div>
     <div class="full-container">
       <div class="amf-container">
-        <h2 style="margin-top: 15px">나만의 여행 계획표를 등록하세요</h2>
+        <h2
+          style="
+            margin-top: 15px;
+            text-decoration: underline;
+            margin-bottom: 20px;
+          "
+        >
+          나만의 여행 계획표를 등록하세요
+        </h2>
         <div class="write-container">
           <div class="write">
-            <div>제목 : <input class="title-input" v-model="tripTitle" /></div>
+            <div>
+              제목 :
+              <input class="title-input" v-model="tripTitle" />
+            </div>
             <div style="margin-top: 15px">
               <textarea v-model="tripContent"></textarea>
             </div>
           </div>
           <div class="btn">
-            <button @click="uploadMyRoute">등록</button>
-            <button @click="deleteMyRoute">삭제</button>
+            <button class="my-btn" @click="uploadMyRoute">등록</button>
+            <button class="my-btn" @click="deleteMyRoute">삭제</button>
           </div>
         </div>
 
@@ -114,11 +125,31 @@ export default {
 }
 .title-input {
   margin-top: 10px;
-  width: 513px; /* 제목 입력란의 너비 설정 */
+  width: 400px; /* 제목 입력란의 너비 설정 */
   height: 30px; /* 제목 입력란의 높이 설정 */
   padding: 5px; /* 제목 입력란의 내부 여백 설정 */
 }
 
+.my-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #f9fafa;
+  color: rgb(0, 0, 0);
+  font-size: 16px;
+  border: 1px solid rgb(97, 96, 96);
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  transition-duration: 0.4s;
+  text-decoration: none;
+  width: 200px;
+  padding: 5%;
+  margin-bottom: 10%;
+}
+
+.my-btn:hover {
+  background-color: #cacaca;
+}
 .btn {
   margin: 50px;
 }

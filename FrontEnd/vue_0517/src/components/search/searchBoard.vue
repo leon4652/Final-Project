@@ -18,7 +18,7 @@
         </option>
       </select>
       <select class="custom-select" v-model="mobility">
-        <option disabled selected>이동 수단</option>
+        <option value="0" disabled selected>이동 수단</option>
         <option value="60">자동차</option>
         <option value="20">자전거</option>
         <option value="5">도보</option>
@@ -38,7 +38,7 @@ export default {
     return {
       searchInput: "",
       sidoCode: 0,
-      mobility: 1,
+      mobility: 0,
       sidoOptions: [],
     };
   },
@@ -59,7 +59,7 @@ export default {
     ]),
     search() {
       //검색 결과 푸쉬
-      if (this.sidoCode == 0) alert("세부지역을 검색해보세요.");
+      if (this.sidoCode == 0) alert("지역을 선택하세요!");
       else {
         this.MOD_SEARCH_WORD(this.searchInput);
 

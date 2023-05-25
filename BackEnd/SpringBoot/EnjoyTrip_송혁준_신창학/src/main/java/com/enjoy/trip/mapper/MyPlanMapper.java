@@ -15,4 +15,6 @@ public interface MyPlanMapper {
 	int getMaxPlanNo() throws Exception;
 	
 	List<MyPlan> getThisLocationReviews(int sidoCode, int gugunCode) throws Exception;
+	
+	List<MyPlan> getMyPlanOrder(int myPlanNo) throws Exception;
 }

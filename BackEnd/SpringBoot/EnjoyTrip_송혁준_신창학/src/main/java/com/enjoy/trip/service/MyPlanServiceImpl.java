@@ -34,4 +34,9 @@ public class MyPlanServiceImpl implements MyPlanService {
 	public List<MyPlan> getThisLocationReviews(int sidoCode, int gugunCode) throws Exception {
 		return myPlanMapper.getThisLocationReviews(sidoCode, gugunCode);
 	}
+
+	@Override
+	public List<MyPlan> getMyPlanOrder(int myPlanNo) throws Exception {
+		return myPlanMapper.getMyPlanOrder(myPlanNo);
+	}
 }
