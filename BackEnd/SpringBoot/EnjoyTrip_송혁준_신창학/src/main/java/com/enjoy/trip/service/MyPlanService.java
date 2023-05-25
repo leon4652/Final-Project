@@ -13,4 +13,6 @@ public interface MyPlanService {
 	void saveMyPlanOrder(List<MyPlan> mp) throws Exception;
 	
 	List<MyPlan> getThisLocationReviews(int sidoCode, int gugunCode) throws Exception;
+	
+	List<MyPlan> getMyPlanOrder(int myPlanNo) throws Exception;
 }

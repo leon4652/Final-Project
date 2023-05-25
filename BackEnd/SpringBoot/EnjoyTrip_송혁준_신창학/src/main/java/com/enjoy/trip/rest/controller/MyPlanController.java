@@ -41,4 +41,12 @@ public class MyPlanController {
 	public List<MyPlan> getThisLocationReviews(@PathVariable("sidoCode") int sidoCode, @PathVariable("gugunCode") int gugunCode) throws Exception {
 		return myPlanService.getThisLocationReviews(sidoCode, gugunCode);
 	}
+	
+	
+	@GetMapping("review/getorders/{myPlanNo}")
+	public List<MyPlan> getMyPlanOrder(@PathVariable("myPlanNo") int myPlanNo) throws Exception {
+		return myPlanService.getMyPlanOrder(myPlanNo);
+	}
+	
+	
 }

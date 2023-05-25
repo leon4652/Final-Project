@@ -40,7 +40,13 @@
       </div>
     </div>
 
-    <Modal :show="showModal" :review="selectedReview" @close="closeModal" />
+    <Modal
+      :show="showModal"
+      :review="selectedReview"
+      :tripOrders="tripOrders"
+      @close="closeModal"
+      @like="likeEvent"
+    />
   </div>
 </template>
 
@@ -57,6 +63,7 @@ export default {
       routeReviews: [], // 데이터를 저장할 배열
       selectedReview: null, //클릭한 리뷰 변수
       showModal: false, //모달 보여주기 트리거
+      tripOrders: [],
     };
   },
   computed: {
@@ -79,11 +86,28 @@ export default {
 
   methods: {
     openModal(review) {
-      this.showModal = true;
       this.selectedReview = review; // 선택된 리뷰를 저장
+      this.getTripOrders(review.myPlanNo);
+      this.showModal = true;
     },
     closeModal() {
       this.showModal = false;
+    },
+    likeEvent() {
+      alert("여기 에러 발생");
+    },
+    async getTripOrders(myPlanNo) {
+      if (myPlanNo) {
+        try {
+          const response = await axios.get(
+            process.env.VUE_APP_API_BASE_URL +
+              `/myplan/review/getorders/${myPlanNo}`
+          );
+          this.tripOrders = response.data; //tripOrders 저장
+        } catch (error) {
+          console.error(error);
+        }
+      }
     },
   },
 };
