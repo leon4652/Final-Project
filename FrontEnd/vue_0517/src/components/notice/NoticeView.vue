@@ -21,7 +21,7 @@
       <b-col>
         <b-card
           :header-html="`<h3>${board.noticeNo}.
-          ${board.noticeTitle} [${board.noticeHit}]</h3><div><h6>${board.userId}</div><div>${board.registDate}</h6></div>`"
+          ${board.noticeTitle}</h3><div><h6>${board.userId}</div><div>${board.registDate}</h6></div>`"
           class="mb-2"
           border-variant="dark"
           no-body
