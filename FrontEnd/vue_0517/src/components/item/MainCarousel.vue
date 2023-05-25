@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="carousel-container">
     <b-carousel
       id="carousel-1"
       v-model="slide"
@@ -50,11 +50,6 @@
         </p>
       </b-carousel-slide>
     </b-carousel>
-
-    <!-- <p class="mt-4">
-      Slide #: {{ slide }}<br />
-      Sliding: {{ sliding }}
-    </p> -->
   </div>
 </template>
 
@@ -81,4 +76,8 @@ export default {
 </script>
 
 <style scoped>
+.carousel-container {
+  margin-left: 10%;
+  margin-right: 10%;
+}
 </style>

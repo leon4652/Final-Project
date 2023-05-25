@@ -118,6 +118,7 @@ const routes = [
   {
     path: "/mypage",
     name: "myPage",
+    redirect: "/myPage/info",
     component: () => import(/* webpackChunkName: "myPage" */ "@/views/MyPageView.vue"),
     children: [
       {

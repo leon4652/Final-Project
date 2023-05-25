@@ -30,7 +30,7 @@ async function signup(user, success, fail) {
 }
 
 async function checkDuplicateId(userId, success, fail) {
-  await api.get(`/checkDuplicateId/${userId}`).then(success).catch(fail)
+  await api.get(`/user/checkDuplicateId/${userId}`).then(success).catch(fail);
 }
 
 export { login, findById, tokenRegeneration, logout, getIfo, signup, checkDuplicateId };

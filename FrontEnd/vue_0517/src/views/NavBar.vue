@@ -12,7 +12,7 @@
           <b-nav-item><router-link to="/storyboard">자유게시판</router-link></b-nav-item>
           <b-nav-item><router-link to="/notice">공지사항</router-link></b-nav-item>
           <b-nav-item><router-link to="/searchMap">여행지 검색</router-link></b-nav-item>
-          <b-nav-item><router-link to="/searchResult">여행지 검색 결과</router-link></b-nav-item>
+          <b-nav-item><router-link to="/rsMain">여행지 검색 결과</router-link></b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
@@ -31,9 +31,11 @@
             <b-nav-item-dropdown right>
               <!-- Using 'button-content' slot -->
               <template #button-content>
-                <em>{{user.userId}}</em>
+                <em>{{ user.userId }}</em>
               </template>
-              <b-dropdown-item href=""><router-link to="/mypage">Profile</router-link></b-dropdown-item>
+              <b-dropdown-item href="">
+                <router-link to="/mypage" class="profileLink">Profile</router-link>
+              </b-dropdown-item>
               <b-dropdown-item href="" @click="logout">Sign Out</b-dropdown-item>
             </b-nav-item-dropdown>
           </div>
@@ -44,41 +46,41 @@
 </template>
 
 <script>
-import jwtDecode from "jwt-decode";
+import jwtDecode from 'jwt-decode';
 
-import { mapMutations, mapState } from "vuex";
+import { mapMutations, mapState } from 'vuex';
 
-const userStore = "userStore";
+const userStore = 'userStore';
 
 export default {
-  name: "NavBar",
+  name: 'NavBar',
   components: {},
   data() {
     return {
       user: {
-        userId: "",
-        userName: "",
+        userId: '',
+        userName: '',
       },
     };
   },
   computed: {
-    ...mapState(userStore, ["isLogin", "userInfo"]),
+    ...mapState(userStore, ['isLogin', 'userInfo']),
   },
   created() {
-    if (sessionStorage.getItem("access-token")) {
-      this.user = jwtDecode(sessionStorage.getItem("access-token"));
+    if (sessionStorage.getItem('access-token')) {
+      this.user = jwtDecode(sessionStorage.getItem('access-token'));
     }
   },
   methods: {
-    ...mapMutations(userStore, ["SET_LOGOUT"]),
+    ...mapMutations(userStore, ['SET_LOGOUT']),
     logout() {
       this.SET_LOGOUT();
       location.reload();
     },
     moveLogin() {
       // this.$router.push({ name: "login" });
-      this.$router.push({ name: "login" }).catch((err) => {
-        if (err.name !== "NavigationDuplicated") {
+      this.$router.push({ name: 'login' }).catch((err) => {
+        if (err.name !== 'NavigationDuplicated') {
           throw err;
         }
       });
@@ -93,5 +95,13 @@ export default {
 }
 a {
   color: white;
+}
+a:hover{
+  /* 마우스 올리면 글자 색 바꾸는 코드 */
+  text-decoration: none;
+  color: black;
+}
+.profileLink {
+  color: black;
 }
 </style>
