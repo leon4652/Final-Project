@@ -3,11 +3,11 @@
     <b-carousel
       id="carousel-1"
       v-model="slide"
-      :interval="4000"
+      :interval="0"
       controls
       indicators
       background="#ababab"
-      img-width="1024"
+      img-width="980"
       img-height="480"
       style="text-shadow: 1px 1px 2px #333"
       @sliding-start="onSlideStart"
@@ -17,8 +17,31 @@
       <b-carousel-slide
         caption="First slide"
         text="Nulla vitae elit libero, a pharetra augue mollis interdum."
-        img-src="https://picsum.photos/1024/480/?image=52"
-      ></b-carousel-slide>
+        img-src="https://www.popco.net/zboard/data/photo_gallery/2017/09/17/194634705159be75dba9fc9.jpg"
+        img-height="1024px"
+        img-width="480px"
+      >
+        <!-- <img src="https://www.popco.net/zboard/data/photo_gallery/2017/09/17/194634705159be75dba9fc9.jpg"> -->
+        <!-- <template #img>
+    <div class="carousel-image">
+      <img src="https://www.popco.net/zboard/data/photo_gallery/2017/09/17/194634705159be75dba9fc9.jpg" alt="Slide Image">
+    </div>
+  </template> -->
+      </b-carousel-slide>
+
+      <b-carousel-slide
+        caption="First slide"
+        text="Nulla vitae elit libero, a pharetra augue mollis interdum."
+      >
+        <template #img>
+          <div class="carousel-image">
+            <img
+              src="https://www.popco.net/zboard/data/photo_gallery/2017/09/17/194634705159be75dba9fc9.jpg"
+              alt="Slide Image"
+            />
+          </div>
+        </template>
+      </b-carousel-slide>
 
       <!-- Slides with custom text -->
       <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=54">
@@ -79,5 +102,7 @@ export default {
 .carousel-container {
   margin-left: 10%;
   margin-right: 10%;
+  margin-bottom: 20px;
 }
+
 </style>

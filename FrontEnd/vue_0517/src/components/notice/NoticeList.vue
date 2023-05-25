@@ -4,7 +4,7 @@
     <b-col class="text-right" v-if="this.isAdmin === 1">
       <b-button variant="info" @click="moveWrite" class="writeBtn">글 작성</b-button>
     </b-col>
-    <b-table striped hover :items="notices" :fields="fields">
+    <b-table hover :items="notices" :fields="fields">
       <template v-slot:cell(noticeTitle)="row">
         <router-link :to="`/notice/info/${row.item.noticeNo}`">{{ row.value }}</router-link>
       </template>
@@ -46,7 +46,7 @@ export default {
   created() {
     this.getNoticeList();
     this.noticeList = this.notices;
-    if (sessionStorage.getItem('access-token')){
+    if (sessionStorage.getItem('access-token')) {
       let user = jwt_decode(sessionStorage.getItem('access-token'));
       this.isAdmin = user.isAdmin;
     }
@@ -70,7 +70,12 @@ export default {
   margin-top: 10px;
 }
 .writeBtn {
-  margin-bottom: 5px;
+  margin-bottom: 10px;
+  background-color: #ff8a00;
+  border: none;
+}
+.writeBtn:hover {
+  background-color: orange;
 }
 a {
   color: black;
