@@ -13,4 +13,6 @@ public interface MyPlanMapper {
 	void saveMyPlan(MyPlan myPlan) throws Exception;
 
 	int getMaxPlanNo() throws Exception;
+	
+	List<MyPlan> getThisLocationReviews(int sidoCode, int gugunCode) throws Exception;
 }

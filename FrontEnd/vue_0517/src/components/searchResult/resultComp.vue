@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="container">
-      <div class="table-container">
+    <div class="rs-container">
+      <div class="rs-table-container">
         <table class="table table-bordered table-hover">
           <caption class="text-center">
             SSAFY Final Project
@@ -81,7 +81,7 @@ export default {
 </script>
 
 <style scoped>
-.container {
+.rs-container {
   max-height: 650px;
   overflow: auto;
   display: flex;
@@ -92,7 +92,7 @@ export default {
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
   margin-top: 30px;
 }
-.table-container {
+.rs-table-container {
   max-height: 600px;
 }
 

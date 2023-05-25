@@ -14,8 +14,44 @@ public class MyPlan {
 	private int userNo;
 	private String tripTitle;
 	private String tripContent;
+	private String sidoCode;
+	private String gugunCode;
+	private int MyPlanLike;
+	private int MyPlanHit;
+	private Date MyPlanRegistDate;
 	
 	
+
+	public Date getMyPlanRegistDate() {
+		return MyPlanRegistDate;
+	}
+	public void setMyPlanRegistDate(Date myPlanRegistDate) {
+		MyPlanRegistDate = myPlanRegistDate;
+	}
+	public int getMyPlanLike() {
+		return MyPlanLike;
+	}
+	public void setMyPlanLike(int myPlanLike) {
+		MyPlanLike = myPlanLike;
+	}
+	public int getMyPlanHit() {
+		return MyPlanHit;
+	}
+	public void setMyPlanHit(int myPlanHit) {
+		MyPlanHit = myPlanHit;
+	}
+	public String getSidoCode() {
+		return sidoCode;
+	}
+	public void setSidoCode(String sidoCode) {
+		this.sidoCode = sidoCode;
+	}
+	public String getGugunCode() {
+		return gugunCode;
+	}
+	public void setGugunCode(String gugunCode) {
+		this.gugunCode = gugunCode;
+	}
 	public String getTripContent() {
 		return tripContent;
 	}

@@ -26,6 +26,7 @@ export default {
   methods: {
     ...mapMutations("mapStore", ["SET_NOW_CONTENT_TYPE"]),
   },
+  mounted() {},
 };
 </script>
 

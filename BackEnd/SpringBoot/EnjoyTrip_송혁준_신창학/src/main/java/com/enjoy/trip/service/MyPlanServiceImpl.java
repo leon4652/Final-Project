@@ -29,4 +29,9 @@ public class MyPlanServiceImpl implements MyPlanService {
 	public void saveMyPlanOrder(List<MyPlan> mp) throws Exception {
 		myPlanMapper.saveMyPlanOrder(mp);	
 	}
+
+	@Override
+	public List<MyPlan> getThisLocationReviews(int sidoCode, int gugunCode) throws Exception {
+		return myPlanMapper.getThisLocationReviews(sidoCode, gugunCode);
+	}
 }

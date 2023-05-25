@@ -4,11 +4,6 @@
 
 <mapper namespace="com.enjoy.trip.mapper.AttractionMapper">
 
-	<!-- List<AttractionInfo> selectAttractionList(Map<String, Object> param) 
-		AttractionInfo getAttraction(int contentId) throws SQLException; List<Sido> 
-		selectSidoList() throws SQLException; List<Gugun> selectGugun(int sidoCode) 
-		throws SQLException; ResponseEntity<?> searchSido(String regionName) throws 
-		SQLException; ResponseEntity<?> searchGugun(String regionName) throws SQLException; -->
 
 
 

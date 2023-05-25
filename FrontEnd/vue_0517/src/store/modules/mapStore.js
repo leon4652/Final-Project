@@ -19,7 +19,7 @@ const mapStore = {
     isTripPlan: false, //여행 계획인지 구분
     myRoute: [], //여행 계획 루트
     mobility: 0, //이동수단
-    expectTime: [0] //예상 시간
+    expectTime: [0], //예상 시간
   },
   mutations: {
     SET_CNT(state, payload) {
@@ -80,11 +80,9 @@ const mapStore = {
 
     ADD_EXPECT_TIME(state, payload) {
       state.expectTime.push(payload);
-    }
+    },
   },
-  getters: {
-    
-  },
+  getters: {},
   actions: {
     fetchAttInfoList({ commit, state }, contentType) {
       axios
@@ -115,7 +113,7 @@ const mapStore = {
         });
     },
 
-    sendMyRoute({ state, commit }, {tripTitle, tripContent}) {
+    sendMyRoute({ state, commit }, { tripTitle, tripContent }) {
       var done = true; //ERR메서드 출력
       const currentTime = new Date(); // 현재 시간을 가져옴
       try {
@@ -136,7 +134,7 @@ const mapStore = {
 
       //myRoute의 특정 프로퍼티 값과, 제목, id, no를 합친 배열 생성
       const myRouteId = state.myRoute.map((route, index) => {
-        const { title, addr1, firstImage } = route; // 특정 프로퍼티 A, B, C를 추출
+        const { title, addr1, firstImage } = route; //
         return {
           idx: index,
           tripTitle,
@@ -148,10 +146,10 @@ const mapStore = {
           userId: idInfo.userId, // id 값을 추가
           userNo: idInfo.userNo, // no 값을 추가
           currentTime, //현재 시간
+          sidoCode: state.sidoCode,
+          gugunCode: state.gugunCode,
         };
       });
-
-      console.dir(myRouteId);
 
       axios
         .post(process.env.VUE_APP_API_BASE_URL + "/myplan/save", myRouteId)
