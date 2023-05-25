@@ -18,7 +18,7 @@ const mapStore = {
     contentTypeList: [12, 14, 15, 25, 28, 32, 38, 39],
     isTripPlan: false, //여행 계획인지 구분
     myRoute: [], //여행 계획 루트
-    mobility: 0, //이동수단
+    mobility: 60, //이동수단
     expectTime: [0], //예상 시간
   },
   mutations: {

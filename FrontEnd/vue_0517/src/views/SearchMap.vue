@@ -60,6 +60,7 @@ export default {
 .bottom {
   flex: 1; /* 하위 절반 공간을 차지 */
   display: flex;
+  margin-bottom: 30px;
 }
 
 .left {
