@@ -39,18 +39,24 @@
         </table>
       </div>
     </div>
+
+    <Modal :show="showModal" :review="selectedReview" @close="closeModal" />
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
 import axios from "axios";
+import Modal from "@/components/searchResult/reviewModal.vue"; // 모달 컴포넌트를 import
+
 export default {
   name: "routeReviews",
-  components: {},
+  components: { Modal }, // 모달 컴포넌트 등록
   data() {
     return {
       routeReviews: [], // 데이터를 저장할 배열
+      selectedReview: null, //클릭한 리뷰 변수
+      showModal: false, //모달 보여주기 트리거
     };
   },
   computed: {
@@ -65,12 +71,21 @@ export default {
       );
       this.routeReviews = response.data;
       this.routeReviews = response.data.reverse(); // 배열을 역순으로 변경(최신글 처리)
+      this.showModal = false; // 모달 닫기
     } catch (error) {
       console.error(error);
     }
   },
 
-  methods: {},
+  methods: {
+    openModal(review) {
+      this.showModal = true;
+      this.selectedReview = review; // 선택된 리뷰를 저장
+    },
+    closeModal() {
+      this.showModal = false;
+    },
+  },
 };
 </script>
 
