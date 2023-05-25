@@ -1,26 +1,4 @@
 <template>
-  <!-- <div>
-    <h3>Login</h3>
-     <b-form @submit="login">
-      <b-row class="my-1">
-        <b-col sm="3">
-          <label for="username">Username:</label>
-        </b-col>
-        <b-col sm="9">
-          <b-form-input id="username" type="text" v-model="username" required></b-form-input>
-        </b-col>
-      </b-row>
-      <b-row class="my-1">
-        <b-col sm="3">
-          <label for="password">Password:</label>
-        </b-col>
-        <b-col sm="9">
-          <b-form-input id="password" type="password" v-model="password" required></b-form-input>
-        </b-col>
-      </b-row>
-      <b-button type="submit" variant="primary">Login</b-button>
-    </b-form>
-  </div> -->
     <b-container class="bv-example-row mt-3">
     <b-row>
       <b-col>
@@ -88,11 +66,10 @@
       async confirm() {
         await this.userConfirm(this.user);
         let token = sessionStorage.getItem("access-token");
-        // console.log("1. confirm() token >> " + token);
         if (this.isLogin) {
           await this.getUserInfo(token);
-          // console.log("4. confirm() userInfo :: ", this.userInfo);
           this.$router.push({ name: "Home" });
+          // location.reload();
         }
       },
       movePage() {

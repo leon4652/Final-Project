@@ -187,11 +187,11 @@ const userStore = {
       await checkDuplicateId(
         userId,
         ({ data }) => {
-          console.dir(data);
-          commit("SET_IS_DUPLICATED", true);
+          // console.log("data의 내용")
+          // console.dir(data);
+          commit("SET_IS_DUPLICATED", data);
         },
         (error) => {
-          console.log("여기로 왔네");
           console.log(error);
           alert("에러 발생");
         }

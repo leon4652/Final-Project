@@ -23,9 +23,17 @@
                 placeholder="아이디 입력...."
                 ref="userId"
               ></b-form-input>
+
+              <p v-if="isButtonClicked && !user.userId" style="color: red">아이디 입력해주세요</p>
+              <p v-if="isButtonClicked && user.userId && !isDuplicate" style="color: red">
+                아이디 중복 검사하세요.
+              </p>
+
               <b-button type="button" variant="success" class="m-1" @click="checkDuplicate"
                 >아이디 중복 확인</b-button
               >
+              <p v-if="isDuplicate" style="color: blue">사용 가능한 아이디입니다</p>
+              <!-- <p v-else style="color: red;">사용중인 아이디입니다</p> -->
             </b-form-group>
             <b-form-group label="비밀번호:" label-for="userPw">
               <b-form-input
@@ -36,6 +44,10 @@
                 placeholder="비밀번호 입력...."
                 ref="password"
               ></b-form-input>
+
+              <p v-if="isButtonClicked && !user.userPw" style="color: red">
+                비밀번호 입력해주세요.
+              </p>
             </b-form-group>
             <b-form-group label="이름:" label-for="userName">
               <b-form-input
@@ -45,6 +57,8 @@
                 placeholder="이름 입력...."
                 ref="name"
               ></b-form-input>
+
+              <p v-if="isButtonClicked && !user.userName" style="color: red">이름 입력해주세요.</p>
             </b-form-group>
             <b-form-group label="이메일:" label-for="email">
               <b-form-input
@@ -62,6 +76,10 @@
             <b-form-group label="구/군:" ref="gugun">
               <select-gugun :sidoCode="sidoCode" @select-gugun="selectGugun"></select-gugun>
             </b-form-group>
+
+            <p v-if="isButtonClicked && user.sido !== 0 && user.gugun === 0" style="color: red">
+              구/군 정보 입력해주세요.
+            </p>
 
             <b-form-group label="생년월일:" label-for="birth">
               <b-form-datepicker
@@ -82,7 +100,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import SelectGugun from '../item/SelectGugun.vue';
 import SelectSido from '../item/SelectSido.vue';
 
@@ -105,31 +123,29 @@ export default {
       selectedDate: null,
       sidoCode: 0,
       isDuplicate: false,
+      isButtonClicked: false,
     };
+  },
+  computed: {
+    ...mapState('userStore', ['isDuplicated']),
   },
   created() {},
   methods: {
     ...mapActions('userStore', ['userSignup', 'duplicateId']),
     async confirm() {
+      this.isButtonClicked = true;
       let err = true;
-      let msg = "";
+
       // 입력값 중에 필수 입력 -> 아이디, 비밀번호, 이름 입력이 없으면 focus
-         !this.user.userId &&
-        ((msg = "아이디 입력해주세요"), (err = false), this.$refs.userId.focus());
-      err &&
-        !this.user.userPw &&
-        ((msg = "비밀번호 입력해주세요"), (err = false), this.$refs.password.focus());
-      err &&
-        !this.user.userName &&
-        ((msg = "이름 입력해주세요"), (err = false), this.$refs.name.focus());
+      !this.user.userId && ((err = false), this.$refs.userId.focus());
+      err && !this.isDuplicate && ((err = false), this.$refs.userId.focus());
+      err && !this.user.userPw && ((err = false), this.$refs.password.focus());
+      err && !this.user.userName && ((err = false), this.$refs.name.focus());
 
       // 시도만 입력하고 구군을 입력안하면 안되도록
-      err &&
-        this.user.sido && !this.user.gugun &&
-        ((msg = "구군 정보 입력해주세요"), (err = false), this.$refs.name.focus());
+      err && this.user.sido && !this.user.gugun && ((err = false), this.$refs.name.focus());
 
-      if (!err) alert(msg)
-      else {
+      if (err) {
         // store에 있는 state에 있는 isSignUp에 따라 동작하도록 변경해야함
         await this.userSignup(this.user)
           .then(() => {
@@ -158,18 +174,13 @@ export default {
       this.user.gugun = gugunCode;
     },
     async checkDuplicate() {
-      console.log(this.user.userId)
       /**
        * 서버에 입력 받은 아이디를 넘겨줌 -> 아이디만
        * DB에서 전달 받은 아이디를 중복 체크 함
        */
       if (this.user.userId) {
-        await this.duplicateId(this.user.userId)
-        .then(() => {
-          this.isDuplicate = true;
-        }).catch(
-          console.log('실패띠')
-        )
+        await this.duplicateId(this.user.userId);
+        this.isDuplicate = this.isDuplicated;
       }
     },
   },

@@ -27,7 +27,7 @@ export default {
     };
   },
   props: {
-    sidoCode: String,
+    sidoCode: Number,
   },
   watch: {
     sidoCode() {
