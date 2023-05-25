@@ -94,6 +94,8 @@ export default {
         tripTitle: this.tripTitle,
         tripContent: this.tripContent,
       });
+      this.tripTitle = "나만의 여행 계획!"; // tripTitle을 원하는 값으로 변경
+      this.tripContent = "내용을 입력하세요."; // tripContent를 원하는 값으로 변경
     },
     convertTime(minutes) {
       //60분 넘어갈 시 시간 변환 실행
