@@ -45,12 +45,12 @@
             ref="content"
           ></b-form-textarea>
         </b-form-group>
-        <b-button type="submit" variant="primary" class="m-1" v-if="this.type === 'write'"
+        <b-button type="submit" variant="primary" class="m-1 writeBtn" v-if="this.type === 'write'"
           >글작성</b-button
         >
-        <b-button type="submit" variant="primary" class="m-1" v-else>글수정</b-button>
+        <b-button type="submit" variant="primary" class="m-1 modifyBtn" v-else>글수정</b-button>
 
-        <b-button type="reset" variant="danger" class="m-1">초기화</b-button>
+        <b-button type="reset" variant="danger" class="m-1 resetBtn">초기화</b-button>
       </b-form>
     </b-col>
   </b-row>
@@ -138,4 +138,21 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.writeBtn,
+.modifyBtn{
+  background-color: #00c9ff;
+  border: none;
+}
+.resetBtn {
+  background-color: #FF6655;
+  border: none;
+}
+.resetBtn:hover {
+  background-color: #C0392B;
+}
+.writeBtn:hover,
+.modifyBtn:hover {
+  background-color: #0586aa;
+}
+</style>

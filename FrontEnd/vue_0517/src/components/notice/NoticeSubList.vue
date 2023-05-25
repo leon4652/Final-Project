@@ -10,6 +10,8 @@
           {{ row.value | dateFormat }}
         </template>
       </b-table>
+
+      
     </div>
   </div>
 </template>
@@ -57,7 +59,7 @@ export default {
 <style scoped>
 .routerLink {
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 .noticeList {
   margin-top: 10px;

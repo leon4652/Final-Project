@@ -29,7 +29,7 @@
                 아이디 중복 검사하세요.
               </p>
 
-              <b-button type="button" variant="success" class="m-1" @click="checkDuplicate"
+              <b-button type="button" variant="success" class="m-1 btn" @click="checkDuplicate"
                 >아이디 중복 확인</b-button
               >
               <p v-if="isDuplicate" style="color: blue">사용 가능한 아이디입니다</p>
@@ -88,7 +88,7 @@
                 :formatter="customDateFormatter()"
               ></b-form-datepicker>
             </b-form-group>
-            <b-button type="button" variant="success" class="m-1" @click="confirm"
+            <b-button type="button" variant="success" class="m-1 btn" @click="confirm"
               >회원가입</b-button
             >
           </b-form>
@@ -187,4 +187,13 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.btn{
+    background-color: #23d335;
+  border: none;
+}
+.btn:hover{
+      background-color: #14a323;
+  border: none;
+}
+</style>

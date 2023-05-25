@@ -7,7 +7,7 @@
     </b-row>
     <b-row class="mb-1">
       <b-col class="text-left">
-        <b-button variant="outline-primary" @click="moveList">목록</b-button>
+        <b-button class="listBtn" variant="outline-primary" @click="moveList">목록</b-button>
       </b-col>
       <!-- 현재 로그인한 사람과 글쓴이가 같은 사람인지 확인 -->
       <b-col class="text-right" v-if="isWriter">
@@ -90,4 +90,14 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.listBtn{
+  border: #00c9ff;
+  color: #00c9ff;
+}
+.listBtn:hover{
+  background-color: #00c9ff;
+  border: none;
+  color: white;
+}
+</style>
