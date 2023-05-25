@@ -5,7 +5,7 @@
         <kakao-map class="map-container"></kakao-map>
       </div>
       <div class="rsrv-search-container">
-        <search-result></search-result>
+        <route-reviews></route-reviews>
       </div>
     </div>
   </div>
@@ -13,11 +13,11 @@
 
 <script>
 import kakaoMap from "@/components/maps/kakaoMap.vue";
-import searchResult from "@/components/searchResult/resultComp.vue";
-import { mapMutations } from "vuex";
+import routeReviews from "@/components/searchResult/routeReviews.vue";
+import { mapActions, mapMutations } from "vuex";
 export default {
   name: "rsReview",
-  components: { kakaoMap, searchResult },
+  components: { kakaoMap, routeReviews },
   data() {
     return {
       message: "",
@@ -31,6 +31,7 @@ export default {
   },
   methods: {
     ...mapMutations("mapStore", ["SET_NOW_CONTENT_TYPE"]),
+    ...mapActions("mapStore", ["getRouteReviews"]),
   },
 };
 </script>

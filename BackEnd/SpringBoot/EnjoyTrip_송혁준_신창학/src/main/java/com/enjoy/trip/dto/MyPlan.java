@@ -16,9 +16,30 @@ public class MyPlan {
 	private String tripContent;
 	private String sidoCode;
 	private String gugunCode;
+	private int MyPlanLike;
+	private int MyPlanHit;
+	private Date MyPlanRegistDate;
 	
 	
-	
+
+	public Date getMyPlanRegistDate() {
+		return MyPlanRegistDate;
+	}
+	public void setMyPlanRegistDate(Date myPlanRegistDate) {
+		MyPlanRegistDate = myPlanRegistDate;
+	}
+	public int getMyPlanLike() {
+		return MyPlanLike;
+	}
+	public void setMyPlanLike(int myPlanLike) {
+		MyPlanLike = myPlanLike;
+	}
+	public int getMyPlanHit() {
+		return MyPlanHit;
+	}
+	public void setMyPlanHit(int myPlanHit) {
+		MyPlanHit = myPlanHit;
+	}
 	public String getSidoCode() {
 		return sidoCode;
 	}
