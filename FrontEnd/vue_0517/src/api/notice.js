@@ -31,4 +31,8 @@ async function modify(notice, success, fail) {
     .catch(fail);
 }
 
-export { select, getNotice, write, deleteNotice, modify };
+async function subSelect(success, fail) {
+  await api.get(`/notice/sublist`).then(success).catch(fail);
+}
+
+export { select, getNotice, write, deleteNotice, modify, subSelect };

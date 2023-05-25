@@ -1,7 +1,6 @@
 <template>
   <div>
     <main-carousel></main-carousel>
-    <homeSwiperComp></homeSwiperComp>
     <div class="container">
       <div class="left-component">
         <!-- 왼쪽 컴포넌트의 내용 -->
@@ -16,14 +15,13 @@
 </template>
 
 <script>
-import homeSwiperComp from '@/components/search/homeSwiperComp.vue';
 import MainCarousel from '@/components/item/MainCarousel.vue';
 import NoticeSubList from '@/components/notice/NoticeSubList.vue';
 import StoryBoardSubList from '@/components/board/StoryBoardSubList.vue';
 
 export default {
   name: 'HomeView',
-  components: { homeSwiperComp, MainCarousel, NoticeSubList, StoryBoardSubList },
+  components: { MainCarousel, NoticeSubList, StoryBoardSubList },
 };
 </script>
 <style scoped>

@@ -16,4 +16,6 @@ public interface StoryBoardService {
 
 	void writeStoryBoard(StoryBoard storyBoard) throws Exception;
 
+	List<StoryBoard> subSelectStoryBoard() throws Exception;
+
 }

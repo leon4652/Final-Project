@@ -37,6 +37,11 @@ public class StoryBoardController {
 		return storyBoardService.selectStoryBoard();
 	}
 	
+	@GetMapping("/sublist")
+	public List<StoryBoard> subSelect() throws Exception {
+		return storyBoardService.subSelectStoryBoard();
+	}
+	
 
 	@GetMapping("/info/{storyBoardNo}")
 	public StoryBoard getBoard(@PathVariable int storyBoardNo) throws Exception {

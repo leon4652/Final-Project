@@ -1,9 +1,13 @@
-import { apiInstance } from "./http";
+import { apiInstance } from './http';
 
 const api = apiInstance();
 
 async function select(success, fail) {
   await api.get(`/storyboard/list`).then(success).catch(fail);
+}
+
+async function subSelect(success, fail) {
+  await api.get(`/storyboard/sublist`).then(success).catch(fail);
 }
 
 async function getBoard(storyBoardNo, success, fail) {
@@ -31,4 +35,4 @@ async function modify(storyBoard, success, fail) {
     .catch(fail);
 }
 
-export { select, getBoard, write, deleteBoard, modify };
+export { select, getBoard, write, deleteBoard, modify, subSelect };

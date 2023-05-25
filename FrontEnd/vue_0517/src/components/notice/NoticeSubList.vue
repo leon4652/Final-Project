@@ -1,20 +1,8 @@
 <template>
   <div class="noticeList">
-    <!-- <h1 class="con">공지사항</h1> -->
     <router-link to="/notice" class="routerLink">공지사항</router-link>
-    <!-- <b-col class="text-right" v-if="this.isAdmin === 1">
-      <b-button variant="info" @click="moveWrite" class="writeBtn">글 작성</b-button>
-    </b-col> -->
-    <!-- <b-table striped hover :items="notices" :fields="fields">
-      <template v-slot:cell(noticeTitle)="row">
-        <router-link :to="`/notice/info/${row.item.noticeNo}`">{{ row.value }}</router-link>
-      </template>
-      <template v-slot:cell(registDate)="row">
-        {{ row.value | dateFormat }}
-      </template>
-    </b-table> -->
     <div>
-      <b-table striped hover :items="notices" :fields="fields">
+      <b-table striped hover :items="subNotices" :fields="fields">
         <template v-slot:cell(noticeTitle)="row">
           <router-link :to="`/notice/info/${row.item.noticeNo}`">{{ row.value }}</router-link>
         </template>
@@ -29,7 +17,6 @@
 <script>
 import moment from 'moment';
 import { mapActions, mapState } from 'vuex';
-import jwt_decode from 'jwt-decode';
 
 const noticeStore = 'noticeStore';
 
@@ -44,18 +31,14 @@ export default {
         { key: 'registDate', label: '작성일' },
       ],
       noticeList: [],
-      isAdmin: '',
     };
   },
   computed: {
-    ...mapState(noticeStore, ['notices']),
+    ...mapState(noticeStore, ['subNotices']),
   },
   created() {
-    this.getNoticeList();
-    this.noticeList = this.notices;
-
-    let user = jwt_decode(sessionStorage.getItem('access-token'));
-    this.isAdmin = user.isAdmin;
+    this.subList();
+    this.noticeList = this.subNotices;
   },
   filters: {
     dateFormat(registDate) {
@@ -63,7 +46,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(noticeStore, ['getNoticeList']),
+    ...mapActions(noticeStore, ['subList']),
     moveWrite() {
       this.$router.push({ name: 'noticeWrite' });
     },
