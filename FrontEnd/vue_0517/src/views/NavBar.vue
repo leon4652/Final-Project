@@ -8,7 +8,7 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
-        <b-navbar-nav>
+        <b-navbar-nav class="routerLink">
           <b-nav-item><router-link to="/storyboard">자유게시판</router-link></b-nav-item>
           <b-nav-item><router-link to="/notice">공지사항</router-link></b-nav-item>
           <b-nav-item><router-link to="/searchMap">여행지 검색</router-link></b-nav-item>
@@ -91,7 +91,7 @@ export default {
 .loginBtn {
   margin-left: 5px;
 }
-.routerLink{
-  text-decoration: none !important;
+a {
+  color: white;
 }
 </style>

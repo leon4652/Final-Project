@@ -104,11 +104,12 @@ export default {
       },
       selectedDate: null,
       sidoCode: 0,
+      isDuplicate: false,
     };
   },
   created() {},
   methods: {
-    ...mapActions('userStore', ['userSignup']),
+    ...mapActions('userStore', ['userSignup', 'duplicateId']),
     async confirm() {
       let err = true;
       let msg = "";
@@ -157,10 +158,19 @@ export default {
       this.user.gugun = gugunCode;
     },
     async checkDuplicate() {
+      console.log(this.user.userId)
       /**
        * 서버에 입력 받은 아이디를 넘겨줌 -> 아이디만
        * DB에서 전달 받은 아이디를 중복 체크 함
        */
+      if (this.user.userId) {
+        await this.duplicateId(this.user.userId)
+        .then(() => {
+          this.isDuplicate = true;
+        }).catch(
+          console.log('실패띠')
+        )
+      }
     },
   },
 };

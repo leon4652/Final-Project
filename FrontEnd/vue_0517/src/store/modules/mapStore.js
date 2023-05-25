@@ -16,9 +16,10 @@ const mapStore = {
     attInfoList: [], //어트랙션 정보들을 저장할 배열 {}
     nowContentType: 0, //콘텐츠 타입(ex:관광지:12, 숙박:25 ..)
     contentTypeList: [12, 14, 15, 25, 28, 32, 38, 39],
-    mobility: 1, //이동수단
     isTripPlan: false, //여행 계획인지 구분
     myRoute: [], //여행 계획 루트
+    mobility: 0, //이동수단
+    expectTime: [0] //예상 시간
   },
   mutations: {
     SET_CNT(state, payload) {
@@ -72,8 +73,18 @@ const mapStore = {
     DEL_MY_ROUTE(state) {
       state.myRoute = [];
     },
+
+    DEL_EXPECT_TIME(state) {
+      state.expectTime = [0];
+    },
+
+    ADD_EXPECT_TIME(state, payload) {
+      state.expectTime.push(payload);
+    }
   },
-  getters: {},
+  getters: {
+    
+  },
   actions: {
     fetchAttInfoList({ commit, state }, contentType) {
       axios
@@ -90,6 +101,7 @@ const mapStore = {
     },
 
     getDetailsFromLatLng({ commit, state }, { lat, lan }) {
+      //좌표 기반으로 지역 정보 검색 후 저장
       axios
         .get(
           process.env.VUE_APP_API_BASE_URL + `/attraction/search/${lat}/${lan}`
@@ -103,7 +115,7 @@ const mapStore = {
         });
     },
 
-    sendMyRoute({ state, commit }, tripTitle) {
+    sendMyRoute({ state, commit }, {tripTitle, tripContent}) {
       var done = true; //ERR메서드 출력
       const currentTime = new Date(); // 현재 시간을 가져옴
       try {
@@ -128,10 +140,11 @@ const mapStore = {
         return {
           idx: index,
           tripTitle,
+          tripContent,
           title,
           addr1,
           firstImage,
-          expectTime: 0,
+          expectTime: state.expectTime[index],
           userId: idInfo.userId, // id 값을 추가
           userNo: idInfo.userNo, // no 값을 추가
           currentTime, //현재 시간
@@ -146,8 +159,8 @@ const mapStore = {
           console.log(response);
         })
         .catch((error) => {
-          alert("등록 과정에 문제가 발생했습니다.");
           done = false;
+          alert("등록 과정에 문제가 발생했습니다.");
           console.error(error);
         });
 

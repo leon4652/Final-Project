@@ -28,4 +28,9 @@ async function getIfo(userId, success, fail) {
 async function signup(user, success, fail) {
   await api.post(`/user/signUp`, user).then(success).catch(fail);
 }
-export { login, findById, tokenRegeneration, logout, getIfo, signup };
+
+async function checkDuplicateId(userId, success, fail) {
+  await api.get(`/checkDuplicateId/${userId}`).then(success).catch(fail)
+}
+
+export { login, findById, tokenRegeneration, logout, getIfo, signup, checkDuplicateId };

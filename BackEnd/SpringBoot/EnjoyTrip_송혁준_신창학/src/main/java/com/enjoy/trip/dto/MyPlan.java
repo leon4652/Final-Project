@@ -4,16 +4,24 @@ import java.sql.Date;
 import java.util.Calendar;
 
 public class MyPlan {
-	int myPlanNo;
-	String title;
-	String addr1;
-	String firstImage;
-	int idx;
-	int expectTime;
-	String userId;
-	int userNo;
+	private int myPlanNo;
+	private String title;
+	private String addr1;
+	private String firstImage;
+	private int idx;
+	private double expectTime;
+	private String userId;
+	private int userNo;
 	private String tripTitle;
+	private String tripContent;
 	
+	
+	public String getTripContent() {
+		return tripContent;
+	}
+	public void setTripContent(String tripContent) {
+		this.tripContent = tripContent;
+	}
 	
 	public String getTripTitle() {
 		return tripTitle;
@@ -51,10 +59,10 @@ public class MyPlan {
 	public void setFirstImage(String firstImage) {
 		this.firstImage = firstImage;
 	}
-	public int getExpectTime() {
+	public double getExpectTime() {
 		return expectTime;
 	}
-	public void setExpectTime(int expectTime) {
+	public void setExpectTime(double expectTime) {
 		this.expectTime = expectTime;
 	}
 	public String getUserId() {
